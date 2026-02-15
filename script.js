@@ -12,7 +12,6 @@ const P = {
     '壬': { mbti: 'ENTP', base: "머리 회전 빠름. 근데 잔머리. 스케일 크게 노는데 마무리 안 됨. 속을 모르겠는 음흉함이 매력.", love: "자유로운 연애. 구속하면 도망감. 썸만 100개. 진심 꽂히면 로맨틱한데 그게 언제일지 모름.", money: "스케일 큰 투자 좋아함. 근데 허황된 것도 많음. 친구 사업 투자하다 날리기도. 현실적으로.", work: "아이디어맨. 기획 기가 막힘. 근데 실행력 부족. 실행력 있는 파트너 찾으세요.", advice: "잔머리 굴리다 자기 꾀에 넘어갑니다." },
     '癸': { mbti: 'INFP', base: "망상으로 우주 정복. 실행력 제로. 감정 롤러코스터. 근데 아이디어는 미침. 천재성.", love: "머릿속으론 로맨틱 극치. 현실은 아무것도 안 함. 상상 속에서 연애하고 이별함. 움직이세요.", money: "전략은 잘 짜는데 실행 안 함. '이번 달부터 적금'하고 6개월째. 자동이체 걸어놓으세요.", work: "브레인스토밍 빛남. 근데 그 다음이 없음. 누가 끌어줘야 빛나는 타입.", advice: "생각 그만하고 일단 시작하세요." }
 };
-// Ten Gods (Ship-seong) Logic for Dynamic Fortune
 const TEN_GODS = {
     'Bi-gyeon': { name: '비견(比肩)', keywords: ['자존감', '경쟁', '독립'], desc: '나와 같은 기운이 들어오는 시기입니다. 주관이 뚜렷해지고 자신감이 넘치지만, 고집이 세져 주변과 마찰이 생길 수 있습니다. 경쟁보다는 협력을 택하세요.' },
     'Geop-jae': { name: '겁재(劫財)', keywords: ['승부욕', '지출', '도전'], desc: '경쟁심이 불타오르는 시기입니다. 의외의 지출이나 손재수가 있을 수 있으니 지갑을 닫으세요. 하지만 승부수를 띄우기엔 좋은 날입니다.' },
@@ -25,15 +24,6 @@ const TEN_GODS = {
     'Pyeon-in': { name: '편인(偏印)', keywords: ['직관', '눈치', '고독'], desc: '눈치가 빨라지고 직관력이 예리해집니다. 남들이 못 보는 것을 보지만, 생각이 너무 많아 우울해질 수도 있습니다. 명상이나 공부가 잘 됩니다.' },
     'Jeong-in': { name: '정인(正印)', keywords: ['인정', '학업', '귀인'], desc: '주변의 도움과 인정을 받는 사랑스러운 시기입니다. 문서운이 좋고 공부나 계약에 유리합니다. 윗사람에게 예쁨을 받습니다.' }
 };
-
-// Mapping: User's Element + Current Element -> Ten God
-// [User Stem] -> { [Current Stem]: TenGodKey }
-// Simplification for prototype: Mapping based on Element Relationship
-// Same Element (Wood-Wood): Bi-gyeon/Geop-jae
-// Generating Output (Wood-Fire): Sik-sin/Sang-gwan
-// Being Controlled (Wood-Metal): Pyeon-gwan/Jeong-gwan
-// Controlling (Wood-Earth): Pyeon-jae/Jeong-jae
-// Generating Input (Wood-Water): Pyeon-in/Jeong-in
 const REL_MAP = {
     same: ['Bi-gyeon', 'Geop-jae'],
     output: ['Sik-sin', 'Sang-gwan'],
@@ -44,15 +34,14 @@ const REL_MAP = {
 const E = { WOOD: { img: 'images/Wood.png', c: '#4ade80' }, FIRE: { img: 'images/Fire.png', c: '#f87171' }, EARTH: { img: 'images/Earth.png', c: '#fbbf24' }, METAL: { img: 'images/Metal.png', c: '#e2e8f0' }, WATER: { img: 'images/Water.png', c: '#60a5fa' } };
 const EM = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER', '寅': 'WOOD', '卯': 'WOOD', '巳': 'FIRE', '午': 'FIRE', '辰': 'EARTH', '戌': 'EARTH', '丑': 'EARTH', '未': 'EARTH', '申': 'METAL', '酉': 'METAL', '亥': 'WATER', '子': 'WATER' };
 const LK = { WOOD: { c: '🌿 그린/민트', i: '식물, 동쪽 산책' }, FIRE: { c: '🔴 레드/퍼플', i: '캔들, 햇빛' }, EARTH: { c: '🟡 옐로우', i: '도자기' }, METAL: { c: '⚪ 화이트/실버', i: '쥬얼리' }, WATER: { c: '🔵 블랙/네이비', i: '물 많이 마시기' } };
-// 천간→오행 / 상생상극 궁합
 const STEM_EL = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER' };
-const GENERATING = { WOOD: 'WATER', FIRE: 'WOOD', EARTH: 'FIRE', METAL: 'EARTH', WATER: 'METAL' }; // 나를 도와주는
-const OVERCOMING = { WOOD: 'METAL', FIRE: 'WATER', EARTH: 'WOOD', METAL: 'FIRE', WATER: 'EARTH' }; // 나를 극하는
+const GENERATING = { WOOD: 'WATER', FIRE: 'WOOD', EARTH: 'FIRE', METAL: 'EARTH', WATER: 'METAL' };
+const OVERCOMING = { WOOD: 'METAL', FIRE: 'WATER', EARTH: 'WOOD', METAL: 'FIRE', WATER: 'EARTH' };
 const ELEMENT_STEM = { WOOD: '甲', FIRE: '丙', EARTH: '戊', METAL: '庚', WATER: '壬' };
 const ELEMENT_COLORS = { WOOD: { bg: '#10b981', t: '#fff' }, FIRE: { bg: '#ef4444', t: '#fff' }, EARTH: { bg: '#eab308', t: '#1f2937' }, METAL: { bg: '#f8fafc', t: '#374151' }, WATER: { bg: '#1e1b4b', t: '#c4b5fd' } };
 const ELEMENT_NAMES = { WOOD: '목(木)', FIRE: '화(火)', EARTH: '토(土)', METAL: '금(金)', WATER: '수(水)' };
-let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M';
-let userMbti = ''; // Store tested MBTI
+let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
+let userMbti = '';
 const trailCanvas = document.getElementById('trailCanvas'), tCtx = trailCanvas.getContext('2d'); let particles = [];
 function resizeTrail() { trailCanvas.width = innerWidth; trailCanvas.height = innerHeight } resizeTrail(); addEventListener('resize', resizeTrail);
 class Particle { constructor(x, y, b = false) { this.x = x; this.y = y; this.size = b ? Math.random() * 6 + 3 : Math.random() * 4 + 2; this.color = ['#00FFFF', '#E0B0FF', '#FFFFFF'][Math.floor(Math.random() * 3)]; this.alpha = 1; this.decay = b ? .03 : .02; const a = Math.random() * Math.PI * 2, s = b ? Math.random() * 4 + 2 : Math.random() + .5; this.vx = Math.cos(a) * s; this.vy = Math.sin(a) * s } update() { this.x += this.vx; this.y += this.vy; this.alpha -= this.decay; this.size *= .96 } draw() { tCtx.save(); tCtx.globalAlpha = this.alpha; tCtx.fillStyle = this.color; tCtx.shadowBlur = 15; tCtx.shadowColor = this.color; tCtx.beginPath(); tCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); tCtx.fill(); tCtx.restore() } isAlive() { return this.alpha > 0 } }
@@ -71,7 +60,6 @@ for (let h = 1; h <= 12; h++)hS.innerHTML += `<option value="${h}">${h}시</opti
 for (let m = 0; m < 60; m++)minS.innerHTML += `<option value="${m}">${String(m).padStart(2, '0')}분</option>`;
 document.getElementById('unknownTime').onchange = e => { const t = document.getElementById('timeInputs'); t.style.opacity = e.target.checked ? '.4' : '1'; t.style.pointerEvents = e.target.checked ? 'none' : 'auto' };
 function updateTheme() { if (!curPd) return; const k = { base: 'base', love: 'love', money: 'money', work: 'work' }; document.getElementById('storyBox').innerHTML = curPd[k[curTheme]] || curPd.base; document.getElementById('adviceTxt').innerHTML = curPd.advice }
-// Advanced Saju Logic: Modifiers (Extended)
 const BRANCH_MODIFIERS = {
     '子': { k: '창의적', d: '생각이 깊고 비밀이 많음.', love: '상대방의 마음을 깊이 헤아리지만, 속마음을 잘 드러내지 않아 오해를 사기도 합니다.', money: '돈을 숨겨두는 재주가 있어 비상금을 잘 만듭니다.', work: '기획이나 아이디어 분야에서 두각을 나타냅니다.' },
     '丑': { k: '성실함', d: '묵묵히 자신의 길을 감.', love: '한번 사랑하면 끝까지 책임지려 하는 진국입니다. 다만 표현이 서툴 수 있습니다.', money: '꾸준히 저축하여 티끌 모아 태산으로 부자가 됩니다.', work: '반복적인 일도 끈기 있게 해내어 신뢰를 얻습니다.' },
@@ -86,7 +74,6 @@ const BRANCH_MODIFIERS = {
     '戌': { k: '충직함', d: '신의를 지키고 방어적임.', love: '한 사람만 바라보는 해바라기 같은 연애를 합니다.', money: '재물을 지키는 능력이 탁월하여 돈이 잘 새지 않습니다.', work: '책임감이 강하여 맡은 일은 반드시 완수합니다.' },
     '亥': { k: '지혜로움', d: '포용력이 넓고 유연함.', love: '모든 것을 이해해주고 받아주는 바다 같은 마음씨를 가졌습니다.', money: '먹을 복이 있어 살면서 돈 걱정은 크게 안 합니다.', work: '통찰력이 있어 큰 흐름을 읽는 일에 능합니다.' }
 };
-
 const SEASON_MODIFIERS = {
     '寅': '초봄의', '卯': '봄의', '辰': '늦봄의',
     '巳': '초여름의', '午': '여름의', '未': '늦여름의',
@@ -98,70 +85,114 @@ function getDetailedPersonality(stem, branch, monthBranch) {
     const base = P[stem] || P['甲'];
     const brMod = BRANCH_MODIFIERS[branch] || { k: '', d: '' };
     const season = SEASON_MODIFIERS[monthBranch] || '계절의';
-
-    // Construct dynamic personality text
     return {
         summary: `${season} ${brMod.d}`,
-        desc: `당신은 <strong>${season} 에너지</strong>를 타고난 <strong>${stem}(${ELEMENT_NAMES[EM[stem]]})</strong>입니다.<br>
-                       ${brMod.d} 성향(${brMod.k})이 더해져, ${base.base.split('.')[0]} 특징이 있습니다.`
+        desc: `당신은 <strong>${season} 에너지</strong>를 타고난 <strong>${stem}(${ELEMENT_NAMES[EM[stem]]})</strong>입니다.<br> ${brMod.d} 성향(${brMod.k})이 더해져, ${base.base.split('.')[0]} 특징이 있습니다.`
     };
 }
 
 function updateQuest() {
     if (!curDm) return;
-    // Calculate Ten Gods
     const now = new Date();
     let targetStem = '';
     let timeLabel = '';
-
-    // Using Solar/Lunar library to get current stems
-    // Note: In real app, consider strict lunar calendar logic. Here using simple conversion.
     const s = Solar.fromYmd(now.getFullYear(), now.getMonth() + 1, now.getDate());
     const l = s.getLunar();
     const bz = l.getEightChar();
-
     if (fType === 'today') {
         targetStem = bz.getDayGan().toString();
         timeLabel = "오늘의 운세";
     } else if (fType === 'week') {
-        // Saju doesn't have 'week', using Month Stem (Wol-un) as proxy for short-term flow
         targetStem = bz.getMonthGan().toString();
         timeLabel = "이번 달(주간) 운세";
     } else {
         targetStem = bz.getYearGan().toString();
         timeLabel = "올해의 운세";
     }
-
-    // Determine Relationship
-    const uEl = STEM_EL[curDm]; // User Element
-    const tEl = STEM_EL[targetStem]; // Target Element (Time)
-
+    const uEl = STEM_EL[curDm];
+    const tEl = STEM_EL[targetStem];
     let relType = '';
-
-    // Simplification: Standard 10 Gods Logic
-    // 1. Compare Element (Same, Output, Wealth, Control, Input)
-    // 2. Compare Polarity (Yin/Yang)
-
     if (uEl === tEl) relType = 'same';
-    else if (GENERATING[uEl] === tEl) relType = 'output'; // I generate -> Output (Sik-Sang)
-    else if (OVERCOMING[uEl] === tEl) relType = 'i_control'; // I overcome -> Wealth (Jae-Seong)
-    else if (OVERCOMING[tEl] === uEl) relType = 'control_me'; // It overcomes me -> Officer (Gwan-Seong)
-    else if (GENERATING[tEl] === uEl) relType = 'input'; // It generates me -> Resource (In-Seong)
-
-    // Polarity Check
+    else if (GENERATING[uEl] === tEl) relType = 'output';
+    else if (OVERCOMING[uEl] === tEl) relType = 'i_control';
+    else if (OVERCOMING[tEl] === uEl) relType = 'control_me';
+    else if (GENERATING[tEl] === uEl) relType = 'input';
     const isYang = (s) => ['甲', '丙', '戊', '庚', '壬'].includes(s);
     const samePol = isYang(curDm) === isYang(targetStem);
-
     const godKey = REL_MAP[relType][samePol ? 0 : 1];
     const god = TEN_GODS[godKey];
-
-    document.getElementById('questTxt').innerHTML = `
-                <span style="font-size:0.9rem; color:var(--cyan); display:block; margin-bottom:4px;">[${timeLabel}: ${god.name}]</span>
-                ${god.desc}<br>
-                <span style="font-size:0.8rem; color:var(--txt2); margin-top:6px; display:block;">🔑 키워드: ${god.keywords.join(', ')}</span>
-             `;
+    document.getElementById('questTxt').innerHTML = `<span style="font-size:0.9rem; color:var(--cyan); display:block; margin-bottom:4px;">[${timeLabel}: ${god.name}]</span> ${god.desc}<br> <span style="font-size:0.8rem; color:var(--txt2); margin-top:6px; display:block;">🔑 키워드: ${god.keywords.join(', ')}</span>`;
 }
-function analyze() { uName = document.getElementById('userName').value.trim() || '익명'; let y, mo, d, h, mi; const tab = document.querySelector('.tab-row button.on').dataset.tab; if (tab === 'quick') { const v = document.getElementById('quickDate').value.trim(); if (!/^\d{8}$/.test(v)) { alert('8자리 숫자로 입력!'); return } y = +v.slice(0, 4); mo = +v.slice(4, 6); d = +v.slice(6, 8) } else { y = +yS.value; mo = +mS.value; d = +dS.value } if (mo < 1 || mo > 12 || d < 1 || d > 31) { alert('날짜 확인!'); return } if (document.getElementById('unknownTime').checked) { h = 12; mi = 0 } else { const ap = document.getElementById('selAmpm').value; let hh = +hS.value; mi = +minS.value; if (ap === 'PM' && hh !== 12) hh += 12; if (ap === 'AM' && hh === 12) hh = 0; h = hh } document.getElementById('inputSection').style.display = 'none'; document.getElementById('loading').style.display = 'flex'; setTimeout(() => { try { if (typeof Solar === 'undefined') throw new Error('Solar library not loaded'); calc(y, mo, d, h, mi) } catch (e) { console.error(e); alert('죄송합니다. 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.'); location.reload() } finally { document.getElementById('loading').style.display = 'none' } }, 1500) }
+
+function analyze() {
+    uName = document.getElementById('userName').value.trim() || '익명';
+    let y, mo, d, h, mi;
+    const tab = document.querySelector('.tab-row button.on').dataset.tab;
+    if (tab === 'quick') {
+        const v = document.getElementById('quickDate').value.trim();
+        if (!/^\d{8}$/.test(v)) { alert('8자리 숫자로 입력!'); return }
+        y = +v.slice(0, 4); mo = +v.slice(4, 6); d = +v.slice(6, 8);
+    } else {
+        y = +yS.value; mo = +mS.value; d = +dS.value;
+    }
+    if (mo < 1 || mo > 12 || d < 1 || d > 31) { alert('날짜 확인!'); return }
+    if (document.getElementById('unknownTime').checked) {
+        h = 12; mi = 0;
+    } else {
+        const ap = document.getElementById('selAmpm').value;
+        let hh = +hS.value;
+        mi = +minS.value;
+        if (ap === 'PM' && hh !== 12) hh += 12;
+        if (ap === 'AM' && hh === 12) hh = 0;
+        h = hh;
+    }
+    userInput = { y, mo, d, h, mi };
+    showCardSelection();
+}
+
+function showCardSelection() {
+    document.getElementById('card-modal').style.display = 'flex';
+}
+
+function revealFortune() {
+    const { y, mo, d, h, mi } = userInput;
+    document.getElementById('inputSection').style.display = 'none';
+    document.getElementById('loading').style.display = 'flex';
+    setTimeout(() => {
+        try {
+            if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
+            calc(y, mo, d, h, mi);
+        } catch (e) {
+            console.error(e);
+            alert('죄송합니다. 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            location.reload();
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }, 1500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card-item');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            if (card.classList.contains('flipped')) return;
+            cards.forEach(c => c.style.pointerEvents = 'none');
+            card.classList.add('flipped');
+            setTimeout(() => {
+                document.getElementById('card-modal').style.display = 'none';
+                revealFortune();
+                setTimeout(() => {
+                    cards.forEach(c => {
+                        c.classList.remove('flipped');
+                        c.style.pointerEvents = 'auto';
+                    });
+                }, 1000);
+            }, 1000);
+        });
+    });
+});
+
 function calc(y, mo, d, h, mi) {
     const s = Solar.fromYmdHms(y, mo, d, h, mi, 0), l = s.getLunar(), bz = l.getEightChar();
     const yG = bz.getYearGan().toString(), yZ = bz.getYearZhi().toString();
@@ -174,7 +205,6 @@ function calc(y, mo, d, h, mi) {
     curDm = dG;
     const basePd = P[curDm] || P['甲'];
     const brMod = BRANCH_MODIFIERS[dZ] || { k: '', d: '', love: '', money: '', work: '' };
-    // Merge Base + Modifier for Dynamic Tabs
     curPd = {
         base: basePd.base + "<br><br>👉 <strong>지지의 영향 (" + dZ + "):</strong> " + brMod.d,
         love: basePd.love + "<br><br>💖 <strong>연애 스타일:</strong> " + brMod.love,
@@ -183,7 +213,6 @@ function calc(y, mo, d, h, mi) {
         advice: basePd.advice,
         mbti: basePd.mbti
     };
-    // 만세력 4기둥 렌더링
     const pillars = [
         { label: '시주', stem: tG, branch: tZ },
         { label: '일주', stem: dG, branch: dZ },
@@ -197,30 +226,21 @@ function calc(y, mo, d, h, mi) {
         pillarsHTML += `<div class="pillar"><span class="pillar-label">${pil.label}</span><div class="stem" style="background:${sC.bg};color:${sC.t}">${pil.stem}</div><div class="branch" style="background:${bC.bg};color:${bC.t}">${pil.branch}</div></div>`;
     });
     document.getElementById('pillarsBox').innerHTML = pillarsHTML;
-    document.getElementById('pillarsBox').innerHTML = pillarsHTML;
-
-    // Generate Dynamic Message
     const detail = getDetailedPersonality(dG, dZ, mZ);
     document.getElementById('sajuMsg').innerHTML = `당신의 사주를 분석한 결과, 타고난 기질은 <strong>${detail.summary} ${ELEMENT_NAMES[EM[dG]]}</strong>입니다.`;
-    // Also update the main text box with richer description if needed, or keep the specific 'storyBox' updated
-    // For now, let's update the 'storyBox' content dynamically too? 
-    // Actually, let's inject the dynamic description into the intro message for maximum effect.
     document.getElementById('sajuMsg').innerHTML += `<br><span style="font-size:0.9rem; color:var(--txt2); font-weight:normal; display:block; margin-top:8px;">${detail.desc}</span>`;
-    // 궁합: 상생상극
     const myEl = STEM_EL[curDm] || 'WOOD';
     const bestEl = GENERATING[myEl], worstEl = OVERCOMING[myEl];
     const bestStem = ELEMENT_STEM[bestEl], worstStem = ELEMENT_STEM[worstEl];
     const bestMbti = P[bestStem]?.mbti || 'ENTP', worstMbti = P[worstStem]?.mbti || 'ESTP';
     document.getElementById('bestMatch').innerHTML = `${bestStem} (${bestMbti}) - ${ELEMENT_NAMES[bestEl]}의 기운`;
     document.getElementById('worstMatch').innerHTML = `${worstStem} (${worstMbti}) - ${ELEMENT_NAMES[worstEl]}의 기운`;
-    // 기존 결과 표시
     let mn = 9, wk = 'WATER';
     for (const [k, v] of Object.entries(cnt)) if (v < mn) { mn = v; wk = k }
     document.getElementById('result').style.display = 'block';
     ['n0', 'n1', 'n2', 'n3'].forEach(id => document.getElementById(id).innerText = uName);
     document.getElementById('soulC').innerText = curDm;
     document.getElementById('soulT').innerText = curPd.mbti;
-    // document.getElementById('mbtiBadge').innerText = curPd.mbti; // Removed: element does not exist
     document.getElementById('genderBadge').innerText = gender === 'M' ? '🙋‍♂️ 남자 (양)' : '🙋‍♀️ 여자 (음)';
     curTheme = 'base';
     document.querySelectorAll('.theme-tabs button').forEach((b, i) => b.classList.toggle('on', i === 0));
@@ -234,20 +254,17 @@ function calc(y, mo, d, h, mi) {
     const lk = LK[wk], le = E[wk];
     const genderTip = gender === 'M' ? '행동력을 높여보세요' : '직관을 믿어보세요';
     document.getElementById('luckBox').innerHTML = `<div class="luck-dot" style="background:${le.c};color:${le.c}"></div><div class="luck-info"><strong>${lk.c}</strong><span>${lk.i} | ${genderTip}</span></div>`;
-    updateQuest(); // Initial update
+    updateQuest();
 
-    // Trigger Mini Popup after a delay
     setTimeout(() => {
         if (!userMbti && document.getElementById('result').style.display === 'block') {
             const popup = document.getElementById('mbtiMiniPopup');
             popup.classList.add('show');
         }
-    }, 3500); // Show popup after 3.5s reading time
+    }, 3500);
 
-    // MBTI 비교 표시 (Logic Refined) : UI Simplified
     document.getElementById('sajuMbti').innerHTML = `${curDm}`;
 
-    // Comparison Text Logic for Modal (Future use) & Soul Text
     if (userMbti) {
         let cTxt = "";
         if (curPd.mbti === userMbti) {
@@ -263,19 +280,16 @@ function calc(y, mo, d, h, mi) {
         document.getElementById('soulT').innerHTML = cTxt;
 
     } else {
-        // Reset comparison text
         document.getElementById('soulT').innerHTML = "";
     }
 }
-
-// MBTI Test Logic
 const questions = [
     { t: "EI", q: "친구가 갑자기 '지금 나와!'라고 한다면?", a: [{ t: "E", v: "오 꿀잼ㅋ 바로 나감" }, { t: "I", v: "아... 기 빨리는데 핑계 댈까?" }] },
     { t: "EI", q: "파티에서 모르는 사람이 말을 걸면?", a: [{ t: "E", v: "오 반가워요! (바로 인스타 맞팔)" }, { t: "I", v: "(어색한 미소) 아 예... (도망갈 각 잰다)" }] },
     { t: "EI", q: "일주일 동안 집 밖에 안 나가기 가능?", a: [{ t: "E", v: "절대 불가. 벽이랑 대화할 듯" }, { t: "I", v: "천국 아님? 넷플릭스 정주행 개꿀" }] },
 
     { t: "SN", q: "멍 때릴 때 무슨 생각 해?", a: [{ t: "S", v: "배고프다, 저녁 뭐 먹지" }, { t: "N", v: "좀비가 나타나면 어디로 튀지?" }] },
-    { t: "SN", q: "여행 갈 때 계획은?", a: [{ t: "S", v: "맛집 리스트, 동선 체크 완벽" }, { t: "N", v: "일단 가서 느낌 오는 대로~" }] }, // This is actually J/P usually but fitting S/N context of concrete vs abstract
+    { t: "SN", q: "여행 갈 때 계획은?", a: [{ t: "S", v: "맛집 리스트, 동선 체크 완벽" }, { t: "N", v: "일단 가서 느낌 오는 대로~" }] },
     { t: "SN", q: "영화를 볼 때 더 중요한 건?", a: [{ t: "S", v: "배우 연기, 영상미, 현실 고증" }, { t: "N", v: "숨겨진 의미, 감독의 메시지, 세계관" }] },
 
     { t: "TF", q: "친구가 차 사고 났다고 전화하면?", a: [{ t: "T", v: "보험 불렀어? 다친 덴 없고?" }, { t: "F", v: "헐 괜찮아??! 많이 놀랐지 ㅠㅠ" }] },
@@ -304,40 +318,33 @@ const MBTI_DESC = {
     'ENFP': "댕댕이 인간형. 리액션 혜자. 금사빠. 감정 기복 롤러코스터. 머릿속에 꽃밭 있음. 뒷마무리 안 됨.",
     'ENTP': "논쟁 즐기는 변태. 남 골탕 먹이는 거 좋아함. 아이디어 뱅크. 고집 셈. 자기애 폭발.",
     'ESTJ': "젊은 꼰대. 일 중독자. 감정팔이 극혐. 리더 하고 싶어 함. 잔소리 대마왕. 융통성 제로.",
-    'ESFJ': "오지랖 대마왕. 남 챙기는 게 낙. 칭찬 안 해주면 삐짐. 뒷담화 좋아함. 분위기 못 맞추면 못 참음.",
+    'ESFJ': "오지ap 대마왕. 남 챙기는 게 낙. 칭찬 안 해주면 삐짐. 뒷담화 좋아함. 분위기 못 맞추면 못 참음.",
     'ENFJ': "평화주의자. 남들 싸우면 말려야 함. 오글거리는 멘트 장인. 멘탈 약함. 남 돕다가 내 코가 석자.",
     'ENTJ': "독재자 기질. 일 못하는 사람 극혐. 목표 달성 위해선 수단 방법 안 가림. 워커홀릭. 공감 능력 부족."
 };
 
 function startMbtiTest() {
-    // 정보 입력 확인 Logic 추가
     const name = document.getElementById('userName').value.trim();
     if (!name) {
         alert('이름을 먼저 입력해주세요! 😅');
         document.getElementById('userName').focus();
         return;
     }
-
     const tab = document.querySelector('.tab-row button.on').dataset.tab;
     let isValidDate = false;
-
     if (tab === 'quick') {
         const v = document.getElementById('quickDate').value.trim();
         if (/^\d{8}$/.test(v)) {
             isValidDate = true;
         }
     } else {
-        // Detail tab validation generally assumed valid via selects, but good to check context
         isValidDate = true;
     }
-
     if (!isValidDate) {
         alert('생년월일을 먼저 입력해주세요! 📅');
         if (tab === 'quick') document.getElementById('quickDate').focus();
         return;
     }
-
-    // 모든 정보가 있으면 테스트 시작
     document.getElementById('mbtiModal').style.display = 'flex';
     qIdx = 0;
     scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
@@ -383,11 +390,8 @@ function finishTest() {
         (scores.J >= scores.P ? 'J' : 'P');
     userMbti = r;
     document.getElementById('mbtiModal').style.display = 'none';
-
-    // Show Result Modal
     const desc = MBTI_DESC[r] || "알 수 없는 유형";
     let compMsg = "";
-
     if (curPd) {
         const sajuM = curPd.mbti;
         if (sajuM) {
@@ -400,13 +404,10 @@ function finishTest() {
     } else {
         compMsg = "사주 결과를 먼저 보면 비교 분석도 해드려요!";
     }
-
     document.getElementById('resMbtiTitle').innerText = r;
     document.getElementById('resMbtiDesc').innerText = desc;
     document.getElementById('resCompareTxt').innerHTML = compMsg;
     document.getElementById('mbtiResultModal').style.display = 'flex';
-
-    // Update Main Result View if visible
     if (document.getElementById('result').style.display === 'block') {
         analyze();
     }
@@ -415,4 +416,4 @@ function finishTest() {
 function closeMbtiResult() {
     document.getElementById('mbtiResultModal').style.display = 'none';
 }
-function shareKakao() { if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) { alert('카카오 SDK 초기화 필요'); return } Kakao.Share.sendDefault({ objectType: 'feed', content: { title: `${uName}님의 영혼 캐릭터는 [${curDm}]!`, description: curPd ? curPd.mbti + ' - ' + curPd.base.slice(0, 40) + '...' : '사주 분석 해보세요!', imageUrl: 'https://choiseokhee4u-svg.github.io/Saju_TheMoon/images/Fire.png', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/Saju_TheMoon/', webUrl: 'https://choiseokhee4u-svg.github.io/Saju_TheMoon/' } }, buttons: [{ title: '내 운명 확인하기', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/Saju_TheMoon/', webUrl: 'https://choiseokhee4u-svg.github.io/Saju_TheMoon/' } }] }) }
+function shareKakao() { if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) { alert('카카오 SDK 초기화 필요'); return } Kakao.Share.sendDefault({ objectType: 'feed', content: { title: `${uName}님의 영혼 캐릭터는 [${curDm}]!`, description: curPd ? curPd.mbti + ' - ' + curPd.base.slice(0, 40) + '...' : '사주 분석 해보세요!', imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }, buttons: [{ title: '내 운명 확인하기', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }] }) }
