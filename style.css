@@ -59,25 +59,16 @@ body {
 
 /* --- New Layout Styles --- */
 #main-layout {
-    display: flex;
-    max-width: 1400px; /* Wider layout */
+    max-width: 800px; /* Centered, single column layout */
     margin: 0 auto;
     padding: 24px 16px;
-    gap: 30px; /* Spacing between columns */
 }
 
 #main-content {
-    flex: 2; /* Main content takes 2/3 of space */
-    min-width: 0; /* Allow content to shrink */
+    width: 100%; /* Take full width of the parent */
 }
 
-#sidebar {
-    flex: 1; /* Sidebar takes 1/3 of space */
-    min-width: 0; /* Allow content to shrink */
-    display: flex; /* Flex container for sidebar sections */
-    flex-direction: column;
-    gap: 20px; /* Spacing between sidebar sections */
-}
+
 
 .wrap {
     max-width: none; /* Remove previous max-width to allow flex to control */
@@ -85,11 +76,7 @@ body {
     padding: 0 0 50px 0; /* Adjust padding for main content flow */
 }
 
-/* Cards within sidebar should also have card styling */
-.disqus-section, .contact-form-section {
-    margin-top: 0 !important; /* Reset specific margin */
-    margin-bottom: 0 !important; /* Reset specific margin */
-}
+
 
 
 .card {
