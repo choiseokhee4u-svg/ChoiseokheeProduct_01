@@ -106,11 +106,11 @@ h1 {
 }
 
 #card-modal-content { perspective: 1500px; }
-#card-container { display: flex; gap: 30px; }
+#card-container { display: flex; gap: 30px; justify-content: center; }
 
 .card-item {
-    width: 150px;
-    height: 220px;
+    width: 200px;
+    height: 300px;
     cursor: pointer;
     opacity: 0;
     transform: translateY(100px);

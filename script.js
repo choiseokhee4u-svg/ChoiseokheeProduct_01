@@ -147,19 +147,26 @@ function analyze() {
         h = hh;
     }
     userInput = { y, mo, d, h, mi };
-    document.getElementById('bgVideo').classList.add('visible');
-    setTimeout(showCardSelection, 500);
+    
+    const videoModal = document.getElementById('result-video-modal');
+    const resultVideo = document.getElementById('resultVideo');
+    videoModal.style.display = 'flex';
+    resultVideo.play();
+
+    resultVideo.onended = () => {
+        videoModal.style.display = 'none';
+        showCardSelection();
+    };
 }
 
 function showCardSelection() {
     const cardModal = document.getElementById('card-modal');
-    const cards = cardModal.querySelectorAll('.card-item');
+    const card = cardModal.querySelector('.card-item');
     cardModal.style.display = 'flex';
-    cards.forEach((card, index) => {
-        setTimeout(() => {
-            card.classList.add('popped');
-        }, index * 200);
-    });
+    
+    setTimeout(() => {
+        card.classList.add('popped');
+    }, 100);
 }
 
 function revealFortune() {
@@ -169,7 +176,6 @@ function revealFortune() {
 
     setTimeout(() => {
         document.getElementById('inputSection').style.display = 'none';
-        document.getElementById('card-modal').style.display = 'none';
         
         try {
             if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
@@ -188,26 +194,27 @@ function revealFortune() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.card-item');
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            if (card.classList.contains('flipped')) return;
-            cards.forEach(c => c.style.pointerEvents = 'none');
-            card.classList.add('flipped');
-            setTimeout(revealFortune, 1200);
-        });
+    const card = document.querySelector('#card-modal .card-item');
+    card.addEventListener('click', () => {
+        if (card.classList.contains('flipped')) return;
+        
+        card.style.pointerEvents = 'none';
+        card.classList.add('flipped');
+        
+        setTimeout(() => {
+            document.getElementById('card-modal').style.display = 'none';
+            revealFortune();
+        }, 2000);
     });
 
-    // Reset cards for next round (optional, can be done when '다시하기' is clicked)
     document.querySelector('.reset').addEventListener('click', () => {
-        const cards = document.querySelectorAll('.card-item');
-        cards.forEach(c => {
-            c.classList.remove('flipped', 'popped');
-            c.style.pointerEvents = 'auto';
-        });
+        const card = document.querySelector('#card-modal .card-item');
+        card.classList.remove('flipped', 'popped');
+        card.style.pointerEvents = 'auto';
         document.getElementById('bgVideo').classList.remove('visible');
     });
 });
+
 
 function calc(y, mo, d, h, mi) {
     const s = Solar.fromYmdHms(y, mo, d, h, mi, 0), l = s.getLunar(), bz = l.getEightChar();
