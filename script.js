@@ -147,29 +147,44 @@ function analyze() {
         h = hh;
     }
     userInput = { y, mo, d, h, mi };
-    showCardSelection();
+    document.getElementById('bgVideo').classList.add('visible');
+    setTimeout(showCardSelection, 500);
 }
 
 function showCardSelection() {
-    document.getElementById('card-modal').style.display = 'flex';
+    const cardModal = document.getElementById('card-modal');
+    const cards = cardModal.querySelectorAll('.card-item');
+    cardModal.style.display = 'flex';
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('popped');
+        }, index * 200);
+    });
 }
 
 function revealFortune() {
     const { y, mo, d, h, mi } = userInput;
-    document.getElementById('inputSection').style.display = 'none';
-    document.getElementById('loading').style.display = 'flex';
+    const transitionOverlay = document.getElementById('transition-overlay');
+    transitionOverlay.classList.add('visible');
+
     setTimeout(() => {
+        document.getElementById('inputSection').style.display = 'none';
+        document.getElementById('card-modal').style.display = 'none';
+        
         try {
             if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
             calc(y, mo, d, h, mi);
+            document.getElementById('result').style.display = 'block';
         } catch (e) {
             console.error(e);
             alert('죄송합니다. 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
             location.reload();
         } finally {
-            document.getElementById('loading').style.display = 'none';
+            setTimeout(() => {
+                transitionOverlay.classList.remove('visible');
+            }, 300);
         }
-    }, 1500);
+    }, 600);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -179,17 +194,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (card.classList.contains('flipped')) return;
             cards.forEach(c => c.style.pointerEvents = 'none');
             card.classList.add('flipped');
-            setTimeout(() => {
-                document.getElementById('card-modal').style.display = 'none';
-                revealFortune();
-                setTimeout(() => {
-                    cards.forEach(c => {
-                        c.classList.remove('flipped');
-                        c.style.pointerEvents = 'auto';
-                    });
-                }, 1000);
-            }, 1000);
+            setTimeout(revealFortune, 1200);
         });
+    });
+
+    // Reset cards for next round (optional, can be done when '다시하기' is clicked)
+    document.querySelector('.reset').addEventListener('click', () => {
+        const cards = document.querySelectorAll('.card-item');
+        cards.forEach(c => {
+            c.classList.remove('flipped', 'popped');
+            c.style.pointerEvents = 'auto';
+        });
+        document.getElementById('bgVideo').classList.remove('visible');
     });
 });
 
@@ -237,7 +253,6 @@ function calc(y, mo, d, h, mi) {
     document.getElementById('worstMatch').innerHTML = `${worstStem} (${worstMbti}) - ${ELEMENT_NAMES[worstEl]}의 기운`;
     let mn = 9, wk = 'WATER';
     for (const [k, v] of Object.entries(cnt)) if (v < mn) { mn = v; wk = k }
-    document.getElementById('result').style.display = 'block';
     ['n0', 'n1', 'n2', 'n3'].forEach(id => document.getElementById(id).innerText = uName);
     document.getElementById('soulC').innerText = curDm;
     document.getElementById('soulT').innerText = curPd.mbti;
@@ -255,16 +270,13 @@ function calc(y, mo, d, h, mi) {
     const genderTip = gender === 'M' ? '행동력을 높여보세요' : '직관을 믿어보세요';
     document.getElementById('luckBox').innerHTML = `<div class="luck-dot" style="background:${le.c};color:${le.c}"></div><div class="luck-info"><strong>${lk.c}</strong><span>${lk.i} | ${genderTip}</span></div>`;
     updateQuest();
-
     setTimeout(() => {
         if (!userMbti && document.getElementById('result').style.display === 'block') {
             const popup = document.getElementById('mbtiMiniPopup');
             popup.classList.add('show');
         }
     }, 3500);
-
     document.getElementById('sajuMbti').innerHTML = `${curDm}`;
-
     if (userMbti) {
         let cTxt = "";
         if (curPd.mbti === userMbti) {
@@ -278,18 +290,19 @@ function calc(y, mo, d, h, mi) {
             }
         }
         document.getElementById('soulT').innerHTML = cTxt;
-
     } else {
         document.getElementById('soulT').innerHTML = "";
     }
 }
+// (이하 MBTI 및 공유 로직은 기존과 동일)
+// ...
 const questions = [
     { t: "EI", q: "친구가 갑자기 '지금 나와!'라고 한다면?", a: [{ t: "E", v: "오 꿀잼ㅋ 바로 나감" }, { t: "I", v: "아... 기 빨리는데 핑계 댈까?" }] },
     { t: "EI", q: "파티에서 모르는 사람이 말을 걸면?", a: [{ t: "E", v: "오 반가워요! (바로 인스타 맞팔)" }, { t: "I", v: "(어색한 미소) 아 예... (도망갈 각 잰다)" }] },
     { t: "EI", q: "일주일 동안 집 밖에 안 나가기 가능?", a: [{ t: "E", v: "절대 불가. 벽이랑 대화할 듯" }, { t: "I", v: "천국 아님? 넷플릭스 정주행 개꿀" }] },
 
     { t: "SN", q: "멍 때릴 때 무슨 생각 해?", a: [{ t: "S", v: "배고프다, 저녁 뭐 먹지" }, { t: "N", v: "좀비가 나타나면 어디로 튀지?" }] },
-    { t: "SN", q: "여행 갈 때 계획은?", a: [{ t: "S", v: "맛집 리스트, 동선 체크 완벽" }, { t: "N", v: "일단 가서 느낌 오는 대로~" }] },
+    { t: "SN", q: "여행 갈 때 계획은?", a: [{ t: "S", v: "맛집 리스트, 동선 체크 완벽" }, { t: "N", v: "일단 가서 느낌 오는 대로~" }] }, // This is actually J/P usually but fitting S/N context of concrete vs abstract
     { t: "SN", q: "영화를 볼 때 더 중요한 건?", a: [{ t: "S", v: "배우 연기, 영상미, 현실 고증" }, { t: "N", v: "숨겨진 의미, 감독의 메시지, 세계관" }] },
 
     { t: "TF", q: "친구가 차 사고 났다고 전화하면?", a: [{ t: "T", v: "보험 불렀어? 다친 덴 없고?" }, { t: "F", v: "헐 괜찮아??! 많이 놀랐지 ㅠㅠ" }] },
