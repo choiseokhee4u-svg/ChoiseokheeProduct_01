@@ -173,6 +173,7 @@ function revealFortune() {
     const { y, mo, d, h, mi } = userInput;
     const transitionOverlay = document.getElementById('transition-overlay');
     transitionOverlay.classList.add('visible');
+    window.scrollTo(0, 0);
 
     setTimeout(() => {
         document.getElementById('inputSection').style.display = 'none';
