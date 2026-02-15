@@ -146,76 +146,25 @@ function analyze() {
         if (ap === 'AM' && hh === 12) hh = 0;
         h = hh;
     }
-    userInput = { y, mo, d, h, mi };
     
-    const videoModal = document.getElementById('result-video-modal');
-    const resultVideo = document.getElementById('resultVideo');
-    videoModal.style.display = 'flex';
-    resultVideo.play();
-
-    resultVideo.onended = () => {
-        videoModal.style.display = 'none';
-        showCardSelection();
-    };
-}
-
-function showCardSelection() {
-    const cardModal = document.getElementById('card-modal');
-    const card = cardModal.querySelector('.card-item');
-    cardModal.style.display = 'flex';
+    document.getElementById('inputSection').style.display = 'none';
+    document.getElementById('loading').style.display = 'flex';
     
     setTimeout(() => {
-        card.classList.add('popped');
-    }, 100);
-}
-
-function revealFortune() {
-    const { y, mo, d, h, mi } = userInput;
-    const transitionOverlay = document.getElementById('transition-overlay');
-    transitionOverlay.classList.add('visible');
-    window.scrollTo(0, 0);
-
-    setTimeout(() => {
-        document.getElementById('inputSection').style.display = 'none';
-        
         try {
             if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
             calc(y, mo, d, h, mi);
+            document.getElementById('loading').style.display = 'none';
             document.getElementById('result').style.display = 'block';
+            window.scrollTo(0, 0);
         } catch (e) {
             console.error(e);
+            document.getElementById('loading').style.display = 'none';
             alert('죄송합니다. 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
             location.reload();
-        } finally {
-            setTimeout(() => {
-                transitionOverlay.classList.remove('visible');
-            }, 300);
         }
-    }, 600);
+    }, 1000);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const card = document.querySelector('#card-modal .card-item');
-    card.addEventListener('click', () => {
-        if (card.classList.contains('flipped')) return;
-        
-        card.style.pointerEvents = 'none';
-        card.classList.add('flipped');
-        
-        setTimeout(() => {
-            document.getElementById('card-modal').style.display = 'none';
-            revealFortune();
-        }, 2000);
-    });
-
-    document.querySelector('.reset').addEventListener('click', () => {
-        const card = document.querySelector('#card-modal .card-item');
-        card.classList.remove('flipped', 'popped');
-        card.style.pointerEvents = 'auto';
-        document.getElementById('bgVideo').classList.remove('visible');
-    });
-});
-
 
 function calc(y, mo, d, h, mi) {
     const s = Solar.fromYmdHms(y, mo, d, h, mi, 0), l = s.getLunar(), bz = l.getEightChar();

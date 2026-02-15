@@ -99,65 +99,7 @@ h1 {
 }
 .sub { text-align: center; color: var(--txt2); font-size: .9rem; margin-bottom: 25px; }
 
-/* --- Card Selection Modal --- */
-@keyframes card-popup {
-    0% { transform: translateY(100px) scale(0.8); opacity: 0; }
-    100% { transform: translateY(0) scale(1); opacity: 1; }
-}
 
-#card-modal-content { perspective: 1500px; }
-#card-container { display: flex; gap: 30px; justify-content: center; }
-
-.card-item {
-    width: 200px;
-    height: 300px;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(100px);
-}
-.card-item.popped { animation: card-popup 0.5s forwards; }
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.card-item.flipped .card-inner { transform: rotateY(180deg); }
-
-.card-back, .card-front {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    background-size: cover;
-    background-position: center;
-}
-
-.card-back {
-    /* 기존 스타일 주석 처리 */
-    /* background: linear-gradient(135deg, var(--accent), var(--cyan)); */
-    /* border: 3px solid #fff; */
-    /* content: '🌙'; */
-    
-    /* 사용자 이미지 사용 (파일을 images/Saju_BackCard.png 경로에 넣어주세요) */
-    background-image: url('images/Saju_BackCard.png');
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-.card-front {
-    /* 기존 스타일 주석 처리 */
-    /* background: linear-gradient(135deg, var(--yellow), var(--pink)); */
-
-    /* 사용자 이미지 사용 (파일을 images/Saju_FrontCard.png 경로에 넣어주세요) */
-    background-image: url('images/Saju_FrontCard.png');
-    transform: rotateY(180deg);
-}
 
 /* 나머지 CSS는 생략... 기존과 동일 */
 /* ... (이하 모든 기존 CSS 내용) ... */
