@@ -1,1 +1,922 @@
-/* Add styles here */
+:root {
+    --bg: #0f172a;
+    --glass: rgba(15, 23, 42, 0.88);
+    --border: rgba(255, 255, 255, 0.1);
+    --txt: #f0f4ff;
+    --txt2: #94a3b8;
+    --accent: #a855f7;
+    --pink: #ff6b9d;
+    --cyan: #00f5d4;
+    --yellow: #ffd166
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--txt);
+    min-height: 100vh;
+    line-height: 1.75
+}
+
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    z-index: -3;
+    opacity: 0.55;
+    mix-blend-mode: screen
+}
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    z-index: -2
+}
+
+#trailCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none
+}
+
+.wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px 16px 50px
+}
+
+.card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 18px;
+    margin-bottom: 14px
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--pink), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px
+}
+
+.sub {
+    text-align: center;
+    color: var(--txt2);
+    font-size: .85rem;
+    margin-bottom: 20px
+}
+
+.sec-title {
+    font-size: .95rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px
+}
+
+.sec-title .nm {
+    color: var(--cyan)
+}
+
+.sec-title .sub-t {
+    font-size: .65rem;
+    color: #9ca3af;
+    font-weight: 400;
+    margin-left: 8px
+}
+
+.fortune-sel {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px
+}
+
+.fortune-sel button {
+    flex: 1;
+    padding: 10px 6px;
+    border: 2px solid var(--border);
+    background: rgba(0, 0, 0, .3);
+    color: var(--txt2);
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: .2s
+}
+
+.fortune-sel button.on {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: rgba(0, 245, 212, .1)
+}
+
+.gender-sel {
+    display: flex;
+    gap: 8px
+}
+
+.gender-sel button {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--border);
+    background: rgba(0, 0, 0, .3);
+    color: var(--txt2);
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: .2s
+}
+
+.gender-sel button.on {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(168, 85, 247, .15)
+}
+
+.form-g {
+    margin-bottom: 14px
+}
+
+.form-g label {
+    display: block;
+    font-size: .8rem;
+    color: var(--txt2);
+    margin-bottom: 6px
+}
+
+.form-g input,
+.form-g select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, .4);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--txt);
+    font-size: .95rem
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px
+}
+
+.tab-row {
+    display: flex;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 8px;
+    padding: 3px;
+    margin-bottom: 14px
+}
+
+.tab-row button {
+    flex: 1;
+    padding: 9px;
+    border: none;
+    background: 0;
+    color: var(--txt2);
+    font-size: .8rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: .2s
+}
+
+.tab-row button.on {
+    background: var(--accent);
+    color: #fff
+}
+
+.tab-c {
+    display: none
+}
+
+.tab-c.on {
+    display: block
+}
+
+.chk-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px
+}
+
+.chk-row input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent)
+}
+
+.chk-row label {
+    color: var(--txt2);
+    font-size: .8rem
+}
+
+.submit {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, var(--pink), var(--accent));
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .97);
+    z-index: 999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.ld {
+    width: 44px;
+    height: 44px;
+    border: 3px solid rgba(0, 245, 212, .2);
+    border-top-color: var(--cyan);
+    border-radius: 50%;
+    animation: sp 1s linear infinite
+}
+
+@keyframes sp {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+#result {
+    display: none
+}
+
+.hero {
+    text-align: center;
+    padding: 16px 0
+}
+
+.soul-c {
+    font-size: 3.5rem;
+    filter: drop-shadow(0 0 25px var(--yellow));
+    margin: 8px 0
+}
+
+.soul-t {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--pink);
+    margin-bottom: 8px
+}
+
+.mbti-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, var(--cyan), var(--accent));
+    border-radius: 20px;
+    font-size: .8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px
+}
+
+.theme-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px
+}
+
+.theme-tabs button {
+    flex: 1;
+    padding: 10px 4px;
+    border: 2px solid var(--border);
+    background: rgba(0, 0, 0, .3);
+    color: var(--txt2);
+    font-size: .7rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: .2s
+}
+
+.theme-tabs button.on {
+    border-color: var(--pink);
+    color: var(--pink);
+    background: rgba(255, 107, 157, .1)
+}
+
+.story {
+    color: var(--txt);
+    font-size: .92rem;
+    line-height: 1.9
+}
+
+.advice-box {
+    background: linear-gradient(135deg, rgba(255, 107, 157, .1), rgba(168, 85, 247, .1));
+    border: 1px solid var(--pink);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 14px
+}
+
+.advice-t {
+    color: var(--pink);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: .9rem
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 8px
+}
+
+.stat-row img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain
+}
+
+.stat-track {
+    flex: 1;
+    height: 9px;
+    background: rgba(0, 0, 0, .4);
+    border-radius: 5px;
+    overflow: hidden
+}
+
+.stat-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 5px;
+    transition: width 1.2s
+}
+
+.stat-n {
+    width: 22px;
+    text-align: right;
+    font-weight: 700;
+    font-size: .85rem
+}
+
+.luck-box {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 10px
+}
+
+.luck-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 16px currentColor
+}
+
+.luck-info strong {
+    display: block;
+    color: var(--yellow);
+    margin-bottom: 3px;
+    font-size: .85rem
+}
+
+.luck-info span {
+    color: var(--txt2);
+    font-size: .8rem
+}
+
+.quest-box {
+    background: linear-gradient(135deg, rgba(0, 245, 212, .1), rgba(96, 165, 250, .1));
+    border: 1px solid var(--cyan);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 12px
+}
+
+.quest-t {
+    color: var(--cyan);
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-size: .85rem
+}
+
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px
+}
+
+.reset {
+    flex: 1;
+    padding: 12px;
+    background: rgba(0, 0, 0, .4);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--txt2);
+    font-size: .9rem;
+    cursor: pointer
+}
+
+.kakao-btn {
+    flex: 1;
+    padding: 12px;
+    background: #FEE500;
+    border: none;
+    border-radius: 10px;
+    color: #3C1E1E;
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px
+}
+
+.ad {
+    margin-top: 18px;
+    padding: 24px;
+    background: rgba(0, 0, 0, .2);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    text-align: center;
+    color: var(--txt2);
+    font-size: .75rem
+}
+
+.encyclopedia {
+    margin-top: 40px
+}
+
+.encyclopedia h2 {
+    font-size: 1.2rem;
+    color: var(--cyan);
+    margin-bottom: 20px;
+    text-align: center
+}
+
+.enc-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 12px
+}
+
+.enc-card h3 {
+    color: var(--pink);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+.enc-card h3 span {
+    font-size: 1.5rem
+}
+
+.enc-card p {
+    color: var(--txt2);
+    font-size: .85rem;
+    line-height: 1.8
+}
+
+.pillars {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 16px 0
+}
+
+.pillar {
+    text-align: center;
+    min-width: 60px
+}
+
+.pillar-label {
+    font-size: .7rem;
+    color: var(--txt2);
+    margin-bottom: 6px;
+    display: block
+}
+
+.stem,
+.branch {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-radius: 8px;
+    margin: 0 auto 4px
+}
+
+.saju-msg {
+    text-align: center;
+    color: var(--cyan);
+    font-size: .85rem;
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(0, 245, 212, .1);
+    border-radius: 8px
+}
+
+.chemistry-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.chemistry-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 12px
+}
+
+.chemistry-item.best {
+    background: linear-gradient(135deg, rgba(0, 245, 212, .15), rgba(96, 165, 250, .15));
+    border: 1px solid var(--cyan)
+}
+
+.chemistry-item.worst {
+    background: linear-gradient(135deg, rgba(239, 68, 68, .15), rgba(168, 85, 247, .15));
+    border: 1px solid var(--pink)
+}
+
+.chemistry-item .emoji {
+    font-size: 1.8rem
+}
+
+.chemistry-info strong {
+    display: block;
+    font-size: .85rem;
+    margin-bottom: 4px
+}
+
+.chemistry-item.best strong {
+    color: var(--cyan)
+}
+
+.chemistry-item.worst strong {
+    color: var(--pink)
+}
+
+.chemistry-info p {
+    color: var(--txt2);
+    font-size: .8rem;
+    margin: 0
+}
+
+/* MBTI Test Modal */
+#mbtiModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9999;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.mbti-header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.mbti-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--txt2);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.mbti-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.mbti-bar {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.q-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.q-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.opt-btn {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--txt);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.opt-btn:hover,
+.opt-btn:active {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: var(--accent);
+}
+
+/* Action Buttons Layout */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.submit {
+    flex: 1;
+    margin-top: 0;
+    /* Let flex container handle spacing */
+}
+
+.mbti-start-btn {
+    flex: 1;
+    padding: 14px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.9rem;
+}
+
+/* MBTI Result Modal */
+#mbtiResultModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.95);
+    z-index: 10000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.mbti-res-card {
+    background: var(--glass);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.res-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.res-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+}
+
+.res-desc {
+    color: var(--txt);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: left;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 14px;
+    border-radius: 12px;
+}
+
+.res-compare {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    font-size: 0.9rem;
+    color: var(--txt2);
+}
+
+/* MBTI Mini Popup */
+.mini-popup {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--cyan);
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 -5px 20px rgba(0, 245, 212, 0.3);
+    z-index: 990;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 90%;
+    max-width: 360px;
+}
+
+.mini-popup.show {
+    bottom: 20px;
+}
+
+.mini-btn {
+    background: var(--cyan);
+    color: #0f172a;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.mini-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--txt2);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* Floating Blog Button */
+.floating-blog-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--cyan), var(--accent));
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+    animation: floatBtn 3s ease-in-out infinite;
+}
+
+.floating-blog-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+}
+
+.floating-blog-btn::after {
+    content: "칼럼";
+    position: absolute;
+    bottom: -22px;
+    color: var(--txt);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.floating-blog-btn span {
+    font-size: 1.8rem;
+}
+
+@keyframes floatBtn {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@media (max-width: 600px) {
+    .floating-blog-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .floating-blog-btn span {
+        font-size: 1.5rem;
+    }
+}
