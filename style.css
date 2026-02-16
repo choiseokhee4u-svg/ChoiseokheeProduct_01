@@ -524,10 +524,11 @@ h1 {
     gap: 10px; /* Slightly more gap */
 }
 
-.stat-row img {
-    width: 30px; /* Larger icon */
-    height: 30px;
-    object-fit: contain;
+.stat-row .element-icon {
+    font-size: 1.8rem;
+    width: 30px;
+    text-align: center;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
 }
 
 .stat-track {

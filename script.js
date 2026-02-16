@@ -91,7 +91,7 @@ const REL_MAP = {
     i_control: ['Pyeon-jae', 'Jeong-jae'],
     input: ['Pyeon-in', 'Jeong-in']
 };
-const E = { WOOD: { img: 'images/Wood.png', c: '#4ade80' }, FIRE: { img: 'images/Fire.png', c: '#f87171' }, EARTH: { img: 'images/Earth.png', c: '#fbbf24' }, METAL: { img: 'images/Metal.png', c: '#e2e8f0' }, WATER: { img: 'images/Water.png', c: '#60a5fa' } };
+const E = { WOOD: { img: '🌳', c: '#4ade80' }, FIRE: { img: '🔥', c: '#f87171' }, EARTH: { img: '⛰️', c: '#fbbf24' }, METAL: { img: '🔔', c: '#e2e8f0' }, WATER: { img: '🌊', c: '#60a5fa' } };
 const EM = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER', '寅': 'WOOD', '卯': 'WOOD', '巳': 'FIRE', '午': 'FIRE', '辰': 'EARTH', '戌': 'EARTH', '丑': 'EARTH', '未': 'EARTH', '申': 'METAL', '酉': 'METAL', '亥': 'WATER', '子': 'WATER' };
 const LK = { WOOD: { c: '🌿 그린/민트', i: '식물, 동쪽 산책' }, FIRE: { c: '🔴 레드/퍼플', i: '캔들, 햇빛' }, EARTH: { c: '🟡 옐로우', i: '도자기' }, METAL: { c: '⚪ 화이트/실버', i: '쥬얼리' }, WATER: { c: '🔵 블랙/네이비', i: '물 많이 마시기' } };
 const STEM_EL = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER' };
@@ -267,16 +267,22 @@ function calc(y, mo, d, h, mi) {
     let mn = 9, wk = 'WATER';
     for (const [k, v] of Object.entries(cnt)) if (v < mn) { mn = v; wk = k }
     ['n0', 'n1', 'n2', 'n3'].forEach(id => document.getElementById(id).innerText = uName);
+    
+    document.querySelector('.hero .sec-title').innerHTML = `✨ <span class="nm" id="n1">${uName}</span>님의 신령님이 점지한 너의 본체`;
     document.getElementById('soulC').innerText = curDm;
     document.getElementById('soulT').innerText = "";
     document.getElementById('genderBadge').innerText = gender === 'M' ? '🙋‍♂️ 남자 (양)' : '🙋‍♀️ 여자 (음)';
     curTheme = 'base';
     document.querySelectorAll('.theme-tabs button').forEach((b, i) => b.classList.toggle('on', i === 0));
     updateTheme();
+    
+    const statCard = document.getElementById('statChart').parentElement;
+    statCard.querySelector('.sec-title').innerHTML = `📜 <span class="nm" id="n2">${uName}</span>님의 신령님이 내려주신 오행 기운`;
+    
     const ch = document.getElementById('statChart'); ch.innerHTML = '';
     ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'].forEach(k => {
         const e = E[k], c = cnt[k], pc = (c / 8) * 100;
-        ch.innerHTML += `<div class="stat-row"><img src="${e.img}" alt="${ELEMENT_NAMES[k]}"><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
+        ch.innerHTML += `<div class="stat-row"><span class="element-icon">${e.img}</span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
     });
     setTimeout(() => document.querySelectorAll('.stat-fill').forEach(b => b.style.width = b.dataset.w), 100);
     const lk = LK[wk], le = E[wk];
