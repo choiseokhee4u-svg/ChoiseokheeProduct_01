@@ -1155,3 +1155,27 @@ h1 {
         bottom: -20px;
     }
 }
+
+.lang-switcher {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+    display: flex;
+    gap: 5px;
+}
+
+.lang-switcher button {
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.lang-switcher button.active {
+    background: white;
+    color: black;
+}

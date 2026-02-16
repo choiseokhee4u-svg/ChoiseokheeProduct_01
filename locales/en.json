@@ -1,0 +1,184 @@
+{
+    "site_title": "Divine Oracle: The Moon's Shrine - Destiny Revealed by a Child Spirit",
+    "site_description": "A renowned shaman's house, The Moon's Shrine, where a child spirit reveals your destiny, ancestral issues, and curses through divine messages. Pioneer your destiny through rituals and secret remedies.",
+    "og_title": "Divine Oracle: The Moon's Shrine",
+    "og_description": "The miraculous messages from the child spirit! Discover your destiny, ancestral problems, and curses right now.",
+
+    "scroll_down": "Scroll Down",
+
+    "main_title": "🌙 Divine Oracle: The Moon's Shrine",
+    "sub_title": "Your destiny, as told by the divine message of the child spirit",
+    "name_label": "📛 Name/Nickname",
+    "name_placeholder": "ex) Lucky Mike",
+    "gender_label": "👤 Gender",
+    "male": "🙋‍♂️ Male",
+    "female": "🙋‍♀️ Female",
+    "fortune_today": "⚡Today",
+    "fortune_week": "📅This Week",
+    "fortune_year": "🚀This Year",
+    "quick_input": "⚡Quick Input",
+    "detail_input": "📅Select",
+    "birthdate_label_quick": "🎂 Birthdate (8 digits)",
+    "birthdate_placeholder": "19990101",
+    "birthdate_label_detail": "🎂 Birthdate",
+    "birth_time_label": "⏰ Time of Birth",
+    "am": "AM",
+    "pm": "PM",
+    "unknown_time": "Time Unknown",
+    "analyze_button": "🍭 Ask the Child Spirit",
+
+    "loading_text": "Summoning the child spirit... 🍬",
+
+    "result_title": "📜 The Divine Message for <span class='nm'></span>",
+    "soul_title": "✨ Your Soul, as told by the Child Spirit, <span class='nm'></span>",
+    "your_deity": "Your Guardian Deity (主神)",
+    "base_theme": "🏠 General",
+    "love_theme": "💘 Love",
+    "money_theme": "💰 Wealth",
+    "work_theme": "⚔️ Career",
+    "advice_title": "💀 The Child Spirit's Blunt Advice",
+    "ancestor_title": "📜 Ancestral Energy and Curses Within You, <span class='nm'></span> <span class='sub-t'>| Ancestors and Purification</span>",
+    "secret_title": "🍀 Secret Remedy to Block Misfortune and Attract Luck, <span class='nm'></span>",
+    "quest_title": "🎯 Today's Oracle from the Child Shaman",
+    "best_match_title": "💫 Soulmate & Fated Rival",
+    "best_match_label": "A benefactor who empowers you",
+    "worst_match_label": "A type that drains your energy",
+    "retry_button": "🔄 Try Again",
+    "share_kakao_button": "💬 Share",
+    "copy_link_button": "🔗 Copy Link",
+
+    "shamanism_title": "📜 What is Shinjeom (神占)?",
+    "shamanism_article1_title": "Seeing Destiny with Spiritual Abilities",
+    "shamanism_article1_p": "Unlike Saju studies, a shaman's Shinjeom predicts the future by borrowing the spiritual power of their guardian deity (such as a mountain god or general god) to see specific images or hear voices, based on the date and time of birth. It is a method of directly conveying the god's voice (gongsu) rather than an academic interpretation of Saju.",
+    "shamanism_article2_title": "Ancestors, Curses (煞), and Rituals (Gut)",
+    "shamanism_article2_p": "Shinjeom often examines an individual's fortune through ancestral grave issues, malevolent energy (salgi), and dream omens. It focuses on resolving the lingering grief of ancestral spirits or removing curses (sal) attached to the body using shamanic tools like rituals, bells, divine knives, and five-colored flags. This helps to prevent legal troubles or accidents and allows one to pioneer their own destiny.",
+    "shamanism_article3_title": "Specific Oracles",
+    "shamanism_article3_p": "Like a 'grave problem at the burial site' or 'your digestive system, including the large and small intestines, is weak,' Shinjeom is characterized by pointing out very specific physical and environmental situations like a fortuneteller. Instead of vague interpretations, it directly delivers the most necessary words for you now, in the voice of a god.",
+
+    "mbti_popup_q": "What am I like in reality?",
+    "mbti_popup_sub": "1-minute MBTI Test",
+    "mbti_popup_btn": "GO",
+
+    "blog_btn_title": "Read Saju Columns",
+
+    "alert_birthdate_format": "Please enter the 8-digit birthdate correctly!",
+    "alert_invalid_date": "The date is strange. Please check it again.",
+    "alert_analysis_error": "The spirits are angry. Please try again later.",
+    "alert_kakao_sdk_error": "Kakao SDK initialization required",
+    "alert_link_copied": "Link copied!",
+    "alert_link_copy_failed": "Failed to copy link.",
+
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "privacy_policy": "Privacy Policy",
+    "blog": "Blog",
+    "copyright": "&copy; 2026 Divine Oracle: The Moon's Shrine. All rights reserved.",
+    "service_warning": "This service is for entertainment purposes only and has no scientific basis. Please do not take it too seriously.",
+
+    "about_title": "About The Moon - Service Introduction",
+    "about_p1": "\"The Moon\" is a unique web service that explores the character of your inner soul by fusing Saju (Four Pillars of Destiny) and MBTI. We go beyond simple fortune-telling to present a new path to self-understanding at the intersection of the ancient Eastern wisdom of Saju Mycology and the modern psychological personality type test, MBTI.",
+    "about_h2_1": "Our Mission",
+    "about_p2": "For the many who are losing themselves in our busy modern society, \"The Moon\" provides a time to look back and understand oneself. It is our mission to help you discover your innate temperament and potential, and to objectively identify your strengths and weaknesses so that you can find a more meaningful direction in life.",
+    "about_h2_2": "Our Philosophy",
+    "about_p3": "Rather than believing that fate is predetermined, we utilize Saju and MBTI as tools to understand and pioneer our own destiny in a positive direction. Under the belief that every person is a unique and precious being, \"The Moon\" seeks to instill positive insight and inspiration into your life. Although it is provided for entertainment purposes based on scientific evidence, we hope that the deep meaning contained within it will be an opportunity to love yourself and communicate better with others.",
+    "about_h2_3": "Services Provided",
+    "about_li1": "<strong>My Soul Character Seen Through Saju (Saju MBTI):</strong> We derive the MBTI type closest to your soul through Saju analysis based on your date and time of birth.",
+    "about_li2": "<strong>Five Elements Analysis:</strong> We analyze the energy of your innate five elements to deeply understand your personality traits and potential.",
+    "about_li3": "<strong>Fortune Telling:</strong> We provide free daily, weekly, and yearly fortunes to offer a guide for your life.",
+    "about_li4": "<strong>Cheongan Personality Guide:</strong> We help you understand Saju by explaining the characteristics of the ten Cheongan (十干) in detail.",
+    "about_li5": "<strong>MBTI Personality Type Test:</strong> We provide a simple MBTI test to help you understand your current tendencies.",
+
+    "blog_title": "Saju and MBTI Blog",
+    "blog_article1_title": "Finding Your Soulmate with Saju: Which MBTI is Right for Me?",
+    "blog_article1_p": "Saju contains the cosmic energy of the moment we were born, helping to predict individual tendencies and destiny. So, how about finding your soulmate compatibility by combining Saju and MBTI? This article delves into the characteristics of each daily stem (日干), the MBTI types that suit them, and the compatibility that can form an ideal relationship. For example, it provides interesting analysis such as what kind of synergy an active 'Gapmok' daily stem can have with which MBTI type, and what type of person a delicate 'Jeonghwa' daily stem feels a sense of stability with. Gain the wisdom you need to build deeper relationships by learning about MBTI compatibility through your own and your partner's Saju.",
+    "blog_article2_title": "Awakening Your Inner Potential: Saju Five Elements Analysis and Self-Development",
+    "blog_article2_p": "Our lives unfold in the harmony and imbalance of the five energies, or the five elements (wood, fire, earth, metal, water). Understanding your five-element composition as it appears in your Saju Palja plays an important role in identifying your innate strengths and weaknesses and establishing an effective self-development strategy based on them. This article explains in detail the meaning and tendency symbolized by each five elements and analyzes the characteristics that can appear when a specific five elements is strong or weak. For example, it provides specific guidance on what fields a person with strong 'metal' energy can excel in, and what efforts a person lacking 'water' energy can make to supplement it. Get practical advice for maximizing your potential and leading a more growing life through your Saju five elements.",
+    "blog_article3_title": "2026 Byeongo Year Fortune: Your Year as Predicted by a Saju Expert",
+    "blog_article3_p": "The new year, 2026 Byeongo, is approaching. What opportunities and challenges will the coming year bring us? In this article, from the perspective of a Saju expert, we analyze the overall flow of fortune for the 2026 Byeongo year and provide predictions and advice for each daily stem. We present detailed predictions across various fields such as wealth, career, love, and health, and guide you through the wise strategies needed to seize good fortune and avoid bad fortune. We help you prepare for and make the most of 2026 by understanding your fortune in advance.",
+
+    "contact_title": "Contact - The Moon",
+    "contact_p1": "Thank you for your interest in \"The Moon\". If you have any questions, partnership proposals, or suggestions for improvement, please do not hesitate to contact us at the contact information below. Your valuable feedback is a great help in creating a better service.",
+    "contact_h2_1": "Contact Information",
+    "contact_info1": "<strong>Email:</strong> sukheechoi@naver.com",
+    "contact_info2": "<strong>Operating Hours:</strong> Monday – Friday, 9:00 AM – 6:00 PM (excluding holidays)",
+    "contact_h2_2": "Frequently Asked Questions (FAQ)",
+    "contact_faq1_q": "<strong>Q: Why are my Saju analysis results like this?</strong>",
+    "contact_faq1_a": "A: This service uses a proprietary analysis system developed by combining the principles of Saju Myeongrihak and MBTI personality types. The results are based on general tendencies, and we recommend consulting with an expert for in-depth personal counseling.",
+    "contact_faq2_q": "<strong>Q: Is my personal information handled securely?</strong>",
+    "contact_faq2_a": "A: Yes, the information you enter, such as your date of birth and gender, is used only for analysis purposes, is not stored on the server, and is processed only within your browser. For more information, please refer to the <a href=\"javascript:void(0);\" onclick=\"document.getElementById('privacyModal').style.display='flex'\">Privacy Policy</a>.",
+    "contact_faq3_q": "<strong>Q: The ads are too numerous or annoying.</strong>",
+    "contact_faq3_a": "A: Ads are included to operate the service. If you have any opinions on the ad placement or number, please let us know by email. We will strive to improve the user experience.",
+    "P": {
+        "甲": {
+            "base": "The child spirit tells you, 'You were born with the energy of a general spirit, and your spirit is powerful.' Wherever you go, you must be the leader to be satisfied, like a general with a sword. However, because of this strong energy, you have many enemies around you and are prone to attracting negative energy (煞), so you must be careful. In particular, your digestive system, including the large and small intestines, is weak, so avoid cold foods and always keep your stomach warm.",
+            "love": "Your love is like a fire, and once it ignites, it burns as if to consume everything. But you try to suppress the other person's energy too much, so they may eventually get tired and leave. The child spirit sees that the person who can accept your strong energy is a person with the energy of water (水), so look for such a connection.",
+            "money": "Wealth comes in, but the holes for it to exit are also large. Be especially careful if you trust people too much and lend them money or invest, as you may get entangled in legal disputes. The child spirit sees your ancestors and sees that an ancestor is blocking your wealth luck. It is a good idea to hold a ritual for your ancestors in the near future to resolve their lingering regrets.",
+            "work": "You are not fated to work under others. You must start your own business or at least become the leader of an organization to release your energy. When the child spirit drew the five-colored flags, the red and white flags came out together. This means that power and honor will follow you, but in the process, there will be a lot of gossip, so you must always be careful with your words.",
+            "advice": "The child spirit's message has come down. 'The sword you hold can cut others, or it can cut you.' Cultivate the wisdom to use that strong energy for others. And you must always have a grateful heart for the guardian spirit who helps you from behind, so that your path ahead will be smooth."
+        },
+        "乙": {
+            "base": "The child spirit tells you, 'You are like a single flower blooming under a mountain spirit.' You may look weak on the outside, but you have the strong life force to survive even in the crevices of rocks. But you are easily swayed and get hurt a lot, so you must find your center. In particular, you are sensitive and may suffer from headaches or insomnia, so soothe your body with a cup of warm tea before bed.",
+            "love": "In love, you try to match everything to the other person. Your devotion is beautiful, but sometimes you get hurt by someone who doesn't respond to your heart, and you are seen crying alone. The child spirit sees that your match is a person with the energy of a reliable tree (木) who can cherish and protect you.",
+            "money": "You have the ability to accumulate wealth, but you often suffer losses because you are led by affection. You are in a situation where your storehouse is empty because you can't refuse to say 'just lend me this' or 'invest a little'. The child spirit sees that you have ancestral luck, so if you offer sincere offerings to your ancestors, your wealth luck will open up.",
+            "work": "You adapt well to organizational life and are loved by your superiors, but your credit is easily stolen by others. You may end up doing good things for others and getting nothing for yourself. The secret remedy the child spirit gives you is to let people know about your small successes to reveal your presence. That way, a benefactor will recognize you and pull you in.",
+            "advice": "The child spirit's message has come down. 'Even the smallest flower must shine on its own for bees and butterflies to come.' Instead of worrying about what others think, think of your own beauty first. You are a precious person who deserves to be loved."
+        },
+        "丙": {
+            "base": "The child spirit says, 'The sun god is enshrined in your body.' The energy is so bright that people are always around you, and you are very popular. However, the light is so intense that it sometimes kills the spirit of others, and you may show an arrogant side without realizing it. Fire energy (火氣) is concentrated in your heart and blood pressure, so you should be wary of getting angry or excited quickly.",
+            "love": "Even when you are in love, you do it loudly and splendidly, as if you have the whole world. Everyone will know about your love, but it is easy to be followed by gossip. The child spirit sees that you need a person with the wise energy of earth (土) who can sometimes cool down your fiery love and sometimes make it burn more.",
+            "money": "You have a strong tendency to spend as much as you earn, so there is no time for wealth to accumulate. You are especially not stingy with money for entertainment or meeting people. The child spirit sees that you have a stronger 'people luck god' than a 'wealth god' who follows money. If you cherish the people around you, they will bring you wealth.",
+            "work": "You are destined to shine on stage. You will have great success in speaking, singing, and teaching in front of people. When the child spirit shook the bell, the trigram for 'success' came out. But that success is followed by envy and jealousy, so you must always remain humble.",
+            "advice": "The child spirit's message has come down. 'The sun illuminates the world, but it cannot see its own shadow.' Even in a glamorous life, always look inside yourself and have a heart to care for those in dark places, and the spirits will bless you with greater fortune."
+        },
+        "丁": {
+            "base": "The child spirit tells you, 'You were born with the destiny of a candle that illuminates the front of the Jade Emperor.' You may seem quiet and calm on the outside, but inside you have a hotter passion and tenacity than anyone else. You have the power to dig into something you've set your mind to until the end, but if that tenacity turns into resentment, you can become frighteningly transformed. You have a curse (煞) in your eyes, so you should pay attention to your eye health and avoid reading books late at night or using electronic devices for a long time.",
+            "love": "When you fall in love, you are a devoted lover who burns your whole body for the other person. But you are jealous and suspicious, so once things go wrong, you torment the other person uncontrollably. The child spirit sees that you need a person with the warm energy of fire (火) who can understand and embrace your tender heart.",
+            "money": "You have the thriftiness to save up wealth, but sometimes your spending explodes, and that's usually when you spend money on others. The child spirit sees that one of your ancestors died unjustly and is blocking your path to wealth. It is a good idea to have a ritual to comfort the soul.",
+            "work": "You have a special talent for dealing with the spiritual world. You will make a name for yourself in the fields of religion, philosophy, art, and counseling. When the child spirit grabbed the divine knife, the help of a 'benefactor' was predicted. You will meet a superior who will recognize your talent and guide you, so always be polite.",
+            "advice": "The child spirit's message has come down. 'A candle must burn itself to give light, but if it burns too quickly, it will go out early.' It is good to sacrifice for others, but you must cherish and love yourself first. When you embrace the darkness within you, your light will spread even further."
+        },
+        "戊": {
+            "base": "The child spirit says, 'You have inherited the firm energy of the mountain god (山神).' You are as reliable and trustworthy as a rock, so people around you trust and rely on you. However, you are too stubborn and dislike change, so you may make the mistake of not accepting new things. Your stomach, spleen, and other digestive systems are weak, so you should avoid overeating or binge eating and eat regular meals.",
+            "love": "In love, you are like a rock that does not change once you give your heart. You may be clumsy with your expressions, but your heart is deeper and more sincere than anyone else's. The child spirit sees that your soulmate is a person with the soft energy of earth (土) who can accept your bluntness with charm and melt your firm heart.",
+            "money": "Your wealth is deeply related to the land. You are destined to make a great fortune by investing in real estate or land. You prefer stability to speculation, so once wealth comes in, it does not easily go out. The child spirit sees that the god of wealth is seated at your home site. It is better not to move frequently.",
+            "work": "You have a God-given talent for connecting and mediating between people. A job based on trust is your calling. When the child spirit drew the five-colored flag, the yellow flag came out. This means the center, so you are destined to be a central figure in any organization. However, you need the wisdom to not get too far ahead and always stay in the middle.",
+            "advice": "The child spirit's message has come down. 'A great mountain communicates with the world through its echo.' Reveal your deep inner thoughts a little. If you don't open your heart first, no one will know your sincerity. When you listen to the sounds around you, you can become a bigger mountain."
+        },
+        "己": {
+            "base": "The child spirit says, 'You have the energy of the Holy Mother who raises all things.' You are warm and affectionate to everyone, and you have a great heart for taking care of your own people. However, the distinction between your people and not your people is too clear, so once you cut someone off, you have a coldness that doesn't look back. You are prone to skin or digestive problems, so you should avoid irritating foods and always keep your body warm.",
+            "love": "In love, you take care of the other person with a motherly heart. You consider building a stable family to be the greatest happiness. The child spirit sees that your spouse is a person with the responsible energy of metal (金) who will not take your devoted love for granted and will build a family with you.",
+            "money": "You have a knack for accumulating wealth, but you are easily deceived and may suffer financial losses. You should be especially careful not to fall for the temptation of 'easy money'. The child spirit sees that there is an energy around you that is jealous of your wealth. Carrying salt with you will help ward off bad energy.",
+            "work": "You find great satisfaction in raising, teaching, and caring for people. The fields of education, welfare, and medicine are your path. When the child spirit shook the bell, a strong 'document' luck came in. This means that there will be good news related to documents such as passing exams, promotions, and contracts. Don't give up and keep going.",
+            "advice": "The child spirit's message has come down. 'Even a good field needs to rest after a year of farming.' It's good to take care of the people around you, but take care of yourself first. You must remember that you can only share true happiness with others when you are happy."
+        },
+        "庚": {
+            "base": "The child spirit tells you, 'You are the image of a general holding a sword made of iron.' You are full of righteousness and cannot stand injustice. However, your energy is so strong and sharp that your well-intentioned words and actions can hurt others. You have a curse (煞) in your bones and joints, so you should take care of your body from a young age and pay attention to your bone health.",
+            "love": "You are clumsy and blunt in expressing your love, but you have the loyalty to protect your person with your life once you decide they are yours. You are not good at playing games, so you express yourself honestly, saying 'I like it if I like it, I don't like it if I don't like it'. The child spirit sees that you need to meet a person with the wise energy of water (水) who can gently embrace your rough side and understand your sincerity.",
+            "money": "Your wealth luck is 'all or nothing'. You have frequent opportunities to make a lot of money, but you also run the risk of losing a lot. If you pursue power or honor, wealth will follow you naturally. The child spirit sees that you have an ancestor who died away from home, so you have bad luck that things fall apart when they are about to work out. You must release this bad luck through a ritual to comfort the ancestor who died away from home.",
+            "work": "Your calling is a profession that holds power and establishes discipline, such as a soldier, police officer, or prosecutor. You lead people with strong charisma, but your flaw is that you often clash with your superiors. When the child spirit drew the divine knife, the trigram for 'blood' came out. This may mean surgery or an accident, but it also means cutting off bad energy and being reborn, so do not be afraid of change.",
+            "advice": "The child spirit's message has come down. 'Even a sharp sword needs to be kept in its scabbard sometimes.' Do not always express your strong energy outward, but learn to control it inward. True strength comes not from using force, but from the wisdom to control that force."
+        },
+        "辛": {
+            "base": "The child spirit tells you, 'You are like a sharp jewel in a fairy's jewelry box.' You have a strong sense of pride, pursue perfection, and cannot tolerate disarray. You see things that others cannot with your sharpness, but you are so sensitive that you torment yourself. Cold energy is likely to enter your lungs and bronchial tubes, so you should always keep your neck warm.",
+            "love": "In love, you are waiting for a prince on a white horse, a fairy from the sky. It is difficult to start a relationship because it is difficult to find someone who meets your high standards. But once you open your heart, you try to show a love that shines like a jewel. The child spirit sees that a person with the energy of a wide land (土) who can accept your pickiness as a compliment and respect your sensitivity is a good match for you.",
+            "money": "You have a good eye for valuable things and have a talent for financial technology. But the money you spend to maintain your dignity is not insignificant. If you are too fond of luxury goods, you will not be able to accumulate wealth. The child spirit sees that you have a strong 'dohwasal (桃花煞)'. This curse (煞) can attract popularity and make you money, but it can also make you lose money due to problems with the opposite sex, so you should be careful in your relationships with the opposite sex.",
+            "work": "You are suited for a professional job that requires delicacy and accuracy. You can be very successful in the fields of law, medicine, finance, and art. When the child spirit drew the five-colored flag, the white flag came out. This means fruition and completion, so if there is something that has been going on for a long time, you will get good results within this year.",
+            "advice": "The child spirit's message has come down. 'A jewel shines the more you polish it, but if you polish it too much, it will wear out.' Let go of your obsession with perfection a little. Not everything in the world can meet your standards. When you are a little more generous with yourself, your soul will shine even more brilliantly."
+        },
+        "壬": {
+            "base": "The child spirit tells you, 'You are like a deep sea called by the Dragon King.' No one can know what is inside you, and your thoughts are free, so you are not bound by anything. You are full of wisdom and creativity, but your flaw is that you cannot finish one thing to the end. The energy of the water (水) system, such as the kidneys and bladder, is weak, so you should drink a lot of water, but avoid water that is too cold.",
+            "love": "In love, you are a free spirit, so you hate being tied down and want a relationship like a friend. You are kind to many people and are easily misunderstood as a playboy, but you are stingy with your true heart. The child spirit sees that your partner is a person with the energy of the wind (木) who can understand your free spirit and travel with you.",
+            "money": "Your wealth luck is like a wave, and a lot of money comes in at once and then disappears in an instant. You have a deep connection with foreign countries, so you can make a lot of money through trade or overseas business. The child spirit sees that one of your ancestors drowned (a water ghost), so when you are about to accumulate wealth, it disappears like a bubble. It is a good idea to go to the water's edge and pray to the Dragon King with all your heart.",
+            "work": "You have a strong 'yeokma (驛馬)' energy that makes you work while traveling the world, rather than a job where you stay in one place. A field with a lot of change and that uses your head, such as planning, ideas, and consulting, is a good fit. When the child spirit shook the bell, the trigram for 'leave' came out. You should not have any lingering feelings for where you are now, but move to a new place to open up your luck.",
+            "advice": "The child spirit's message has come down. 'The deep sea embraces everything, but it does not lose its center.' It is good to wander here and there, but make a vessel to hold your wisdom. When you get into the habit of finishing what you start, your wisdom will finally become a treasure that benefits the world."
+        },
+        "癸": {
+            "base": "The child spirit says, 'You are like a welcome rain from the sky, soaking all things and giving life.' You are quiet and affectionate, and you help others in unseen places. But you think too much and are so emotional that you sometimes lose your sense of reality. You have a cold (冷) energy in your body, so your hands and feet are cold and you are prone to depression, so you should always keep your body warm and get a lot of sunlight.",
+            "love": "In love, you are pure and romantic, but you are also easily hurt. You often turn away after being quietly upset by yourself, so the other person lets you go without knowing why. The child spirit sees that you need a person with the warm energy of earth (土) who can understand your tender emotions and wipe away your tears.",
+            "money": "You value spiritual values more than accumulating wealth. You are not greedy for money, so it is difficult to become a big rich person, but you are destined not to starve for money for the rest of your life. The child spirit sees that you have an energy to lose money by helping others. You should never guarantee a loan or lend money out of compassion.",
+            "work": "You have a special talent for touching people's hearts. You are destined to be a light to people in the fields of religion, counseling, art, and education. When the child spirit drew the divine knife, the trigram for 'hwal-in (活人)' came out. This means that you must do the work of saving people to release your karma and open up your luck.",
+            "advice": "The child spirit's message has come down. 'Stagnant water rots, and flowing water creates life.' Show your deep thoughts and compassionate heart to the world. Don't just save the world in your head, but when you put even a small action into practice, you will become a precious being like a welcome rain that soaks a dry land."
+        }
+    }
+}

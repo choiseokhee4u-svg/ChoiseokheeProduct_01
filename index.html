@@ -8,7 +8,7 @@
 <body>
     <div class="scroll-down-indicator">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-        <span>아래로 스크롤</span>
+        <span data-i18n="scroll_down">아래로 스크롤</span>
     </div>
     <div id="transition-overlay"></div>
     <video id="bgVideo" autoplay loop muted playsinline>
@@ -34,61 +34,61 @@
             <meta itemprop="serviceType" content="사주 운세 제공">
             <div class="wrap">
                 <div id="inputSection" class="card">
-                    <h1 itemprop="name">🌙 용한점집 달의 신당</h1>
-                    <p class="sub" itemprop="description">애기동자 몸주신이 공수로 알려주는 당신의 운명</p>                    <div itemprop="provider" itemscope itemtype="https://schema.org/Person">
+                    <h1 itemprop="name" data-i18n="main_title">🌙 용한점집 달의 신당</h1>
+                    <p class="sub" itemprop="description" data-i18n="sub_title">애기동자 몸주신이 공수로 알려주는 당신의 운명</p>                    <div itemprop="provider" itemscope itemtype="https://schema.org/Person">
                         <meta itemprop="name" content="달의 신당 애기동자">
                     </div>
-                    <div class="form-g"><label>📛 이름/닉네임</label><input type="text" id="userName" placeholder="ex) 럭키민수"
+                    <div class="form-g"><label data-i18n="name_label">📛 이름/닉네임</label><input type="text" id="userName" data-i18n-placeholder="name_placeholder" placeholder="ex) 럭키민수"
                             maxlength="20"></div>
-                    <div class="form-g"><label>👤 성별</label>
-                        <div class="gender-sel"><button class="on" data-g="M">🙋‍♂️ 남자</button><button data-g="F">🙋‍♀️
+                    <div class="form-g"><label data-i18n="gender_label">👤 성별</label>
+                        <div class="gender-sel"><button class="on" data-g="M" data-i18n="male">🙋‍♂️ 남자</button><button data-g="F" data-i18n="female">🙋‍♀️
                                 여자</button></div>
                     </div>
-                    <div class="fortune-sel"><button class="on" data-t="today">⚡오늘</button><button
-                            data-t="week">📅이번주</button><button data-t="year">🚀1년</button></div>
+                    <div class="fortune-sel"><button class="on" data-t="today" data-i18n="fortune_today">⚡오늘</button><button
+                            data-t="week" data-i18n="fortune_week">📅이번주</button><button data-t="year" data-i18n="fortune_year">🚀1년</button></div>
 
-                    <div class="tab-row"><button class="on" data-tab="quick">⚡빠른입력</button><button
-                            data-tab="detail">📅선택</button></div>
+                    <div class="tab-row"><button class="on" data-tab="quick" data-i18n="quick_input">⚡빠른입력</button><button
+                            data-tab="detail" data-i18n="detail_input">📅선택</button></div>
                     <div id="tab-quick" class="tab-c on">
-                        <div class="form-g"><label>🎂 생년월일 8자리</label><input type="text" id="quickDate" placeholder="19990101"
+                        <div class="form-g"><label data-i18n="birthdate_label_quick">🎂 생년월일 8자리</label><input type="text" id="quickDate" data-i18n-placeholder="birthdate_placeholder" placeholder="19990101"
                                 maxlength="8" inputmode="numeric"></div>
                     </div>
                     <div id="tab-detail" class="tab-c">
-                        <div class="form-g"><label>🎂 생년월일</label>
+                        <div class="form-g"><label data-i18n="birthdate_label_detail">🎂 생년월일</label>
                             <div class="grid-3"><select id="selYear"></select><select id="selMonth"></select><select
                                     id="selDay"></select></div>
                         </div>
                     </div>
-                    <div class="form-g"><label>⏰ 태어난 시간</label>
+                    <div class="form-g"><label data-i18n="birth_time_label">⏰ 태어난 시간</label>
                         <div class="grid-3" id="timeInputs"><select id="selAmpm">
-                                <option value="AM">오전</option>
-                                <option value="PM">오후</option>
+                                <option value="AM" data-i18n="am">오전</option>
+                                <option value="PM" data-i18n="pm">오후</option>
                             </select><select id="selHour"></select><select id="selMinute"></select></div>
-                        <div class="chk-row"><input type="checkbox" id="unknownTime"><label for="unknownTime">시간 모름</label>
+                        <div class="chk-row"><input type="checkbox" id="unknownTime"><label for="unknownTime" data-i18n="unknown_time">시간 모름</label>
                         </div>
                     </div>
                     <div class="action-buttons">
-                        <button class="submit" onclick="analyze()">🍭 애기동자에게 물어보기</button>
+                        <button class="submit" onclick="analyze()" data-i18n="analyze_button">🍭 애기동자에게 물어보기</button>
                     </div>
                 </div>
                 <div id="loading">
                     <div class="ld"></div>
-                    <p style="margin-top:14px;color:var(--cyan)">애기동자 부르는 중... 🍬</p>
+                    <p style="margin-top:14px;color:var(--cyan)" data-i18n="loading_text">애기동자 부르는 중... 🍬</p>
                 </div>
                 <div id="result">
                     <div class="card" id="manseCard">
-                        <div class="sec-title" style="justify-content:center">📜 <span class="nm" id="n0">OOO</span>에게 내리는 신의 공수
+                        <div class="sec-title" style="justify-content:center" data-i18n="result_title">📜 <span class="nm" id="n0">OOO</span>에게 내리는 신의 공수
                         </div>
                         <div class="pillars" id="pillarsBox"></div>
                         <div class="saju-msg" id="sajuMsg"></div>
                     </div>
                     <div class="card hero">
-                        <div class="sec-title" style="justify-content:center">✨ <span class="nm" id="n1"></span>애기동자님이 알려주는 너의 영혼
+                        <div class="sec-title" style="justify-content:center" data-i18n="soul_title">✨ <span class="nm" id="n1"></span>애기동자님이 알려주는 너의 영혼
                         </div>
                         <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
                             <div
                                 style="flex:1; background:rgba(0,0,0,0.3); padding:20px; border-radius:16px; text-align:center;">
-                                <span style="font-size:0.9rem; color:var(--txt2); display:block; margin-bottom:8px;">너의 주신(主神)</span>
+                                <span style="font-size:0.9rem; color:var(--txt2); display:block; margin-bottom:8px;" data-i18n="your_deity">너의 주신(主神)</span>
                                 <div id="sajuMbti"
                                     style="font-size:2.5rem; font-weight:800; color:var(--pink); line-height:1.2;"></div>
                             </div>
@@ -99,77 +99,76 @@
                         <div id="genderBadge" style="font-size:.8rem;color:var(--txt2);margin-top:4px"></div>
                     </div>
                     <div class="card">
-                        <div class="theme-tabs"><button class="on" data-th="base">🏠 기본</button><button data-th="love">💘
-                                연애</button><button data-th="money">💰 재물</button><button data-th="work">⚔️ 사회</button></div>
+                        <div class="theme-tabs"><button class="on" data-th="base" data-i18n="base_theme">🏠 기본</button><button data-th="love" data-i18n="love_theme">💘
+                                연애</button><button data-th="money" data-i18n="money_theme">💰 재물</button><button data-th="work" data-i18n="work_theme">⚔️ 사회</button></div>
                         <div id="storyBox" class="story"></div>
                         <div class="advice-box">
-                            <div class="advice-t">💀 애기동자의 팩폭 공수</div>
+                            <div class="advice-t" data-i18n="advice_title">💀 애기동자의 팩폭 공수</div>
                             <p id="adviceTxt"></p>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="sec-title">📜 <span class="nm" id="n2"></span>네게 깃든 조상신의 기운과 살(煞) <span class="sub-t">| 조상과 살풀이</span></div>
+                        <div class="sec-title" data-i18n="ancestor_title">📜 <span class="nm" id="n2"></span>네게 깃든 조상신의 기운과 살(煞) <span class="sub-t">| 조상과 살풀이</span></div>
                         <div id="statChart"></div>
                     </div>
                     <div class="card">
-                        <div class="sec-title">🍀 <span class="nm" id="n3"></span>액운을 막고 복을 부르는 비방</div>
+                        <div class="sec-title" data-i18n="secret_title">🍀 <span class="nm" id="n3"></span>액운을 막고 복을 부르는 비방</div>
                         <div id="luckBox" class="luck-box"></div>
                         <div class="quest-box">
-                            <div class="quest-t">🎯 애동제자의 오늘의 공수</div>
+                            <div class="quest-t" data-i18n="quest_title">🎯 애동제자의 오늘의 공수</div>
                             <p id="questTxt"></p>
                         </div>
                     </div>
                     <div class="card" id="chemistryCard">
-                        <div class="sec-title" style="justify-content:center">💫 영혼의 단짝 & 피해야 할 악연</div>
+                        <div class="sec-title" style="justify-content:center" data-i18n="best_match_title">💫 영혼의 단짝 & 피해야 할 악연</div>
                         <div class="chemistry-content">
                             <div class="chemistry-item best">
                                 <span class="emoji">✨</span>
                                 <div class="chemistry-info">
-                                    <strong>너에게 힘이 되어주는 귀인</strong>
+                                    <strong data-i18n="best_match_label">너에게 힘이 되어주는 귀인</strong>
                                     <p id="bestMatch"></p>
                                 </div>
                             </div>
                             <div class="chemistry-item worst">
                                 <span class="emoji">⚡</span>
                                 <div class="chemistry-info">
-                                    <strong>만나면 기 빨리는 스타일</strong>
+                                    <strong data-i18n="worst_match_label">만나면 기 빨리는 스타일</strong>
                                     <p id="worstMatch"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="btn-row">
-                        <button class="reset" onclick="location.reload()">🔄 다시하기</button>
-                        <button class="kakao-btn" onclick="shareKakao()">💬 자랑하기</button>
-                        <button class="link-btn" onclick="copyLink()">🔗 링크 복사</button>
+                        <button class="reset" onclick="location.reload()" data-i18n="retry_button">🔄 다시하기</button>
+                        <button class="kakao-btn" onclick="shareKakao()" data-i18n="share_kakao_button">💬 자랑하기</button>
+                        <button class="link-btn" onclick="copyLink()" data-i18n="copy_link_button">🔗 링크 복사</button>
                     </div>
                     <div class="ad">
                         광고 영역
                         <!-- DP -->
                         <ins class="adsbygoogle"
                              style="display:block"
+                             data-ad-format="autorelaxed"
                              data-ad-client="ca-pub-3360310428058423"
-                             data-ad-slot="6358225756"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
+                             data-ad-slot="9099114756"></ins>
                         <script>
                              (adsbygoogle = window.adsbygoogle || []).push({});
                         </script>
                     </div>
                 </div>
                 <section class="encyclopedia">
-                    <h2>📜 신점(神占)이란?</h2>
+                    <h2 data-i18n="shamanism_title">📜 신점(神占)이란?</h2>
                     <article class="enc-card">
-                        <h3>영적 능력으로 보는 운명</h3>
-                        <p>무당의 신점은 사주명리학과 달리, 생년월일시를 기반으로 무당이 모시는 몸주신(산신, 장군신 등)의 영적 능력을 빌려 구체적인 화면을 보거나 목소리를 듣는 방식으로 앞날을 예언합니다. 학문적인 사주 해석보다는 신의 목소리(공수)를 직접 전달하는 방식입니다.</p>
+                        <h3 data-i18n="shamanism_article1_title">영적 능력으로 보는 운명</h3>
+                        <p data-i18n="shamanism_article1_p">무당의 신점은 사주명리학과 달리, 생년월일시를 기반으로 무당이 모시는 몸주신(산신, 장군신 등)의 영적 능력을 빌려 구체적인 화면을 보거나 목소리를 듣는 방식으로 앞날을 예언합니다. 학문적인 사주 해석보다는 신의 목소리(공수)를 직접 전달하는 방식입니다.</p>
                     </article>
                     <article class="enc-card">
-                        <h3>조상과 살(煞), 그리고 굿</h3>
-                        <p>신점은 종종 조상 묘탈, 살기(煞氣), 꿈 몽조 등을 통해 개인의 운세를 살핍니다. 굿, 방울, 신칼, 오색기 등의 무구를 사용하여 조상신의 맺힌 한을 풀어주거나, 몸에 붙은 살(煞)을 떼어내는 데에 초점을 둡니다. 이를 통해 관재수나 횡액을 막고 운명을 개척하도록 돕습니다.</p>
+                        <h3 data-i18n="shamanism_article2_title">조상과 살(煞), 그리고 굿</h3>
+                        <p data-i18n="shamanism_article2_p">신점은 종종 조상 묘탈, 살기(煞氣), 꿈 몽조 등을 통해 개인의 운세를 살핍니다. 굿, 방울, 신칼, 오색기 등의 무구를 사용하여 조상신의 맺힌 한을 풀어주거나, 몸에 붙은 살(煞)을 떼어내는 데에 초점을 둡니다. 이를 통해 관재수나 횡액을 막고 운명을 개척하도록 돕습니다.</p>
                     </article>
                      <article class="enc-card">
-                        <h3>구체적인 공수</h3>
-                        <p>"산소에 묘탈이 났다", "대장·소장 등 소화기 계통이 약하다"와 같이, 신점은 매우 구체적인 신체적, 환경적 상황을 족집게처럼 지적하는 것이 특징입니다. 막연한 풀이가 아닌, 지금 당신에게 가장 필요한 말을 신의 목소리로 직접 전합니다.</p>
+                        <h3 data-i18n="shamanism_article3_title">구체적인 공수</h3>
+                        <p data-i18n="shamanism_article3_p">"산소에 묘탈이 났다", "대장·소장 등 소화기 계통이 약하다"와 같이, 신점은 매우 구체적인 신체적, 환경적 상황을 족집게처럼 지적하는 것이 특징입니다. 막연한 풀이가 아닌, 지금 당신에게 가장 필요한 말을 신의 목소리로 직접 전합니다.</p>
                     </article>
                 </section>
             </main>
@@ -185,18 +184,20 @@
         <button class="mini-close" onclick="this.parentElement.classList.remove('show')">✕</button>
         <span style="font-size:1.5rem">🤔</span>
         <div style="flex:1">
-            <div style="color:var(--cyan); font-weight:700; font-size:0.9rem">현실의 나는 어떨까?</div>
-            <div style="color:var(--txt2); font-size:0.8rem">1분컷 MBTI 테스트 하기</div>
+            <div style="color:var(--cyan); font-weight:700; font-size:0.9rem" data-i18n="mbti_popup_q">현실의 나는 어떨까?</div>
+            <div style="color:var(--txt2); font-size:0.8rem" data-i18n="mbti_popup_sub">1분컷 MBTI 테스트 하기</div>
         </div>
-        <button class="mini-btn" onclick="startMbtiTest(); this.parentElement.classList.remove('show')">GO</button>
+        <button class="mini-btn" onclick="startMbtiTest(); this.parentElement.classList.remove('show')" data-i18n="mbti_popup_btn">GO</button>
     </div>
 
     <!-- Floating Blog Button -->
-    <a href="blog.html" class="floating-blog-btn" title="사주 칼럼 읽기">
+    <a href="blog.html" class="floating-blog-btn" title="사주 칼럼 읽기" data-i18n-title="blog_btn_title">
         <span>📚</span>
     </a>
 
+    <script src="script_data.js"></script>
     <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

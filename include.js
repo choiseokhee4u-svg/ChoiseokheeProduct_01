@@ -1,43 +1,44 @@
-function setPageMetadata(page) {
+function setPageMetadata(page, translations) {
     const metadata = {
         '': { // for index.html
-            title: '용한점집 달의 신당 - 애기동자 신점으로 보는 운명',
-            description: '애기동자 몸주신을 모시는 용한점집, 달의 신당. 신의 공수로 당신의 운명, 조상 문제, 살(煞)을 꿰뚫어 봅니다. 굿, 비방을 통해 운명을 개척하세요.'
+            title_key: 'site_title',
+            description_key: 'site_description'
         },
         'index': {
-            title: '용한점집 달의 신당 - 애기동자 신점으로 보는 운명',
-            description: '애기동자 몸주신을 모시는 용한점집, 달의 신당. 신의 공수로 당신의 운명, 조상 문제, 살(煞)을 꿰뚫어 봅니다. 굿, 비방을 통해 운명을 개척하세요.'
+            title_key: 'site_title',
+            description_key: 'site_description'
         },
         'about': {
-            title: '서비스 소개 - 점술가 The Moon',
-            description: '점술가 The Moon 서비스의 미션, 철학, 제공 서비스를 소개합니다.'
+            title_key: 'about_title',
+            description_key: 'about_p1'
         },
         'blog': {
-            title: '사주와 MBTI 블로그 - 점술가 The Moon',
-            description: '사주와 MBTI를 통해 자신을 이해하고 미래를 준비하는 다양한 글들을 만나보세요.'
+            title_key: 'blog_title',
+            description_key: 'blog_article1_p'
         },
         'contact': {
-            title: '문의하기 - 점술가 The Moon',
-            description: '점술가 The Moon 서비스에 대한 문의사항이나 의견을 남겨주세요.'
+            title_key: 'contact_title',
+            description_key: 'contact_p1'
         }
     };
 
     const pageMeta = metadata[page];
-    if (pageMeta) {
-        document.title = pageMeta.title;
+    if (pageMeta && translations) {
+        document.title = translations[pageMeta.title_key] || pageMeta.title_key;
         const descriptionTag = document.querySelector('meta[name="description"]');
         if (descriptionTag) {
-            descriptionTag.setAttribute('content', pageMeta.description);
+            descriptionTag.setAttribute('content', translations[pageMeta.description_key] || pageMeta.description_key);
         } else {
             const newDescriptionTag = document.createElement('meta');
             newDescriptionTag.setAttribute('name', 'description');
-            newDescriptionTag.setAttribute('content', pageMeta.description);
+            newDescriptionTag.setAttribute('content', translations[pageMeta.description_key] || pageMeta.description_key);
             document.head.appendChild(newDescriptionTag);
         }
     }
 }
 
-function includeHeader() {
+
+async function includeHeader() {
     const head = document.head;
     
     // Add placeholders for title and description
@@ -46,6 +47,9 @@ function includeHeader() {
     descriptionElement.setAttribute('name', 'description');
     head.appendChild(titleElement);
     head.appendChild(descriptionElement);
+
+    const lang = localStorage.getItem('lang') || 'ko';
+    const translations = await fetch(`locales/${lang}.json`).then(response => response.json());
 
     fetch('_header.html')
         .then(response => response.text())
@@ -61,8 +65,8 @@ function includeHeader() {
             
             // Set metadata based on the current page
             let pageName = window.location.pathname.split('/').pop().replace('.html', '');
-            if(pageName ==='ChoiseokheeProduct_01') pageName = 'index';
-            setPageMetadata(pageName);
+            if(pageName ==='ChoiseokheeProduct_01' || pageName === '') pageName = 'index'; // Handle root and index.html
+            setPageMetadata(pageName, translations);
         });
 }
 
