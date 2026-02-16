@@ -101,7 +101,6 @@ const ELEMENT_STEM = { WOOD: '甲', FIRE: '丙', EARTH: '戊', METAL: '庚', WAT
 const ELEMENT_COLORS = { WOOD: { bg: '#10b981', t: '#fff' }, FIRE: { bg: '#ef4444', t: '#fff' }, EARTH: { bg: '#eab308', t: '#1f2937' }, METAL: { bg: '#f8fafc', t: '#374151' }, WATER: { bg: '#1e1b4b', t: '#c4b5fd' } };
 const ELEMENT_NAMES = { WOOD: '목(木)', FIRE: '화(火)', EARTH: '토(土)', METAL: '금(金)', WATER: '수(水)' };
 let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
-let userMbti = '';
 const trailCanvas = document.getElementById('trailCanvas'), tCtx = trailCanvas.getContext('2d'); let particles = [];
 function resizeTrail() { trailCanvas.width = innerWidth; trailCanvas.height = innerHeight } resizeTrail(); addEventListener('resize', resizeTrail);
 class Particle { constructor(x, y, b = false) { this.x = x; this.y = y; this.size = b ? Math.random() * 6 + 3 : Math.random() * 4 + 2; this.color = ['#00FFFF', '#E0B0FF', '#FFFFFF'][Math.floor(Math.random() * 3)]; this.alpha = 1; this.decay = b ? .03 : .02; const a = Math.random() * Math.PI * 2, s = b ? Math.random() * 4 + 2 : Math.random() + .5; this.vx = Math.cos(a) * s; this.vy = Math.sin(a) * s } update() { this.x += this.vx; this.y += this.vy; this.alpha -= this.decay; this.size *= .96 } draw() { tCtx.save(); tCtx.globalAlpha = this.alpha; tCtx.fillStyle = this.color; tCtx.shadowBlur = 15; tCtx.shadowColor = this.color; tCtx.beginPath(); tCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); tCtx.fill(); tCtx.restore() } isAlive() { return this.alpha > 0 } }
@@ -121,18 +120,18 @@ for (let m = 0; m < 60; m++)minS.innerHTML += `<option value="${m}">${String(m).
 document.getElementById('unknownTime').onchange = e => { const t = document.getElementById('timeInputs'); t.style.opacity = e.target.checked ? '.4' : '1'; t.style.pointerEvents = e.target.checked ? 'none' : 'auto' };
 function updateTheme() { if (!curPd) return; const k = { base: 'base', love: 'love', money: 'money', work: 'work' }; document.getElementById('storyBox').innerHTML = curPd[k[curTheme]] || curPd.base; document.getElementById('adviceTxt').innerHTML = curPd.advice }
 const BRANCH_MODIFIERS = {
-    '子': { k: '창의적', d: '생각이 깊고 비밀이 많음.', love: '상대방의 마음을 깊이 헤아리지만, 속마음을 잘 드러내지 않아 오해를 사기도 합니다.', money: '돈을 숨겨두는 재주가 있어 비상금을 잘 만듭니다.', work: '기획이나 아이디어 분야에서 두각을 나타냅니다.' },
-    '丑': { k: '성실함', d: '묵묵히 자신의 길을 감.', love: '한번 사랑하면 끝까지 책임지려 하는 진국입니다. 다만 표현이 서툴 수 있습니다.', money: '꾸준히 저축하여 티끌 모아 태산으로 부자가 됩니다.', work: '반복적인 일도 끈기 있게 해내어 신뢰를 얻습니다.' },
-    '寅': { k: '활동적', d: '추진력이 강하고 리더십 있음.', love: '좋아하면 앞뒤 안 가리고 직진하는 불도저 스타일입니다.', money: '큰 돈을 벌 기회를 잘 포착하지만, 씀씀이도 큽니다.', work: '새로운 프로젝트를 시작하는 데 탁월한 능력이 있습니다.' },
-    '卯': { k: '섬세함', d: '다정하고 인정이 많음.', love: '상대방을 세심하게 챙겨주는 로맨티시스트입니다.', money: '실속 있게 돈을 잘 굴리며, 낭비를 싫어합니다.', work: '디테일을 요하는 일이나 사람을 상대하는 일에 능합니다.' },
-    '辰': { k: '이상적', d: '포부가 크고 꿈을 쫓음.', love: '영화 같은 로맨스를 꿈꾸며, 상대방에게 멋진 모습을 보여주려 합니다.', money: '스케일이 큰 투자를 좋아하며, 대박을 노립니다.', work: '리더십이 있고 조직을 이끄는 힘이 있습니다.' },
-    '巳': { k: '현실적', d: '계산이 빠르고 실속을 챙김.', love: '상대의 조건과 현실적인 면을 꼼꼼히 따져보고 만납니다.', money: '정보 수집 능력이 뛰어나 재테크에 밝습니다.', work: '일처리가 빠르고 정확하며, 협상에 능합니다.' },
-    '午': { k: '열정적', d: '화려하고 나서기를 좋아함.', love: '화려하고 열정적인 연애를 즐기며, 인기 만점입니다.', money: '폼생폼사라 돈을 시원하게 쓰지만, 버는 능력도 좋습니다.', work: '주목받는 일을 좋아하며, 홍보나 영업에서 빛을 발합니다.' },
-    '未': { k: '온화함', d: '참을성이 많으나 고집 있음.', love: '따뜻하게 감싸주지만, 은근히 고집이 세서 꺾지 않습니다.', money: '안전한 자산을 선호하며, 확실하지 않으면 지갑을 열지 않습니다.', work: '사람들과의 조화를 중시하며, 중재자 역할을 잘합니다.' },
-    '申': { k: '다재다능', d: '임기응변이 뛰어나고 재주가 많음.', love: '유머러스하고 재치 있어 이성에게 인기가 많습니다.', money: '다양한 수단으로 돈을 벌며, 수단이 좋습니다.', work: '문제 해결 능력이 뛰어나 어떤 상황에서도 살아남습니다.' },
-    '酉': { k: '예리함', d: '완벽주의적이고 깔끔함.', love: '눈이 높고 까다롭지만, 내 사람에게는 완벽하게 잘해줍니다.', money: '10원 한 장도 허투루 쓰지 않는 꼼꼼한 관리자입니다.', work: '전문성이 필요한 일이나 분석적인 업무에 적합합니다.' },
-    '戌': { k: '충직함', d: '신의를 지키고 방어적임.', love: '한 사람만 바라보는 해바라기 같은 연애를 합니다.', money: '재물을 지키는 능력이 탁월하여 돈이 잘 새지 않습니다.', work: '책임감이 강하여 맡은 일은 반드시 완수합니다.' },
-    '亥': { k: '지혜로움', d: '포용력이 넓고 유연함.', love: '모든 것을 이해해주고 받아주는 바다 같은 마음씨를 가졌습니다.', money: '먹을 복이 있어 살면서 돈 걱정은 크게 안 합니다.', work: '통찰력이 있어 큰 흐름을 읽는 일에 능합니다.' }
+    '子': { k: '지혜', d: '깊은 지혜를 품었으나, 그 속을 남에게 드러내지 않는구나.', love: '마음은 깊은 바다와 같으나, 표현이 서툴러 오해를 사기 쉽다.', money: '남몰래 재물을 모으는 재주가 있으니, 곳간이 비어있는 것처럼 보여도 실은 든든하리라.', work: '밤에 하는 일, 정신적인 일, 아이디어를 내는 일에 큰 재능을 보인다.' },
+    '丑': { k: '성실', d: '황소처럼 묵묵히 제 길을 가니, 그 성실함은 하늘도 알아준다.', love: '한번 마음을 주면 평생을 함께할 반려를 얻는 것과 같다. 다만 재미는 조금 없을 수 있다.', money: '티끌 모아 태산을 이루니, 그 결실이 노년에 크게 빛을 발하리라.', work: '꾸준함이 필요한 일, 신뢰를 바탕으로 하는 일에 적합하다.' },
+    '寅': { k: '용맹', d: '산중호랑이의 기세이니, 두려움이 없고 용맹하다.', love: '사랑에 빠지면 앞뒤 재지 않고 돌진하는구나. 그 열정은 아름답지만, 때로는 상대를 지치게 할 수 있다.', money: '큰 것을 노리니, 작은 재물에는 만족하지 못한다. 사업가 기질이 다분하다.', work: '사람들을 이끄는 리더, 새로운 길을 개척하는 선구자의 운명이다.' },
+    '卯': { k: '온화', d: '만물이 소생하는 봄의 토끼와 같으니, 다정하고 온화하다.', love: '섬세하고 부드러워 곁에 있으면 마음이 편안해진다. 많은 이성의 사랑을 받는다.', money: '알뜰살뜰 살림을 잘 꾸리니, 재물이 쉽게 새지 않는다.', work: '사람을 상대하는 일, 남을 가르치고 돌보는 일에 하늘이 내린 재능이 있다.' },
+    '辰': { k: '변화', d: '변화무쌍한 용의 기운이니, 그 스케일이 남다르다.', love: '꿈같은 사랑을 그리니, 평범한 연애로는 만족하지 못한다.', money: '큰 재물을 꿈꾸니, 투기나 사업에 과감하게 뛰어드는 경향이 있다.', work: '권력을 쥐거나, 큰 조직을 이끄는 지도자의 상이다. 변화를 두려워하지 마라.' },
+    '巳': { k: '열정', d: '꺼지지 않는 불꽃의 열정을 품고 있구나.', love: '겉으로는 차가워 보여도, 속은 불덩이처럼 뜨겁다. 한번 사랑에 빠지면 모든 것을 태운다.', money: '정보를 다루는 능력이 뛰어나, 돈의 흐름을 읽는 눈이 있다.', work: '말솜씨가 뛰어나고 설득력이 있으니, 변호사나 외교관, 방송인의 길이 열려있다.' },
+    '午': { k: '화려', d: '한낮의 태양처럼 화려하고 주목받는 기운이다.', love: '인기가 많아 주변에 사람이 끊이지 않는다. 화려한 연애를 즐기지만, 진정한 내 사람을 찾기까지 시간이 걸린다.', money: '폼생폼사 기질이 있어 씀씀이가 크지만, 그만큼 버는 능력도 출중하다.', work: '예체능, 연예인 등 남들 앞에 서는 직업에서 크게 성공할 운이다.' },
+    '未': { k: '끈기', d: '마른 땅의 끈기를 지녔으니, 인내심이 강하고 속이 깊다.', love: '상대방을 묵묵히 지켜보고 기다려주는 해바라기 같은 사랑을 한다.', money: '안정적인 것을 최고로 치니, 부동산이나 저축으로 부를 쌓는다.', work: '중재자의 역할을 잘하니, 사람들 사이의 갈등을 해결하는 일에 능하다.' },
+    '申': { k: '재주', d: '천부적인 재주와 임기응변을 타고났구나.', love: '재치와 유머로 이성의 마음을 쉽게 사로잡는다. 연애 경험이 많을 수 있다.', money: '잔꾀가 많아 돈 버는 재주가 비상하다. 여러 곳에서 재물이 들어온다.', work: '어떤 위기 상황에서도 살아남는 능력이 있으니, 무엇을 해도 밥 굶을 걱정은 없다.' },
+    '酉': { k: '결실', d: '가을의 결실과 같이, 예리하고 깔끔한 성품이다.', love: '눈이 높아 아무나 마음에 품지 않는다. 완벽한 상대를 찾지만, 한번 마음을 열면 헌신한다.', money: '한 푼의 낭비도 용납하지 않는 깐깐한 재물 관리자다.', work: '정밀함을 요구하는 전문직, 날카로운 분석력이 필요한 분야가 천직이다.' },
+    '戌': { k: '신의', d: '주인을 지키는 충견과 같으니, 의리와 신의가 두텁다.', love: '한번 마음 준 사람은 배신하지 않으니, 이보다 더 든든한 짝은 없으리라.', money: '곳간을 지키는 능력이 탁월하니, 한번 들어온 재물은 절대 잃지 않는다.', work: '책임감이 강해 어떤 임무를 맡겨도 반드시 완수해내는 믿음직한 사람이다.' },
+    '亥': { k: '포용', d: '모든 것을 품는 밤의 바다와 같은 기운이다.', love: '상대의 모든 것을 이해하고 감싸주니, 그 마음이 태평양과 같다.', money: '스스로 돈을 좇지 않아도, 먹을 복을 타고나 평생 굶지 않는다.', work: '큰 흐름을 읽는 통찰력이 있으니, 시대를 앞서가는 분야에서 두각을 나타낸다.' }
 };
 const SEASON_MODIFIERS = {
     '寅': '초봄의', '卯': '봄의', '辰': '늦봄의',
@@ -147,7 +146,7 @@ function getDetailedPersonality(stem, branch, monthBranch) {
     const season = SEASON_MODIFIERS[monthBranch] || '계절의';
     return {
         summary: `${season} ${brMod.d}`,
-        desc: `당신은 <strong>${season} 에너지</strong>를 타고난 <strong>${stem}(${ELEMENT_NAMES[EM[stem]]})</strong>입니다.<br> ${brMod.d} 성향(${brMod.k})이 더해져, ${base.base.split('.')[0]} 특징이 있습니다.`
+        desc: `너는 <strong>${season} 에너지</strong>를 타고난 <strong>${stem}(${ELEMENT_NAMES[EM[stem]]})</strong>일세.<br> ${brMod.d} 성향(${brMod.k})이 더해져, ${base.base.split('.')[0]} 특징이 보이니 참고하게.`
     };
 }
 
@@ -161,13 +160,13 @@ function updateQuest() {
     const bz = l.getEightChar();
     if (fType === 'today') {
         targetStem = bz.getDayGan().toString();
-        timeLabel = "오늘의 운세";
+        timeLabel = "오늘의 신탁";
     } else if (fType === 'week') {
         targetStem = bz.getMonthGan().toString();
-        timeLabel = "이번 달(주간) 운세";
+        timeLabel = "이번 주 신탁";
     } else {
         targetStem = bz.getYearGan().toString();
-        timeLabel = "올해의 운세";
+        timeLabel = "올해의 신탁";
     }
     const uEl = STEM_EL[curDm];
     const tEl = STEM_EL[targetStem];
@@ -181,21 +180,21 @@ function updateQuest() {
     const samePol = isYang(curDm) === isYang(targetStem);
     const godKey = REL_MAP[relType][samePol ? 0 : 1];
     const god = TEN_GODS[godKey];
-    document.getElementById('questTxt').innerHTML = `<span style="font-size:0.9rem; color:var(--cyan); display:block; margin-bottom:4px;">[${timeLabel}: ${god.name}]</span> ${god.desc}<br> <span style="font-size:0.8rem; color:var(--txt2); margin-top:6px; display:block;">🔑 키워드: ${god.keywords.join(', ')}</span>`;
+    document.getElementById('questTxt').innerHTML = `<span style="font-size:0.9rem; color:var(--cyan); display:block; margin-bottom:4px;">[${timeLabel}: ${god.name}]</span> ${god.desc}<br> <span style="font-size:0.8rem; color:var(--txt2); margin-top:6px; display:block;">🔑 새겨들을 단어: ${god.keywords.join(', ')}</span>`;
 }
 
 function analyze() {
-    uName = document.getElementById('userName').value.trim() || '익명';
+    uName = document.getElementById('userName').value.trim() || '애동';
     let y, mo, d, h, mi;
     const tab = document.querySelector('.tab-row button.on').dataset.tab;
     if (tab === 'quick') {
         const v = document.getElementById('quickDate').value.trim();
-        if (!/^\d{8}$/.test(v)) { alert('8자리 숫자로 입력!'); return }
+        if (!/^\d{8}$/.test(v)) { alert('생년월일 8자를 바르게 입력해야지!'); return }
         y = +v.slice(0, 4); mo = +v.slice(4, 6); d = +v.slice(6, 8);
     } else {
         y = +yS.value; mo = +mS.value; d = +dS.value;
     }
-    if (mo < 1 || mo > 12 || d < 1 || d > 31) { alert('날짜 확인!'); return }
+    if (mo < 1 || mo > 12 || d < 1 || d > 31) { alert('날짜가 이상하구나. 다시 보아라.'); return }
     if (document.getElementById('unknownTime').checked) {
         h = 12; mi = 0;
     } else {
@@ -220,7 +219,7 @@ function analyze() {
         } catch (e) {
             console.error(e);
             document.getElementById('loading').style.display = 'none';
-            alert('죄송합니다. 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            alert('신령님께서 노하셨다. 잠시 후 다시 시도해 보거라.');
             location.reload();
         }
     }, 1000);
@@ -239,12 +238,11 @@ function calc(y, mo, d, h, mi) {
     const basePd = P[curDm] || P['甲'];
     const brMod = BRANCH_MODIFIERS[dZ] || { k: '', d: '', love: '', money: '', work: '' };
     curPd = {
-        base: basePd.base + "<br><br>👉 <strong>지지의 영향 (" + dZ + "):</strong> " + brMod.d,
-        love: basePd.love + "<br><br>💖 <strong>연애 스타일:</strong> " + brMod.love,
-        money: basePd.money + "<br><br>💰 <strong>재물 운용:</strong> " + brMod.money,
-        work: basePd.work + "<br><br>💼 <strong>직업/사회:</strong> " + brMod.work,
-        advice: basePd.advice,
-        mbti: basePd.mbti
+        base: basePd.base + "<br><br>👉 <strong>네 발 밑의 기운 (" + dZ + "):</strong> " + brMod.d,
+        love: basePd.love + "<br><br>💖 <strong>애정의 향방:</strong> " + brMod.love,
+        money: basePd.money + "<br><br>💰 <strong>재물의 흐름:</strong> " + brMod.money,
+        work: basePd.work + "<br><br>💼 <strong>세상살이와 명예:</strong> " + brMod.work,
+        advice: basePd.advice
     };
     const pillars = [
         { label: '시주', stem: tG, branch: tZ },
@@ -260,19 +258,17 @@ function calc(y, mo, d, h, mi) {
     });
     document.getElementById('pillarsBox').innerHTML = pillarsHTML;
     const detail = getDetailedPersonality(dG, dZ, mZ);
-    document.getElementById('sajuMsg').innerHTML = `당신의 사주를 분석한 결과, 타고난 기질은 <strong>${detail.summary} ${ELEMENT_NAMES[EM[dG]]}</strong>입니다.`;
-    document.getElementById('sajuMsg').innerHTML += `<br><span style="font-size:0.9rem; color:var(--txt2); font-weight:normal; display:block; margin-top:8px;">${detail.desc}</span>`;
+    document.getElementById('sajuMsg').innerHTML = detail.desc;
     const myEl = STEM_EL[curDm] || 'WOOD';
     const bestEl = GENERATING[myEl], worstEl = OVERCOMING[myEl];
     const bestStem = ELEMENT_STEM[bestEl], worstStem = ELEMENT_STEM[worstEl];
-    const bestMbti = P[bestStem]?.mbti || 'ENTP', worstMbti = P[worstStem]?.mbti || 'ESTP';
-    document.getElementById('bestMatch').innerHTML = `${bestStem} (${bestMbti}) - ${ELEMENT_NAMES[bestEl]}의 기운`;
-    document.getElementById('worstMatch').innerHTML = `${worstStem} (${worstMbti}) - ${ELEMENT_NAMES[worstEl]}의 기운`;
+    document.getElementById('bestMatch').innerHTML = `${bestStem} 일간 - ${ELEMENT_NAMES[bestEl]}의 기운을 가진 사람`;
+    document.getElementById('worstMatch').innerHTML = `${worstStem} 일간 - ${ELEMENT_NAMES[worstEl]}의 기운을 가진 사람`;
     let mn = 9, wk = 'WATER';
     for (const [k, v] of Object.entries(cnt)) if (v < mn) { mn = v; wk = k }
     ['n0', 'n1', 'n2', 'n3'].forEach(id => document.getElementById(id).innerText = uName);
     document.getElementById('soulC').innerText = curDm;
-    document.getElementById('soulT').innerText = curPd.mbti;
+    document.getElementById('soulT').innerText = "";
     document.getElementById('genderBadge').innerText = gender === 'M' ? '🙋‍♂️ 남자 (양)' : '🙋‍♀️ 여자 (음)';
     curTheme = 'base';
     document.querySelectorAll('.theme-tabs button').forEach((b, i) => b.classList.toggle('on', i === 0));
@@ -284,166 +280,10 @@ function calc(y, mo, d, h, mi) {
     });
     setTimeout(() => document.querySelectorAll('.stat-fill').forEach(b => b.style.width = b.dataset.w), 100);
     const lk = LK[wk], le = E[wk];
-    const genderTip = gender === 'M' ? '행동력을 높여보세요' : '직관을 믿어보세요';
+    const genderTip = gender === 'M' ? '스스로 길을 개척해야 복이 온다' : '주변의 도움을 귀하게 여겨야 복이 온다';
     document.getElementById('luckBox').innerHTML = `<div class="luck-dot" style="background:${le.c};color:${le.c}"></div><div class="luck-info"><strong>${lk.c}</strong><span>${lk.i} | ${genderTip}</span></div>`;
     updateQuest();
-    setTimeout(() => {
-        if (!userMbti && document.getElementById('result').style.display === 'block') {
-            const popup = document.getElementById('mbtiMiniPopup');
-            popup.classList.add('show');
-        }
-    }, 3500);
     document.getElementById('sajuMbti').innerHTML = `${curDm}`;
-    if (userMbti) {
-        let cTxt = "";
-        if (curPd.mbti === userMbti) {
-            cTxt = "<br><span style='font-size:0.85rem; color:var(--cyan); font-weight:700'>😲 소름! 본캐랑 부캐가 똑같네요!</span><br><span style='font-size:0.75rem; color:var(--txt2)'>타고난 대로 잘 살고 계시군요.</span>";
-        } else {
-            const diffCount = (curPd.mbti[0] !== userMbti[0]) + (curPd.mbti[1] !== userMbti[1]) + (curPd.mbti[2] !== userMbti[2]) + (curPd.mbti[3] !== userMbti[3]);
-            if (diffCount >= 3) {
-                cTxt = `<br><span style='font-size:0.85rem; color:var(--pink); font-weight:700'>😱 헐! 타고난 거랑 완전 딴판인데요?</span><br><span style='font-size:0.75rem; color:var(--txt2)'>사회생활 하느라 고생이 많으시네요..</span>`;
-            } else {
-                cTxt = `<br><span style='font-size:0.85rem; color:var(--yellow); font-weight:700'>🤔 음.. 현실 타협 좀 하셨군요?</span><br><span style='font-size:0.75rem; color:var(--txt2)'>타고난 성향(${curPd.mbti})과 조금 다르네요.</span>`;
-            }
-        }
-        document.getElementById('soulT').innerHTML = cTxt;
-    } else {
-        document.getElementById('soulT').innerHTML = "";
-    }
+    document.getElementById('soulT').innerHTML = ``;
 }
-// (이하 MBTI 및 공유 로직은 기존과 동일)
-// ...
-const questions = [
-    { t: "EI", q: "친구가 갑자기 '지금 나와!'라고 한다면?", a: [{ t: "E", v: "오 꿀잼ㅋ 바로 나감" }, { t: "I", v: "아... 기 빨리는데 핑계 댈까?" }] },
-    { t: "EI", q: "파티에서 모르는 사람이 말을 걸면?", a: [{ t: "E", v: "오 반가워요! (바로 인스타 맞팔)" }, { t: "I", v: "(어색한 미소) 아 예... (도망갈 각 잰다)" }] },
-    { t: "EI", q: "일주일 동안 집 밖에 안 나가기 가능?", a: [{ t: "E", v: "절대 불가. 벽이랑 대화할 듯" }, { t: "I", v: "천국 아님? 넷플릭스 정주행 개꿀" }] },
-
-    { t: "SN", q: "멍 때릴 때 무슨 생각 해?", a: [{ t: "S", v: "배고프다, 저녁 뭐 먹지" }, { t: "N", v: "좀비가 나타나면 어디로 튀지?" }] },
-    { t: "SN", q: "여행 갈 때 계획은?", a: [{ t: "S", v: "맛집 리스트, 동선 체크 완벽" }, { t: "N", v: "일단 가서 느낌 오는 대로~" }] }, // This is actually J/P usually but fitting S/N context of concrete vs abstract
-    { t: "SN", q: "영화를 볼 때 더 중요한 건?", a: [{ t: "S", v: "배우 연기, 영상미, 현실 고증" }, { t: "N", v: "숨겨진 의미, 감독의 메시지, 세계관" }] },
-
-    { t: "TF", q: "친구가 차 사고 났다고 전화하면?", a: [{ t: "T", v: "보험 불렀어? 다친 덴 없고?" }, { t: "F", v: "헐 괜찮아??! 많이 놀랐지 ㅠㅠ" }] },
-    { t: "TF", q: "친구가 '나 우울해서 머리 잘랐어'라고 하면?", a: [{ t: "T", v: "얼마 줬어? 잘 어울리네" }, { t: "F", v: "무슨 일 있었어? 왜 우울해 ㅠㅠ" }] },
-    { t: "TF", q: "회의 중 내 의견이 반박당하면?", a: [{ t: "T", v: "아 그런가? 논리적으로 맞네 (수긍)" }, { t: "F", v: "아... (마상 입음, 집 가서 이불킥)" }] },
-
-    { t: "JP", q: "2주 뒤 여행, 지금 내 상태는?", a: [{ t: "J", v: "숙소 예약 완료, 엑셀로 일정 정리 중" }, { t: "P", v: "비행기 표는 끊었나? 아 몰라 그때 가서" }] },
-    { t: "JP", q: "책상 위 상태는?", a: [{ t: "J", v: "각 잡혀 있음. 물건 제자리" }, { t: "P", v: "카오스 그 자체. 근데 어디 뭐 있는진 앎" }] },
-    { t: "JP", q: "약속 시간 1시간 전, 친구가 '30분 늦을 듯'이라 한다면?", a: [{ t: "J", v: "아... 내 계획 다 꼬이는데 (짜증)" }, { t: "P", v: "오 개꿀ㅋ 나도 천천히 가야지" }] }
-];
-
-let qIdx = 0;
-let scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-
-const MBTI_DESC = {
-    'ISTJ': "현실주의자 그 자체. 약속 시간 1분 늦으면 손절각. 겉으론 꼰대 같아 보이지만 책임감 하나는 우주 최강. 계획 틀어지면 고장남.",
-    'ISFJ': "착한 척하는데 속으로 욕하고 있음. 남 챙겨주는 척하면서 내 사람 챙김. 뒤끝 쩔어서 3년 전 일도 기억함.",
-    'INFJ': "겉으론 웃는데 속으론 인류 멸망 시나리오 씀. 남 눈치 보느라 피곤함. 도덕적인 척하지만 속으론 제일 음흉할 수도.",
-    'INTJ': "인간 혐오자. 멍청한 사람 보면 화남. 혼자 있는 게 제일 좋음. 계획한 대로 안 되면 세상 무너짐.",
-    'ISTP': "만사가 귀찮음. 효율충. 남한테 관심 없음. 영혼 없다는 소리 자주 들음. 근데 뭐 하나 꽂히면 무서움.",
-    'ISFP': "침대 성애자. 약속 취소되면 기뻐함. 착한데 우유부단함. 거절 못해서 호구 잡힘. 갬성 충만.",
-    'INFP': "망상 전문가. 유리 멘탈. 혼자 있는 거 좋은데 외로운 건 싫음. 착한데 가끔 흑화하면 무서움.",
-    'INTP': "논리왕. 말싸움하면 절대 안 짐. 공감 능력 제로. 팩폭 하다가 친구 다 떠나감. 방구석 아인슈타인.",
-    'ESTP': "스릴 중독자. 내일은 없다. 일단 저지르고 봄. 말이 행동보다 빠름. 팩폭러. 남 눈치 안 봄.",
-    'ESFP': "관종 그 자체. 사람 만나는 게 에너지 충전. 분위기 메이커. 진지한 거 딱 질색. 카드값 폭탄 주의.",
-    'ENFP': "댕댕이 인간형. 리액션 혜자. 금사빠. 감정 기복 롤러코스터. 머릿속에 꽃밭 있음. 뒷마무리 안 됨.",
-    'ENTP': "논쟁 즐기는 변태. 남 골탕 먹이는 거 좋아함. 아이디어 뱅크. 고집 셈. 자기애 폭발.",
-    'ESTJ': "젊은 꼰대. 일 중독자. 감정팔이 극혐. 리더 하고 싶어 함. 잔소리 대마왕. 융통성 제로.",
-    'ESFJ': "오지ap 대마왕. 남 챙기는 게 낙. 칭찬 안 해주면 삐짐. 뒷담화 좋아함. 분위기 못 맞추면 못 참음.",
-    'ENFJ': "평화주의자. 남들 싸우면 말려야 함. 오글거리는 멘트 장인. 멘탈 약함. 남 돕다가 내 코가 석자.",
-    'ENTJ': "독재자 기질. 일 못하는 사람 극혐. 목표 달성 위해선 수단 방법 안 가림. 워커홀릭. 공감 능력 부족."
-};
-
-function startMbtiTest() {
-    const name = document.getElementById('userName').value.trim();
-    if (!name) {
-        alert('이름을 먼저 입력해주세요! 😅');
-        document.getElementById('userName').focus();
-        return;
-    }
-    const tab = document.querySelector('.tab-row button.on').dataset.tab;
-    let isValidDate = false;
-    if (tab === 'quick') {
-        const v = document.getElementById('quickDate').value.trim();
-        if (/^\d{8}$/.test(v)) {
-            isValidDate = true;
-        }
-    } else {
-        isValidDate = true;
-    }
-    if (!isValidDate) {
-        alert('생년월일을 먼저 입력해주세요! 📅');
-        if (tab === 'quick') document.getElementById('quickDate').focus();
-        return;
-    }
-    document.getElementById('mbtiModal').style.display = 'flex';
-    qIdx = 0;
-    scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-    showQuestion();
-}
-
-function closeMbtiTest() {
-    if (confirm('테스트를 그만두시겠습니까? 기록은 저장되지 않습니다.')) {
-        document.getElementById('mbtiModal').style.display = 'none';
-    }
-}
-
-function showQuestion() {
-    const q = questions[qIdx];
-    const qBox = document.getElementById('qBox');
-    document.getElementById('qNum').innerText = `${qIdx + 1} / ${questions.length}`;
-    document.getElementById('mbtiBar').style.width = `${((qIdx + 1) / questions.length) * 100}%`;
-
-    qBox.innerHTML = `
-                <div class="q-card">
-                    <p class="q-text">${q.q}</p>
-                    <button class="opt-btn" onclick="answer('${q.a[0].t}')">A. ${q.a[0].v}</button>
-                    <button class="opt-btn" onclick="answer('${q.a[1].t}')">B. ${q.a[1].v}</button>
-                </div>
-            `;
-}
-
-function answer(type) {
-    scores[type]++;
-    qIdx++;
-    if (qIdx < questions.length) {
-        showQuestion();
-    } else {
-        finishTest();
-    }
-}
-
-function finishTest() {
-    const r =
-        (scores.E >= scores.I ? 'E' : 'I') +
-        (scores.S >= scores.N ? 'S' : 'N') +
-        (scores.T >= scores.F ? 'T' : 'F') +
-        (scores.J >= scores.P ? 'J' : 'P');
-    userMbti = r;
-    document.getElementById('mbtiModal').style.display = 'none';
-    const desc = MBTI_DESC[r] || "알 수 없는 유형";
-    let compMsg = "";
-    if (curPd) {
-        const sajuM = curPd.mbti;
-        if (sajuM) {
-            if (sajuM === r) {
-                compMsg = `😲 <strong>소름!</strong> 타고난 운명(${sajuM})과 현재 성격이 완벽하게 일치합니다! 본캐와 부캐가 하나시네요.`;
-            } else {
-                compMsg = `🤔 타고난 운명은 <strong>${sajuM}</strong>인데, 실제로는 <strong>${r}</strong>로 살고 계시네요! 사회생활 하느라 성격이 좀 바뀌셨나요?`;
-            }
-        }
-    } else {
-        compMsg = "사주 결과를 먼저 보면 비교 분석도 해드려요!";
-    }
-    document.getElementById('resMbtiTitle').innerText = r;
-    document.getElementById('resMbtiDesc').innerText = desc;
-    document.getElementById('resCompareTxt').innerHTML = compMsg;
-    document.getElementById('mbtiResultModal').style.display = 'flex';
-    if (document.getElementById('result').style.display === 'block') {
-        analyze();
-    }
-}
-
-function closeMbtiResult() {
-    document.getElementById('mbtiResultModal').style.display = 'none';
-}
-function shareKakao() { if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) { alert('카카오 SDK 초기화 필요'); return } Kakao.Share.sendDefault({ objectType: 'feed', content: { title: `${uName}님의 영혼 캐릭터는 [${curDm}]!`, description: curPd ? curPd.mbti + ' - ' + curPd.base.slice(0, 40) + '...' : '사주 분석 해보세요!', imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }, buttons: [{ title: '내 운명 확인하기', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }] }) }
+function shareKakao() { if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) { alert('카카오 SDK 초기화 필요'); return } Kakao.Share.sendDefault({ objectType: 'feed', content: { title: `[용한점집 달의 신당] ${uName}님에게 신령님이 내린 점괘`, description: `타고난 운명은 [${curDm}]... 과연 그 뜻은?`, imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }, buttons: [{ title: '내 점괘 확인하기', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }] }) }
