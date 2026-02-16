@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>점술가 The Moon - 사주로 보는 나의 영혼 캐릭터 (MBTI)</title>
+    <title>용한점집 달의 신당</title>
     <meta name="description"
         content="2026년 병오년 무료 신년운세, 사주팔자, 만세력 기반의 성격 분석. 나의 타고난 기질과 MBTI를 비교해보세요. 오늘, 이번주, 올해의 운세를 무료로 제공합니다.">
     <meta name="keywords" content="사주, 무료사주, 만세력, 신년운세, 2026년운세, MBTI, 성격테스트, 사주MBTI, 궁합">
     <link rel="canonical" href="https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/">
-    <meta property="og:title" content="점술가 The Moon - 사주로 보는 영혼 캐릭터">
+    <meta property="og:title" content="용한점집 달의 신당">
     <meta property="og:description" content="소름 돋는 사주 분석! 내 영혼의 MBTI는 무엇일까? 지금 바로 확인하세요.">
     <meta property="og:image" content="https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png">
     <meta property="og:url" content="https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/">
@@ -29,46 +29,24 @@
     <div id="overlay"></div>
     <canvas id="trailCanvas"></canvas>
 
-    <!-- MBTI Test Modal -->
-    <div id="mbtiModal">
-        <div class="wrap" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
-            <div class="mbti-header">
-                <h2>🧩 성격 유형 테스트</h2>
-                <button class="mbti-close-btn" onclick="closeMbtiTest()">✕</button>
-                <div class="mbti-progress">
-                    <div class="mbti-bar" id="mbtiBar"></div>
-                </div>
-                <p id="qNum" style="color:var(--txt2); font-size:0.8rem; margin-top:8px">1 / 12</p>
-            </div>
-            <div id="qBox"></div>
-        </div>
-    </div>
 
-    <!-- MBTI Result Modal -->
-    <div id="mbtiResultModal">
-        <div class="mbti-res-card">
-            <div class="res-badge">당신의 진짜 성격은?</div>
-            <div class="res-title" id="resMbtiTitle">INFP</div>
-            <div class="res-desc" id="resMbtiDesc"></div>
-            <div class="res-compare" id="resCompareTxt"></div>
-            <button class="submit" onclick="closeMbtiResult()">확인</button>
-        </div>
-    </div>
 
     <div id="main-layout">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-format="autorelaxed"
-             data-ad-client="ca-pub-3360310428058423"
-             data-ad-slot="9099114756"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        <div class="ad-container-top">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="autorelaxed"
+                 data-ad-client="ca-pub-3360310428058423"
+                 data-ad-slot="9099114756"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
         <main id="main-content">
             <div class="wrap">
                 <div id="inputSection" class="card">
-                    <h1>🌙 점술가 The Moon</h1>
-                    <p class="sub">MZ세대를 위한 팩폭 사주 🔥</p>
+                    <h1>🌙 용한점집 달의 신당</h1>
+                    <p class="sub">신령님이 알려주는 당신의 운명</p>
                     <div class="form-g"><label>📛 이름/닉네임</label><input type="text" id="userName" placeholder="ex) 럭키민수"
                             maxlength="20"></div>
                     <div class="form-g"><label>👤 성별</label>
@@ -99,13 +77,12 @@
                         </div>
                     </div>
                     <div class="action-buttons">
-                        <button class="submit" onclick="analyze()">🔮 내 운명 까발리기</button>
-                        <button class="mbti-start-btn" onclick="startMbtiTest()">🧩 내 '진짜' MBTI 검사하기</button>
+                        <button class="submit" onclick="analyze()">🔮 신령님께 여쭙기</button>
                     </div>
                 </div>
                 <div id="loading">
                     <div class="ld"></div>
-                    <p style="margin-top:14px;color:var(--cyan)">천기누설 중... 🤫</p>
+                    <p style="margin-top:14px;color:var(--cyan)">신령님 부르는 중... 🕯️</p>
                 </div>
                 <div id="result">
                     <div class="card" id="manseCard">
@@ -189,7 +166,7 @@
                     </div>
                 </div>
                 <section class="encyclopedia">
-                    <h2>📚 천간 성격 도감</h2>
+                    <h2>📜 신령님의 비급</h2>
                     <article class="enc-card">
                         <h3><span>甲</span> 갑목 - 큰 나무의 기운</h3>
                         <p>갑목(甲木)은 하늘을 향해 곧게 뻗어 올라가는 거대한 나무의 기운을 상징합니다. 이 기운을 가진 사람은 리더십이 강하고 정의감이 넘치며, 자신만의 원칙과 소신을 끝까지 지키려는
@@ -257,7 +234,7 @@
         </div>
 
         <footer>
-            <p>&copy; 2026 점술가 The Moon. All rights reserved.</p>
+            <p>&copy; 2026 용한점집 달의 신당. All rights reserved.</p>
             <div style="margin-top: 10px;">
                 <a href="index.html" style="color: var(--txt2); text-decoration: none;">홈</a> |
                 <a href="about.html" style="color: var(--txt2); text-decoration: none;">소개</a> |
@@ -266,8 +243,7 @@
                     onclick="document.getElementById('privacyModal').style.display='flex'">개인정보처리방침</span> |
                 <a href="blog.html" style="color: var(--txt2); text-decoration: none;">블로그</a>
             </div>
-            <p style="margin-top: 20px; font-size: 0.7rem; opacity: 0.6;">본 서비스는 과학적 근거에 기반한 엔터테인먼트 목적으로 제공되며, 맹신은
-                금물입니다.</p>
+            <p style="margin-top: 20px; font-size: 0.7rem; opacity: 0.6;">본 서비스는 재미를 위한 콘텐츠이며, 과학적 근거가 부족하오니 맹신은 금물입니다.</p>
         </footer>
     </div>
 
