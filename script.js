@@ -287,3 +287,10 @@ function calc(y, mo, d, h, mi) {
     document.getElementById('soulT').innerHTML = ``;
 }
 function shareKakao() { if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) { alert('카카오 SDK 초기화 필요'); return } Kakao.Share.sendDefault({ objectType: 'feed', content: { title: `[용한점집 달의 신당] ${uName}님에게 신령님이 내린 점괘`, description: `타고난 운명은 [${curDm}]... 과연 그 뜻은?`, imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }, buttons: [{ title: '내 점괘 확인하기', link: { mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/', webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/' } }] }) }
+
+window.addEventListener('scroll', () => {
+    const indicator = document.querySelector('.scroll-down-indicator');
+    if (indicator) {
+        indicator.style.opacity = '0';
+    }
+}, { once: true });
