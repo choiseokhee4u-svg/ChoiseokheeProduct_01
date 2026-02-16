@@ -643,6 +643,36 @@ h1 {
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
 }
 
+.link-btn {
+    flex: 1;
+    padding: 14px;
+    background: var(--cyan);
+    border: none;
+    border-radius: 12px;
+    color: #0f172a;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 245, 212, 0.3);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.link-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 245, 212, 0.4);
+}
+
+.element-icon {
+    font-size: 1.8rem;
+    width: 30px;
+    text-align: center;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+}
+
 .ad {
     margin-top: 24px; /* Increased space */
     padding: 30px; /* Increased padding */
