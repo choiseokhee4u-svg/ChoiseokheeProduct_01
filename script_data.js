@@ -10,10 +10,3 @@ async function loadScriptData(lang) {
     LK_DATA = translations.LK;
     ELEMENT_NAMES_DATA = translations.ELEMENT_NAMES;
 }
-
-// Ensure this is loaded before script.js
-(async () => {
-    // Get current language from localStorage or default to 'ko'
-    const lang = localStorage.getItem('lang') || 'ko';
-    await loadScriptData(lang);
-})();

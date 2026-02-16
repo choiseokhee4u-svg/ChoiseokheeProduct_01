@@ -1,5 +1,6 @@
 let currentLang = localStorage.getItem('lang') || 'ko';
 let translations = {}; // Store translations globally
+let isScriptDataLoaded = false; // Flag to check if dynamic script data is loaded
 
 async function loadTranslations(lang) {
     const response = await fetch(`locales/${lang}.json`);
@@ -35,9 +36,12 @@ async function setLanguage(lang) {
     translations = await loadTranslations(lang);
     applyTranslations(translations);
     updateLangUI();
-    // Reload dynamic script data as well
+    
+    // Load dynamic script data as well
     if (typeof loadScriptData === 'function') {
         await loadScriptData(lang);
+        isScriptDataLoaded = true; // Set flag to true after data is loaded
+        document.dispatchEvent(new CustomEvent('scriptDataLoaded')); // Dispatch event
     }
 }
 

@@ -156,14 +156,14 @@
             "base": "The child spirit tells you, 'You are the image of a general holding a sword made of iron.' You are full of righteousness and cannot stand injustice. However, your energy is so strong and sharp that your well-intentioned words and actions can hurt others. You have a curse (煞) in your bones and joints, so you should take care of your body from a young age and pay attention to your bone health.",
             "love": "You are clumsy and blunt in expressing your love, but you have the loyalty to protect your person with your life once you decide they are yours. You are not good at playing games, so you express yourself honestly, saying 'I like it if I like it, I don't like it if I don't like it'. The child spirit sees that you need to meet a person with the wise energy of water (水) who can gently embrace your rough side and understand your sincerity.",
             "money": "Your wealth luck is 'all or nothing'. You have frequent opportunities to make a lot of money, but you also run the risk of losing a lot. If you pursue power or honor, wealth will follow you naturally. The child spirit sees that you have an ancestor who died away from home, so you have bad luck that things fall apart when they are about to work out. You must release this bad luck through a ritual to comfort the ancestor who died away from home.",
-            "work": "Your calling is a profession that holds power and establishes discipline, such as a soldier, police officer, or prosecutor. You lead people with strong charisma, but your flaw is that you often clash with your superiors. When the child spirit drew the divine knife, the trigram for 'blood' came out. This may mean surgery or an accident, but it also means cutting off bad energy and being reborn, so do not be afraid of change.",
+            "work": "Your calling is a profession that holds power and establishes discipline, such as a soldier, police officer, or prosecutor. You lead people with strong charisma, but your flaw is that you often clash with your superiors. When the child spirit drew the five-colored flags, the red and white flags came out together. This means that power and honor will follow you, but in the process, there will be a lot of gossip, so you must always be careful with your words.",
             "advice": "The child spirit's message has come down. 'Even a sharp sword needs to be kept in its scabbard sometimes.' Do not always express your strong energy outward, but learn to control it inward. True strength comes not from using force, but from the wisdom to control that force."
         },
         "辛": {
             "base": "The child spirit tells you, 'You are like a sharp jewel in a fairy's jewelry box.' You have a strong sense of pride, pursue perfection, and cannot tolerate disarray. You see things that others cannot with your sharpness, but you are so sensitive that you torment yourself. Cold energy is likely to enter your lungs and bronchial tubes, so you should always keep your neck warm.",
             "love": "In love, you are waiting for a prince on a white horse, a fairy from the sky. It is difficult to start a relationship because it is difficult to find someone who meets your high standards. But once you open your heart, you try to show a love that shines like a jewel. The child spirit sees that a person with the energy of a wide land (土) who can accept your pickiness as a compliment and respect your sensitivity is a good match for you.",
             "money": "You have a good eye for valuable things and have a talent for financial technology. But the money you spend to maintain your dignity is not insignificant. If you are too fond of luxury goods, you will not be able to accumulate wealth. The child spirit sees that you have a strong 'dohwasal (桃花煞)'. This curse (煞) can attract popularity and make you money, but it can also make you lose money due to problems with the opposite sex, so you should be careful in your relationships with the opposite sex.",
-            "work": "You are suited for a professional job that requires delicacy and accuracy. You can be very successful in the fields of law, medicine, finance, and art. When the child spirit drew the five-colored flag, the white flag came out. This means fruition and completion, so if there is something that has been going on for a long time, you will get good results within this year.",
+            "work": "You are suited for a professional job that requires delicacy and accuracy. You can be very successful in the fields of law, medicine, finance, and art. When the child spirit drew the five-colored flags, the white flag came out. This means fruition and completion, so if there is something that has been going on for a long time, you will get good results within this year.",
             "advice": "The child spirit's message has come down. 'A jewel shines the more you polish it, but if you polish it too much, it will wear out.' Let go of your obsession with perfection a little. Not everything in the world can meet your standards. When you are a little more generous with yourself, your soul will shine even more brilliantly."
         },
         "壬": {
@@ -180,5 +180,88 @@
             "work": "You have a special talent for touching people's hearts. You are destined to be a light to people in the fields of religion, counseling, art, and education. When the child spirit drew the divine knife, the trigram for 'hwal-in (活人)' came out. This means that you must do the work of saving people to release your karma and open up your luck.",
             "advice": "The child spirit's message has come down. 'Stagnant water rots, and flowing water creates life.' Show your deep thoughts and compassionate heart to the world. Don't just save the world in your head, but when you put even a small action into practice, you will become a precious being like a welcome rain that soaks a dry land."
         }
-    }
+    },
+    "TEN_GODS": {
+        "Bi-gyeon": { "name": "Friend (比肩)", "keywords": ["Self-esteem", "Competition", "Independence"], "desc": "This is a time when energy similar to your own comes in. Your subjectivity becomes clear and you are full of confidence, but you can get into friction with your surroundings because you become stubborn. Choose cooperation over competition." },
+        "Geop-jae": { "name": "Robber (劫財)", "keywords": ["Competitiveness", "Spending", "Challenge"], "desc": "Your competitive spirit is on fire. There may be unexpected spending or financial losses, so close your wallet. But it's a good day to take a chance." },
+        "Sik-sin": { "name": "Food God (食神)", "keywords": ["Expression", "Relaxation", "Food Luck"], "desc": "This is a time when food, clothing, and shelter become abundant. Your creativity soars and your speaking skills improve. It's perfect for eating delicious food or enjoying a hobby." },
+        "Sang-gwan": { "name": "Hurting Officer (傷官)", "keywords": ["Eloquence", "Rebellion", "Idea"], "desc": "The desire to break the existing mold becomes stronger. You get attention for your quirky ideas, but you have to be careful of slips of the tongue (gossip)." },
+        "Pyeon-jae": { "name": "Indirect Wealth (偏財)", "keywords": ["Windfall", "Entertainment", "Big Money"], "desc": "This is a time when unexpected money can come in or go out. Your business acumen improves and you want to enjoy entertainment. Try buying a lottery ticket!" },
+        "Jeong-jae": { "name": "Direct Wealth (正財)", "keywords": ["Sincerity", "Savings", "Stability"], "desc": "Your meticulous and realistic judgment improves. It is good for accumulating wealth little by little. Planned consumption and investment will pay off." },
+        "Pyeon-gwan": { "name": "7 Killings (偏官)", "keywords": ["Responsibility", "Stress", "Charisma"], "desc": "You may feel a heavy sense of responsibility and stress. However, if you overcome the difficulties, you can gain great honor. Pay attention to your health." },
+        "Jeong-gwan": { "name": "Direct Officer (正官)", "keywords": ["Promotion", "Honor", "Principle"], "desc": "This is a time when you live a just and upright life. You will be recognized for your abilities at work or have luck in passing exams. Fortune comes when you stick to your principles." },
+        "Pyeon-in": { "name": "Indirect Resource (偏印)", "keywords": ["Intuition", "Quick-wittedness", "Loneliness"], "desc": "You become quick-witted and your intuition becomes sharp. You see things that others don't, but you can get depressed because you think too much. Meditation and studying will go well." },
+        "Jeong-in": { "name": "Direct Resource (正印)", "keywords": ["Recognition", "Study", "Benefactor"], "desc": "This is a lovely time when you receive help and recognition from those around you. You have good luck with documents and it is advantageous for studying or contracts. You will be loved by your superiors." }
+    },
+    "BRANCH_MODIFIERS": {
+        "子": { "k": "Wisdom", "d": "You have deep wisdom, but you do not reveal it to others.", "love": "Your heart is like the deep sea, but you are clumsy with your expressions and are easily misunderstood.", "money": "You have a talent for secretly accumulating wealth, so even if your storehouse seems empty, it is actually full.", "work": "You have a great talent for night work, mental work, and coming up with ideas." },
+        "丑": { "k": "Sincerity", "d": "You go your own way silently like an ox, and even the heavens recognize your sincerity.", "love": "Once you give your heart, it is like gaining a life partner. But it might be a little boring.", "money": "You make a mountain out of a molehill, and the fruits of your labor will shine brightly in your old age.", "work": "You are suitable for work that requires perseverance and is based on trust." },
+        "寅": { "k": "Courage", "d": "You have the spirit of a mountain tiger, so you are fearless and brave.", "love": "When you fall in love, you rush in without thinking. That passion is beautiful, but it can sometimes tire the other person out.", "money": "You aim for big things, so you are not satisfied with small wealth. You have a strong entrepreneurial spirit.", "work": "You are destined to be a leader who leads people, a pioneer who opens up new paths." },
+        "卯": { "k": "Gentleness", "d": "You are like a rabbit in spring when all things come to life, so you are affectionate and gentle.", "love": "You are delicate and gentle, so being around you is comfortable. You are loved by many of the opposite sex.", "money": "You are a frugal housekeeper, so wealth does not easily leak out.", "work": "You have a God-given talent for dealing with people, teaching and caring for others." },
+        "辰": { "k": "Change", "d": "You have the ever-changing energy of a dragon, so your scale is extraordinary.", "love": "You dream of a dream-like love, so you are not satisfied with an ordinary relationship.", "money": "You dream of great wealth, so you tend to jump into speculation or business ventures.", "work": "You are the image of a leader who holds power or leads a large organization. Do not be afraid of change." },
+        "巳": { "k": "Passion", "d": "You have the passion of a fire that never goes out.", "love": "You may seem cold on the outside, but you are hot as a fire on the inside. Once you fall in love, you burn everything.", "money": "You have a good ability to handle information and have an eye for reading the flow of money.", "work": "You are eloquent and persuasive, so the path of a lawyer, diplomat, or broadcaster is open to you." },
+        "午": { "k": "Splendor", "d": "You have a splendid and eye-catching energy like the midday sun.", "love": "You are popular and there are always people around you. You enjoy a glamorous love life, but it takes time to find your true person.", "money": "You have a 'live for style' temperament and spend a lot, but you also have an outstanding ability to earn.", "work": "You are destined to succeed greatly in a profession where you stand in front of others, such as arts and entertainment." },
+        "未": { "k": "Perseverance", "d": "You have the perseverance of dry land, so you are patient and deep-hearted.", "love": "You are a sunflower-like love that silently watches over and waits for the other person.", "money": "You consider stability to be the best, so you accumulate wealth through real estate or savings.", "work": "You are good at being a mediator, so you are good at resolving conflicts between people." },
+        "申": { "k": "Talent", "d": "You were born with natural talent and resourcefulness.", "love": "You easily capture the hearts of the opposite sex with your wit and humor. You may have a lot of dating experience.", "money": "You have a lot of cunning and a knack for making money. Wealth comes from various places.", "work": "You have the ability to survive in any crisis, so you don't have to worry about starving no matter what you do." },
+        "酉": { "k": "Fruition", "d": "Like the fruits of autumn, you have a sharp and neat personality.", "love": "You have high standards and do not embrace just anyone. You look for the perfect partner, but once you open your heart, you are devoted.", "money": "You are a meticulous wealth manager who does not tolerate a single penny of waste.", "work": "A professional job that requires precision, a field that requires sharp analytical skills is your calling." },
+        "戌": { "k": "Loyalty", "d": "Like a loyal dog that protects its owner, you have a strong sense of loyalty and fidelity.", "love": "Once you give your heart, you will not betray them, so there is no more reliable partner.", "money": "You have an excellent ability to protect your storehouse, so you will never lose wealth once it comes in.", "work": "You are a reliable person who will surely complete any task given to you because you have a strong sense of responsibility." },
+        "亥": { "k": "Inclusiveness", "d": "You have the energy of the night sea that embraces everything.", "love": "You understand and embrace everything about the other person, so your heart is like the Pacific Ocean.", "money": "Even if you don't pursue money yourself, you are born with good fortune and will never starve.", "work": "You have the insight to read the big picture, so you will stand out in a field that is ahead of its time." }
+    },
+    "SEASON_MODIFIERS": {
+        "寅": "of early spring", "卯": "of spring", "辰": "of late spring",
+        "巳": "of early summer", "午": "of summer", "未": "of late summer",
+        "申": "of early autumn", "酉": "of autumn", "戌": "of late autumn",
+        "亥": "of early winter", "子": "of winter", "丑": "of late winter"
+    },
+    "LK": {
+        "WOOD": { "c": "🌿 Green/Mint", "i": "Plants, walk to the east" },
+        "FIRE": { "c": "🔴 Red/Purple", "i": "Candles, sunlight" },
+        "EARTH": { "c": "🟡 Yellow", "i": "Pottery" },
+        "METAL": { "c": "⚪ White/Silver", "i": "Jewelry" },
+        "WATER": { "c": "🔵 Black/Navy", "i": "Drink plenty of water" }
+    },
+    "ELEMENT_NAMES": {
+        "WOOD": "Wood(木)", "FIRE": "Fire(火)", "EARTH": "Earth(土)", "METAL": "Metal(金)", "WATER": "Water(水)"
+    },
+
+    "blog_article4_title": "The History of Saju and Shamanism in Korea: Historical and Cultural Significance",
+    "blog_article4_p": "In Korea, Saju and Shamanism have a long history and deep cultural significance. From ancient times to the present day, these two have profoundly influenced the lives and spiritual world of Koreans. Saju Palja is a tool to predict and understand individual destiny, analyzing the cosmic energy determined at the moment of birth. Shamanism, on the other hand, is a traditional belief system that predicts good and bad fortune, heals diseases, and prevents misfortune through communication with spiritual beings. This article delves into how Saju and Shamanism have developed and influenced each other in Korean society, and how they are positioned in modern times, exploring their historical background and cultural importance. Both have played an important role in the lives of Koreans, particularly contributing to the interpretation of individual destiny and spiritual comfort. We hope this article helps you understand Korea's unique spiritual culture.",
+
+    "blog_article5_title": "Saju Result Interpretation Guide: Key Concepts for Beginners",
+    "blog_article5_p": "Saju Mycology may seem complex, but with an understanding of just a few key concepts, you can interpret your Saju results yourself and gain wisdom for life. This guide clearly and simply explains the most important concepts for Saju beginners: 'Saju Palja (Four Pillars and Eight Characters)', 'Ilgan (Day Master)', 'Ohaeng (Five Elements)', and 'Sipsin (Ten Gods)'. Saju Palja represents the year, month, day, and hour of a person's birth as four pillars and eight characters, among which Ilgan is the most important character representing 'self'. The Five Elements (Wood, Fire, Earth, Metal, Water) explain the changes of all things in the universe through their creative (相生) and overcoming (相剋) relationships, and Sipsin serves as a standard for detailed analysis of personality, wealth luck, career luck, and spouse luck through their relationship with Ilgan and other characters. Through this guide, we hope you will understand the meaning of your Saju, grasp your innate potential and future fortune flow, and make wise choices for a better life.",
+
+    "blog_article6_title": "In-depth Analysis of Saju's Five Elements: Their Impact on Your Life",
+    "blog_article6_p": "In Saju Mycology, the Five Elements (五行) are the origin of all things in the universe and the basic elements of life activities. The five energies of Wood, Fire, Earth, Metal, and Water create (相生) and overcome (相剋) each other to achieve balance and harmony, which profoundly affects an individual's destiny and personality. This article deeply analyzes the natural phenomena, colors, emotions, body parts, and personality traits symbolized by each Five Elements, and suggests life patterns, health problems, and ways to complement and harmonize them when a specific Five Elements is abundant or lacking in one's Saju. For example, a person with strong Wood energy is proactive and driven, but can sometimes show excessive competitiveness. Conversely, a lack of Wood energy can lead to indecisiveness or weakness. Through this in-depth analysis, we hope you will gain practical wisdom to deeply understand your innate Five Element structure, find balance in your life, and create a richer and healthier life. Gain wisdom to leverage your strengths and compensate for your weaknesses by understanding your Five Elements characteristics.",
+
+    "season_default": "of the season",
+    "energy_text": "energy",
+    "tendency_text": "tendency",
+    "characteristics_text": "characteristics",
+    "today_oracle": "Today's Oracle",
+    "week_oracle": "This Week's Oracle",
+    "year_oracle": "This Year's Oracle",
+    "keywords_text": "Keywords to ponder",
+    "alert_loading_data": "Data is loading. Please try again shortly.",
+    "default_name": "Child Shaman",
+    "underfoot_energy_text": "Energy beneath your feet",
+    "love_fortune_text": "Direction of Love",
+    "wealth_flow_text": "Flow of Wealth",
+    "career_honor_text": "Worldly life and Honor",
+    "pillar_label_time": "Time Pillar",
+    "pillar_label_day": "Day Pillar",
+    "pillar_label_month": "Month Pillar",
+    "pillar_label_year": "Year Pillar",
+    "stem_text": "Stem",
+    "element_energy_text": "'s energy person",
+    "soul_body_text": "'s spirit-destined true self",
+    "gender_male_text": "🙋‍♂️ Male (Yang)",
+    "gender_female_text": "🙋‍♀️ Female (Yin)",
+    "five_elements_text": "'s Five Elements Energy from the Spirits",
+    "male_luck_tip": "You find luck by pioneering your own path",
+    "female_luck_tip": "You find luck by valuing help from others",
+    "kakao_share_title_prefix": "[Divine Oracle: The Moon's Shrine]",
+    "kakao_share_title_suffix": "'s divination from the spirits",
+    "kakao_share_desc_prefix": "Your innate destiny is",
+    "kakao_share_desc_suffix": "... What does it mean?",
+    "kakao_share_button_title": "Check my divination"
 }
