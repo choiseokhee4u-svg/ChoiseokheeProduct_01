@@ -178,7 +178,10 @@ function calc(y, mo, d, h, mi) {
     document.getElementById('worstMatch').innerHTML = `${worstStem} ${window.translations.stem_text} - ${window.ELEMENT_NAMES_DATA[worstEl]}${window.translations.element_energy_text}`;
     let mn = 9, wk = 'WATER';
     for (const [k, v] of Object.entries(cnt)) if (v < mn) { mn = v; wk = k }
-    ['n0', 'n1', 'n2', 'n3'].forEach(id => document.getElementById(id).innerText = uName);
+    ['n0', 'n1', 'n2', 'n3'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = uName;
+    });
 
     document.querySelector('.hero .sec-title').innerHTML = `✨ <span class="nm" id="n1">${uName}</span>${window.translations.soul_body_text}`;
     document.getElementById('soulC').innerText = curDm;

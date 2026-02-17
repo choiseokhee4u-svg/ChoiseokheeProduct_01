@@ -3,7 +3,7 @@ window.translations = {}; // Store translations globally on window
 // isScriptDataLoaded는 script.js에서 이미 선언됨. 재선언 삭제.
 
 async function loadTranslations(lang) {
-    const response = await fetch(`locales/${lang}.json`);
+    const response = await fetch(`locales/${lang}.json?v=${new Date().getTime()}`);
     return response.json();
 }
 
