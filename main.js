@@ -1,6 +1,6 @@
 let currentLang = localStorage.getItem('lang') || 'ko';
 let translations = {}; // Store translations globally
-let isScriptDataLoaded = false; // Flag to check if dynamic script data is loaded
+// isScriptDataLoaded는 script.js에서 이미 선언됨 - 재선언 금지
 
 // FOUC 방지: CSS 로딩 후 body 표시
 function showBody() {
