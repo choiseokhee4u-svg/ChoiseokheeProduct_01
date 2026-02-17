@@ -131,7 +131,7 @@ function analyze() {
         } catch (e) {
             console.error(e);
             document.getElementById('loading').style.display = 'none';
-            alert(window.translations.alert_analysis_error);
+            alert((window.translations.alert_analysis_error || "오류가 발생했습니다.") + "\n[Error: " + e.message + "]");
             location.reload();
         }
     }, 1000);
