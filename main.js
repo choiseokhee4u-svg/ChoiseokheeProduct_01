@@ -48,6 +48,13 @@ async function setLanguage(lang) {
     if (typeof loadScriptData === 'function') {
         try {
             await loadScriptData(lang);
+
+            // If result is already shown, refresh it with new language data
+            const resultDiv = document.getElementById('result');
+            if (resultDiv && resultDiv.style.display === 'block' && typeof calc === 'function') {
+                calc();
+            }
+
             window.isScriptDataLoaded = true; // Use global window property
             document.dispatchEvent(new CustomEvent('scriptDataLoaded')); // Dispatch event
         } catch (e) {

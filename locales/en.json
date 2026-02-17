@@ -400,6 +400,8 @@
     "energy_text": "energy",
     "tendency_text": "tendency",
     "characteristics_text": "characteristics",
+    "desc_template_1": "You are born with the energy of {season} {energy}. You are a {stem} ({element}).",
+    "desc_template_2": "<br> With the addition of {branch_desc} {tendency} ({branch_keyword}), keep in mind that {base_desc} defines your {characteristics}.",
     "today_oracle": "Today's Oracle",
     "week_oracle": "This Week's Oracle",
     "year_oracle": "This Year's Oracle",

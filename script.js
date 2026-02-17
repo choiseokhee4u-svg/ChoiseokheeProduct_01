@@ -56,7 +56,22 @@ function getDetailedPersonality(stem, branch, monthBranch) {
     const season = window.SEASON_MODIFIERS_DATA[monthBranch] || window.translations.season_default;
     return {
         summary: `${season} ${brMod.d}`,
-        desc: `너는 <strong>${season} ${window.translations.energy_text}</strong>를 타고난 <strong>${stem}(${window.ELEMENT_NAMES_DATA[EM[stem]]})</strong>일세.<br> ${brMod.d} ${window.translations.tendency_text}(${brMod.k})이 더해져, ${base.base.split('.')[0]} ${window.translations.characteristics_text}이니 참고하게.`
+        desc: (() => {
+            let desc = window.translations.desc_template_1
+                .replace('{season}', season)
+                .replace('{energy}', window.translations.energy_text)
+                .replace('{stem}', stem)
+                .replace('{element}', window.ELEMENT_NAMES_DATA[EM[stem]]);
+
+            let desc2 = window.translations.desc_template_2
+                .replace('{branch_desc}', brMod.d)
+                .replace('{tendency}', window.translations.tendency_text)
+                .replace('{branch_keyword}', brMod.k)
+                .replace('{base_desc}', base.base.split('.')[0])
+                .replace('{characteristics}', window.translations.characteristics_text);
+
+            return desc + desc2;
+        })()
     };
 }
 
