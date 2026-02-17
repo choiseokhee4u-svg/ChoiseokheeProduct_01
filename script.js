@@ -214,7 +214,14 @@ function calc(y, mo, d, h, mi) {
 }
 
 function shareKakao() {
-    if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
+    if (typeof Kakao === 'undefined') {
+        alert(window.translations.alert_kakao_sdk_error);
+        return;
+    }
+    if (!Kakao.isInitialized()) {
+        Kakao.init('14302bcc718209aaa470793e426fbb2a');
+    }
+    if (!Kakao.isInitialized()) {
         alert(window.translations.alert_kakao_sdk_error);
         return;
     }
