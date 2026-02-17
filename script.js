@@ -299,7 +299,8 @@ function calc(y, mo, d, h, mi) {
     const ch = document.getElementById('statChart'); ch.innerHTML = '';
     ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'].forEach(k => {
         const e = E[k], c = cnt[k], pc = (c / 8) * 100;
-        ch.innerHTML += `<div class="stat-row"><span class="element-icon">${e.img}</span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
+        const eName = window.ELEMENT_NAMES_DATA[k];
+        ch.innerHTML += `<div class="stat-row"><span class="element-icon">${e.img} <span style="font-size:0.8em; opacity:0.8;">(${eName})</span></span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
     });
     setTimeout(() => document.querySelectorAll('.stat-fill').forEach(b => b.style.width = b.dataset.w), 100);
     const lk = window.LK_DATA[wk], le = E[wk];
