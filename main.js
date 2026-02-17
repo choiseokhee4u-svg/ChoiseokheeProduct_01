@@ -168,29 +168,23 @@ function initShamanEffects() {
 
     // --- 카드 스크롤 진입 애니메이션 (IntersectionObserver) ---
     const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.1,
+        rootMargin: '0px 0px -30px 0px'
     };
 
     const cardObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                entry.target.classList.remove('card-hidden');
                 entry.target.classList.add('card-reveal');
                 cardObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // 카드와 백과사전 항목에 옵저버 적용
-    document.querySelectorAll('.card, .enc-card, .blog-article').forEach(card => {
-        card.style.opacity = '0';
+    // 백과사전 항목에만 옵저버 적용 (입력/결과 카드는 제외)
+    document.querySelectorAll('.enc-card, .blog-article').forEach(card => {
+        card.classList.add('card-hidden');
         cardObserver.observe(card);
     });
-
-    // 입력 섹션 카드는 바로 보이도록
-    const inputSection = document.getElementById('inputSection');
-    if (inputSection) {
-        inputSection.style.opacity = '1';
-        inputSection.classList.add('card-reveal');
-    }
 }
