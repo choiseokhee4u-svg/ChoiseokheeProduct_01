@@ -7,7 +7,7 @@ window.LK_DATA = null;
 window.ELEMENT_NAMES_DATA = null;
 
 window.loadScriptData = async function (lang) {
-    const response = await fetch(`locales/${lang}.json`);
+    const response = await fetch(`locales/${lang}.json?v=${new Date().getTime()}`);
     const translations = await response.json();
     window.P_DATA = translations.P;
     window.TEN_GODS_DATA = translations.TEN_GODS;
