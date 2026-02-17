@@ -2,6 +2,15 @@ let currentLang = localStorage.getItem('lang') || 'ko';
 let translations = {}; // Store translations globally
 let isScriptDataLoaded = false; // Flag to check if dynamic script data is loaded
 
+// FOUC 방지: CSS 로딩 후 body 표시
+function showBody() {
+    document.body.classList.add('loaded');
+}
+// window.onload는 모든 리소스(CSS, 이미지 등) 로딩 후 발생
+window.addEventListener('load', showBody);
+// 안전장치: 2초 후에도 안 보이면 강제 표시
+setTimeout(showBody, 2000);
+
 async function loadTranslations(lang) {
     const response = await fetch(`locales/${lang}.json`);
     return response.json();
