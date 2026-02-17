@@ -104,9 +104,9 @@ const REL_MAP = {
 };
 const E = {
     WOOD: { img: 'images/Wood.png', c: '#4ade80' },
-    FIRE: { img: 'images/Fire.png', c: '#f87171' },
-    EARTH: { img: 'images/Earth.png', c: '#fbbf24' },
-    METAL: { img: 'images/Metal.png', c: '#e2e8f0' },
+    FIRE: { img: 'images/Fire_New.png', c: '#f87171' },
+    EARTH: { img: 'images/Earth_New.png', c: '#fbbf24' },
+    METAL: { img: 'images/Metal_New.png', c: '#e2e8f0' },
     WATER: { img: 'images/Water_New.jpg', c: '#60a5fa' }
 };
 const EM = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER', '寅': 'WOOD', '卯': 'WOOD', '巳': 'FIRE', '午': 'FIRE', '辰': 'EARTH', '戌': 'EARTH', '丑': 'EARTH', '未': 'EARTH', '申': 'METAL', '酉': 'METAL', '亥': 'WATER', '子': 'WATER' };
