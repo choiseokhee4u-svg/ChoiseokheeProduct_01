@@ -1,12 +1,18 @@
-let P_DATA, TEN_GODS_DATA, BRANCH_MODIFIERS_DATA, SEASON_MODIFIERS_DATA, LK_DATA, ELEMENT_NAMES_DATA;
+// Globals exposed on window
+window.P_DATA = null;
+window.TEN_GODS_DATA = null;
+window.BRANCH_MODIFIERS_DATA = null;
+window.SEASON_MODIFIERS_DATA = null;
+window.LK_DATA = null;
+window.ELEMENT_NAMES_DATA = null;
 
-async function loadScriptData(lang) {
+window.loadScriptData = async function (lang) {
     const response = await fetch(`locales/${lang}.json`);
     const translations = await response.json();
-    P_DATA = translations.P;
-    TEN_GODS_DATA = translations.TEN_GODS;
-    BRANCH_MODIFIERS_DATA = translations.BRANCH_MODIFIERS;
-    SEASON_MODIFIERS_DATA = translations.SEASON_MODIFIERS;
-    LK_DATA = translations.LK;
-    ELEMENT_NAMES_DATA = translations.ELEMENT_NAMES;
+    window.P_DATA = translations.P;
+    window.TEN_GODS_DATA = translations.TEN_GODS;
+    window.BRANCH_MODIFIERS_DATA = translations.BRANCH_MODIFIERS;
+    window.SEASON_MODIFIERS_DATA = translations.SEASON_MODIFIERS;
+    window.LK_DATA = translations.LK;
+    window.ELEMENT_NAMES_DATA = translations.ELEMENT_NAMES;
 }
