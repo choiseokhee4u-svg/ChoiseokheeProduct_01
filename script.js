@@ -300,7 +300,7 @@ function calc(y, mo, d, h, mi) {
     ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'].forEach(k => {
         const e = E[k], c = cnt[k], pc = (c / 8) * 100;
         const eName = window.ELEMENT_NAMES_DATA[k];
-        ch.innerHTML += `<div class="stat-row"><span class="element-icon">${e.img} <span style="font-size:0.8em; opacity:0.8; margin-left:4px;">(${eName})</span></span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
+        ch.innerHTML += `<div class="stat-row"><span class="element-icon">${e.img} <span style="font-size:0.6em; opacity:0.75; margin-left:2px; vertical-align: middle;">(${eName})</span></span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
     });
     setTimeout(() => document.querySelectorAll('.stat-fill').forEach(b => b.style.width = b.dataset.w), 100);
     const lk = window.LK_DATA[wk], le = E[wk];
