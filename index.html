@@ -7,7 +7,9 @@
 
 <body>
     <div class="scroll-down-indicator">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
         <span data-i18n="scroll_down">아래로 스크롤</span>
     </div>
     <div id="transition-overlay"></div>
@@ -21,13 +23,10 @@
 
     <div id="main-layout">
         <div class="ad-container-top">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-format="autorelaxed"
-                 data-ad-client="ca-pub-3360310428058423"
-                 data-ad-slot="9099114756"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed"
+                data-ad-client="ca-pub-3360310428058423" data-ad-slot="9099114756"></ins>
             <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
         <main id="main-content" itemscope itemtype="https://schema.org/Service">
@@ -35,23 +34,29 @@
             <div class="wrap">
                 <div id="inputSection" class="card">
                     <h1 itemprop="name" data-i18n="main_title">🌙 용한점집 달의 신당</h1>
-                    <p class="sub" itemprop="description" data-i18n="sub_title">애기동자 몸주신이 공수로 알려주는 당신의 운명</p>                    <div itemprop="provider" itemscope itemtype="https://schema.org/Person">
+                    <p class="sub" itemprop="description" data-i18n="sub_title">애기동자 몸주신이 공수로 알려주는 당신의 운명</p>
+                    <div itemprop="provider" itemscope itemtype="https://schema.org/Person">
                         <meta itemprop="name" content="달의 신당 애기동자">
                     </div>
-                    <div class="form-g"><label data-i18n="name_label">📛 이름/닉네임</label><input type="text" id="userName" data-i18n-placeholder="name_placeholder" placeholder="ex) 럭키민수"
-                            maxlength="20"></div>
+                    <div class="form-g"><label data-i18n="name_label">📛 이름/닉네임</label><input type="text" id="userName"
+                            data-i18n-placeholder="name_placeholder" placeholder="ex) 럭키민수" maxlength="20"></div>
                     <div class="form-g"><label data-i18n="gender_label">👤 성별</label>
-                        <div class="gender-sel"><button class="on" data-g="M" data-i18n="male">🙋‍♂️ 남자</button><button data-g="F" data-i18n="female">🙋‍♀️
+                        <div class="gender-sel"><button class="on" data-g="M" data-i18n="male">🙋‍♂️ 남자</button><button
+                                data-g="F" data-i18n="female">🙋‍♀️
                                 여자</button></div>
                     </div>
-                    <div class="fortune-sel"><button class="on" data-t="today" data-i18n="fortune_today">⚡오늘</button><button
-                            data-t="week" data-i18n="fortune_week">📅이번주</button><button data-t="year" data-i18n="fortune_year">🚀1년</button></div>
+                    <div class="fortune-sel"><button class="on" data-t="today"
+                            data-i18n="fortune_today">⚡오늘</button><button data-t="week"
+                            data-i18n="fortune_week">📅이번주</button><button data-t="year"
+                            data-i18n="fortune_year">🚀1년</button></div>
 
-                    <div class="tab-row"><button class="on" data-tab="quick" data-i18n="quick_input">⚡빠른입력</button><button
-                            data-tab="detail" data-i18n="detail_input">📅선택</button></div>
+                    <div class="tab-row"><button class="on" data-tab="quick"
+                            data-i18n="quick_input">⚡빠른입력</button><button data-tab="detail"
+                            data-i18n="detail_input">📅선택</button></div>
                     <div id="tab-quick" class="tab-c on">
-                        <div class="form-g"><label data-i18n="birthdate_label_quick">🎂 생년월일 8자리</label><input type="text" id="quickDate" data-i18n-placeholder="birthdate_placeholder" placeholder="19990101"
-                                maxlength="8" inputmode="numeric"></div>
+                        <div class="form-g"><label data-i18n="birthdate_label_quick">🎂 생년월일 8자리</label><input
+                                type="text" id="quickDate" data-i18n-placeholder="birthdate_placeholder"
+                                placeholder="19990101" maxlength="8" inputmode="numeric"></div>
                     </div>
                     <div id="tab-detail" class="tab-c">
                         <div class="form-g"><label data-i18n="birthdate_label_detail">🎂 생년월일</label>
@@ -64,7 +69,8 @@
                                 <option value="AM" data-i18n="am">오전</option>
                                 <option value="PM" data-i18n="pm">오후</option>
                             </select><select id="selHour"></select><select id="selMinute"></select></div>
-                        <div class="chk-row"><input type="checkbox" id="unknownTime"><label for="unknownTime" data-i18n="unknown_time">시간 모름</label>
+                        <div class="chk-row"><input type="checkbox" id="unknownTime"><label for="unknownTime"
+                                data-i18n="unknown_time">시간 모름</label>
                         </div>
                     </div>
                     <div class="action-buttons">
@@ -77,20 +83,24 @@
                 </div>
                 <div id="result">
                     <div class="card" id="manseCard">
-                        <div class="sec-title" style="justify-content:center" data-i18n="result_title">📜 <span class="nm" id="n0">OOO</span>에게 내리는 신의 공수
+                        <div class="sec-title" style="justify-content:center" data-i18n="result_title">📜 <span
+                                class="nm" id="n0">OOO</span>에게 내리는 신의 공수
                         </div>
                         <div class="pillars" id="pillarsBox"></div>
                         <div class="saju-msg" id="sajuMsg"></div>
                     </div>
                     <div class="card hero">
-                        <div class="sec-title" style="justify-content:center" data-i18n="soul_title">✨ <span class="nm" id="n1"></span>애기동자님이 알려주는 너의 영혼
+                        <div class="sec-title" style="justify-content:center" data-i18n="soul_title">✨ <span class="nm"
+                                id="n1"></span>애기동자님이 알려주는 너의 영혼
                         </div>
                         <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
                             <div
                                 style="flex:1; background:rgba(0,0,0,0.3); padding:20px; border-radius:16px; text-align:center;">
-                                <span style="font-size:0.9rem; color:var(--txt2); display:block; margin-bottom:8px;" data-i18n="your_deity">너의 주신(主神)</span>
+                                <span style="font-size:0.9rem; color:var(--txt2); display:block; margin-bottom:8px;"
+                                    data-i18n="your_deity">너의 주신(主神)</span>
                                 <div id="sajuMbti"
-                                    style="font-size:2.5rem; font-weight:800; color:var(--pink); line-height:1.2;"></div>
+                                    style="font-size:2.5rem; font-weight:800; color:var(--pink); line-height:1.2;">
+                                </div>
                             </div>
                         </div>
 
@@ -99,8 +109,10 @@
                         <div id="genderBadge" style="font-size:.8rem;color:var(--txt2);margin-top:4px"></div>
                     </div>
                     <div class="card">
-                        <div class="theme-tabs"><button class="on" data-th="base" data-i18n="base_theme">🏠 기본</button><button data-th="love" data-i18n="love_theme">💘
-                                연애</button><button data-th="money" data-i18n="money_theme">💰 재물</button><button data-th="work" data-i18n="work_theme">⚔️ 사회</button></div>
+                        <div class="theme-tabs"><button class="on" data-th="base" data-i18n="base_theme">🏠
+                                기본</button><button data-th="love" data-i18n="love_theme">💘
+                                연애</button><button data-th="money" data-i18n="money_theme">💰 재물</button><button
+                                data-th="work" data-i18n="work_theme">⚔️ 사회</button></div>
                         <div id="storyBox" class="story"></div>
                         <div class="advice-box">
                             <div class="advice-t" data-i18n="advice_title">💀 애기동자의 팩폭 공수</div>
@@ -108,11 +120,13 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="sec-title" data-i18n="ancestor_title">📜 <span class="nm" id="n2"></span>네게 깃든 조상신의 기운과 살(煞) <span class="sub-t">| 조상과 살풀이</span></div>
+                        <div class="sec-title" data-i18n="ancestor_title">📜 <span class="nm" id="n2"></span>네게 깃든 조상신의
+                            기운과 살(煞) <span class="sub-t">| 조상과 살풀이</span></div>
                         <div id="statChart"></div>
                     </div>
                     <div class="card">
-                        <div class="sec-title" data-i18n="secret_title">🍀 <span class="nm" id="n3"></span>액운을 막고 복을 부르는 비방</div>
+                        <div class="sec-title" data-i18n="secret_title">🍀 <span class="nm" id="n3"></span>액운을 막고 복을 부르는
+                            비방</div>
                         <div id="luckBox" class="luck-box"></div>
                         <div class="quest-box">
                             <div class="quest-t" data-i18n="quest_title">🎯 애동제자의 오늘의 공수</div>
@@ -120,7 +134,8 @@
                         </div>
                     </div>
                     <div class="card" id="chemistryCard">
-                        <div class="sec-title" style="justify-content:center" data-i18n="best_match_title">💫 영혼의 단짝 & 피해야 할 악연</div>
+                        <div class="sec-title" style="justify-content:center" data-i18n="best_match_title">💫 영혼의 단짝 &
+                            피해야 할 악연</div>
                         <div class="chemistry-content">
                             <div class="chemistry-item best">
                                 <span class="emoji">✨</span>
@@ -146,13 +161,10 @@
                     <div class="ad">
                         광고 영역
                         <!-- DP -->
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-format="autorelaxed"
-                             data-ad-client="ca-pub-3360310428058423"
-                             data-ad-slot="9099114756"></ins>
+                        <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed"
+                            data-ad-client="ca-pub-3360310428058423" data-ad-slot="9099114756"></ins>
                         <script>
-                             (adsbygoogle = window.adsbygoogle || []).push({});
+                            (adsbygoogle = window.adsbygoogle || []).push({});
                         </script>
                     </div>
                 </div>
@@ -160,23 +172,39 @@
                     <h2 data-i18n="shamanism_title">📜 신점(神占)이란?</h2>
                     <article class="enc-card">
                         <h3 data-i18n="shamanism_article1_title">영적 능력으로 보는 운명</h3>
-                        <p data-i18n="shamanism_article1_p">무당의 신점은 사주명리학과 달리, 생년월일시를 기반으로 무당이 모시는 몸주신(산신, 장군신 등)의 영적 능력을 빌려 구체적인 화면을 보거나 목소리를 듣는 방식으로 앞날을 예언합니다. 학문적인 사주 해석보다는 신의 목소리(공수)를 직접 전달하는 방식입니다.</p>
+                        <p data-i18n="shamanism_article1_p">무당의 신점은 사주명리학과 달리, 생년월일시를 기반으로 무당이 모시는 몸주신(산신, 장군신 등)의 영적
+                            능력을 빌려 구체적인 화면을 보거나 목소리를 듣는 방식으로 앞날을 예언합니다. 학문적인 사주 해석보다는 신의 목소리(공수)를 직접 전달하는 방식입니다.</p>
                     </article>
                     <article class="enc-card">
                         <h3 data-i18n="shamanism_article2_title">조상과 살(煞), 그리고 굿</h3>
-                        <p data-i18n="shamanism_article2_p">신점은 종종 조상 묘탈, 살기(煞氣), 꿈 몽조 등을 통해 개인의 운세를 살핍니다. 굿, 방울, 신칼, 오색기 등의 무구를 사용하여 조상신의 맺힌 한을 풀어주거나, 몸에 붙은 살(煞)을 떼어내는 데에 초점을 둡니다. 이를 통해 관재수나 횡액을 막고 운명을 개척하도록 돕습니다.</p>
+                        <p data-i18n="shamanism_article2_p">신점은 종종 조상 묘탈, 살기(煞氣), 꿈 몽조 등을 통해 개인의 운세를 살핍니다. 굿, 방울, 신칼,
+                            오색기 등의 무구를 사용하여 조상신의 맺힌 한을 풀어주거나, 몸에 붙은 살(煞)을 떼어내는 데에 초점을 둡니다. 이를 통해 관재수나 횡액을 막고 운명을 개척하도록
+                            돕습니다.</p>
                     </article>
-                     <article class="enc-card">
+                    <article class="enc-card">
                         <h3 data-i18n="shamanism_article3_title">구체적인 공수</h3>
-                        <p data-i18n="shamanism_article3_p">"산소에 묘탈이 났다", "대장·소장 등 소화기 계통이 약하다"와 같이, 신점은 매우 구체적인 신체적, 환경적 상황을 족집게처럼 지적하는 것이 특징입니다. 막연한 풀이가 아닌, 지금 당신에게 가장 필요한 말을 신의 목소리로 직접 전합니다.</p>
+                        <p data-i18n="shamanism_article3_p">"산소에 묘탈이 났다", "대장·소장 등 소화기 계통이 약하다"와 같이, 신점은 매우 구체적인 신체적,
+                            환경적 상황을 족집게처럼 지적하는 것이 특징입니다. 막연한 풀이가 아닌, 지금 당신에게 가장 필요한 말을 신의 목소리로 직접 전합니다.</p>
+                    </article>
+                    <article class="enc-card">
+                        <h3>몸주신과 애기동자</h3>
+                        <p>무당에게 내리는 신(몸주신)에는 다양한 종류가 있습니다. 산신, 장군신, 대감신, 선녀신, 그리고 애기동자가 대표적입니다. 그 중 애기동자는 순수하고 천진난만한
+                            어린아이의 영혼으로, 솔직담백하게 운명을 전달하는 것이 특징입니다. 달의 신당의 애기동자는 딱딱한 운세 풀이가 아닌, 따뜻하면서도 직설적인 공수를 내려 당신이
+                            진정으로 알아야 할 것을 전합니다.</p>
+                    </article>
+                    <article class="enc-card">
+                        <h3>오행(五行)과 체질</h3>
+                        <p>동양의학에서는 인간의 체질을 오행(木·火·土·金·水)의 균형으로 설명합니다. 사주에 나타난 오행의 분포는 타고난 체질과 성격적 특성을 반영하며, 부족한 오행을 음식,
+                            색깔, 방위 등으로 보충하면 건강과 운세 모두 개선될 수 있다고 전해집니다. 예를 들어 목(木)이 부족하면 녹색 채소를 먹고, 수(水)가 부족하면 검은콩이나 해조류가
+                            도움이 된다고 합니다.</p>
                     </article>
                 </section>
-            </main>
+        </main>
 
 
-        </div>
+    </div>
 
-        <div id="footer-placeholder"></div>
+    <div id="footer-placeholder"></div>
     </div>
 
     <!-- MBTI Mini Popup -->
@@ -187,7 +215,8 @@
             <div style="color:var(--cyan); font-weight:700; font-size:0.9rem" data-i18n="mbti_popup_q">현실의 나는 어떨까?</div>
             <div style="color:var(--txt2); font-size:0.8rem" data-i18n="mbti_popup_sub">1분컷 MBTI 테스트 하기</div>
         </div>
-        <button class="mini-btn" onclick="startMbtiTest(); this.parentElement.classList.remove('show')" data-i18n="mbti_popup_btn">GO</button>
+        <button class="mini-btn" onclick="startMbtiTest(); this.parentElement.classList.remove('show')"
+            data-i18n="mbti_popup_btn">GO</button>
     </div>
 
     <!-- Floating Blog Button -->

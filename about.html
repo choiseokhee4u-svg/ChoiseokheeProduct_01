@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <script src="include.js"></script>
     <style>
@@ -12,11 +13,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             color: var(--txt);
         }
+
         .about-container h1 {
             color: var(--cyan);
             text-align: center;
             margin-bottom: 30px;
         }
+
         .about-container h2 {
             color: var(--pink);
             margin-top: 30px;
@@ -25,20 +28,38 @@
             border-bottom: 1px solid var(--border);
             padding-bottom: 5px;
         }
+
         .about-container p {
             margin-bottom: 1em;
             color: var(--txt2);
-            line-height: 1.6;
+            line-height: 1.7;
         }
+
         .about-container ul {
             list-style-type: disc;
             margin-left: 20px;
             margin-bottom: 1em;
             color: var(--txt2);
         }
+
         .about-container ul li {
             margin-bottom: 0.5em;
+            line-height: 1.6;
         }
+
+        .about-highlight {
+            background: linear-gradient(135deg, rgba(0, 245, 212, .1), rgba(168, 85, 247, .1));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .about-highlight h3 {
+            color: var(--cyan);
+            margin-bottom: 10px;
+        }
+
         footer {
             margin-top: 50px;
             text-align: center;
@@ -47,35 +68,64 @@
             padding: 20px;
             border-top: 1px solid var(--border);
         }
+
         footer a {
             color: var(--cyan);
             text-decoration: none;
         }
+
         footer a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
+
 <body>
     <div class="about-container">
-        <h1 data-i18n="about_title">점술가 The Moon - 서비스 소개</h1>
+        <h1 data-i18n="about_title">용한점집 달의 신당 - 서비스 소개</h1>
 
-        <p data-i18n="about_p1">"점술가 The Moon"은 사주팔자와 MBTI를 융합하여 당신의 내면 깊숙한 영혼의 캐릭터를 탐색하는 독창적인 웹 서비스입니다. 우리는 단순한 운세 풀이를 넘어, 고대 동양의 지혜인 사주명리학과 현대 심리학의 성격 유형 검사인 MBTI의 접점에서 새로운 자기 이해의 길을 제시합니다.</p>
+        <p data-i18n="about_p1">"용한점집 달의 신당"은 사주명리학의 체계적 분석에 무속 신점의 직관적 해석을 더한 독창적인 운명 분석 웹 서비스입니다. 우리는 단순한 운세 풀이를 넘어,
+            고대 동양의 지혜인 사주명리학과 무속 신앙의 깊은 통찰을 결합하여 당신의 내면에 숨겨진 운명의 비밀을 밝혀드립니다.</p>
+
+        <div class="about-highlight">
+            <h3>🌙 왜 "달의 신당"인가?</h3>
+            <p>달은 예로부터 음양오행에서 음(陰)의 기운을 상징하며, 직관과 무의식, 그리고 보이지 않는 세계와의 연결을 의미합니다. '달의 신당'이라는 이름은 달처럼 고요히 빛나며 당신의 운명을
+                비추어주는 공간이 되겠다는 우리의 철학을 담고 있습니다. 애기동자 몸주신이 내리는 공수를 통해, 밤하늘의 달처럼 어두운 미래를 환히 밝혀드리겠습니다.</p>
+        </div>
 
         <h2 data-i18n="about_h2_1">우리의 미션</h2>
-        <p data-i18n="about_p2">바쁜 현대 사회 속에서 자신을 잃어가는 많은 이들에게, "점술가 The Moon"은 자신을 돌아보고 이해하는 시간을 제공합니다. 타고난 기질과 잠재력을 발견하고, 자신의 강점과 약점을 객관적으로 파악하여 더욱 의미 있는 삶의 방향을 찾아갈 수 있도록 돕는 것이 우리의 미션입니다.</p>
+        <p data-i18n="about_p2">바쁜 현대 사회 속에서 자신을 잃어가는 많은 이들에게, "달의 신당"은 자신을 돌아보고 이해하는 시간을 제공합니다. 타고난 기질과 잠재력을 발견하고, 자신의
+            강점과 약점을 객관적으로 파악하여 더욱 의미 있는 삶의 방향을 찾아갈 수 있도록 돕는 것이 우리의 미션입니다. 무당의 신점이 주는 따뜻한 위로와 사주명리의 논리적 분석이 결합된 결과는, 단순한
+            점(占)을 넘어 당신의 삶에 실질적인 지침이 될 것입니다.</p>
 
         <h2 data-i18n="about_h2_2">우리의 철학</h2>
-        <p data-i18n="about_p3">우리는 운명이 정해져 있다고 믿기보다는, 자신의 운명을 이해하고 긍정적인 방향으로 개척해나갈 수 있는 도구로서 사주와 MBTI를 활용합니다. 모든 사람은 고유하며 소중한 존재라는 믿음 아래, "점술가 The Moon"은 당신의 삶에 긍정적인 통찰과 영감을 불어넣고자 합니다. 과학적 근거에 기반한 엔터테인먼트 목적으로 제공되지만, 그 안에 담긴 깊은 의미를 통해 자신을 사랑하고 타인과 더 잘 소통하는 계기가 되기를 바랍니다.</p>
+        <p data-i18n="about_p3">우리는 운명이 정해져 있다고 믿기보다는, 자신의 운명을 이해하고 긍정적인 방향으로 개척해나갈 수 있는 도구로서 사주와 신점을 활용합니다. 무속에서는 "아는
+            것이 힘"이라고 합니다. 사주를 통해 내가 어떤 기운을 타고났는지, 어떤 살(煞)이 끼어있는지를 알면 미리 대비할 수 있기 때문입니다. 모든 사람은 고유하며 소중한 존재라는 믿음 아래, "달의
+            신당"은 당신의 삶에 긍정적인 통찰과 영감을 불어넣고자 합니다.</p>
 
         <h2 data-i18n="about_h2_3">제공 서비스</h2>
         <ul>
-            <li data-i18n="about_li1"><strong>사주로 보는 나의 영혼 캐릭터 (사주MBTI):</strong> 생년월일시 기반의 사주 분석을 통해 당신의 영혼에 가장 가까운 MBTI 유형을 도출합니다.</li>
-            <li data-i18n="about_li2"><strong>오행 분석:</strong> 타고난 오행의 기운을 분석하여 당신의 성격적 특성과 잠재력을 심층적으로 파악합니다.</li>
-            <li data-i18n="about_li3"><strong>운세 풀이:</strong> 오늘, 이번 주, 올해의 운세를 무료로 제공하여 삶의 지표를 제시합니다.</li>
-            <li data-i18n="about_li4"><strong>천간 성격 도감:</strong> 십간(十干)의 특성을 상세히 설명하여 사주 이해를 돕습니다.</li>
-            <li data-i18n="about_li5"><strong>MBTI 성격 유형 테스트:</strong> 자신의 현재 성향을 파악할 수 있는 간편한 MBTI 테스트를 제공합니다.</li>
+            <li data-i18n="about_li1"><strong>애기동자의 공수(신점 운세):</strong> 생년월일시를 기반으로 사주 명식을 산출하고, 애기동자 몸주신의 신점 형식으로 당신의
+                운명을 풀어드립니다. 기본운, 연애운, 재물운, 사회운 네 가지 영역을 심층 분석합니다.</li>
+            <li data-i18n="about_li2"><strong>오행 균형 분석:</strong> 타고난 오행(木·火·土·金·水)의 기운을 분석하여 당신의 성격적 특성과 잠재력을 심층적으로
+                파악합니다. 부족한 오행을 보충하는 구체적인 비방도 함께 제공합니다.</li>
+            <li data-i18n="about_li3"><strong>운세 풀이:</strong> 오늘, 이번 주, 올해의 운세를 십신(十神) 분석을 통해 무료로 제공하여 삶의 지표를 제시합니다.
+            </li>
+            <li data-i18n="about_li4"><strong>조상신의 기운과 살(煞) 분석:</strong> 사주에 나타난 살(煞)의 종류를 파악하고, 이를 풀기 위한 전통적인 비방과 현대적
+                조언을 함께 드립니다.</li>
+            <li data-i18n="about_li5"><strong>영혼의 단짝 & 상성 분석:</strong> 오행의 상생상극 관계를 기반으로 나와 잘 맞는 귀인과 피해야 할 악연을 분석해드립니다.
+            </li>
         </ul>
+
+        <h2>서비스 이용 안내</h2>
+        <p>본 서비스는 별도의 회원가입이나 로그인 없이 누구나 무료로 이용하실 수 있습니다. 입력하신 생년월일시, 성별 정보는 서버에 전송되거나 저장되지 않으며, 오직 사용자의 브라우저 내에서만 실시간으로
+            계산되어 결과를 보여드립니다. 개인정보 보호에 대한 자세한 사항은 <span
+                style="cursor:pointer; color:var(--cyan); text-decoration:underline;"
+                onclick="document.getElementById('privacyModal').style.display='flex'">개인정보처리방침</span>을 참고해주세요.</p>
+
+        <h2>면책 고지</h2>
+        <p>본 서비스에서 제공하는 모든 사주 분석, 운세, 신점 해석은 <strong>오락 및 참고 목적</strong>으로 제공됩니다. 과학적·의학적·법률적 근거에 기반하지 않으며, 전문적인 상담이나
+            조언을 대체하지 않습니다. 중요한 의사결정은 반드시 해당 분야 전문가와 상의하시기 바라며, 맹신은 금물입니다.</p>
     </div>
 
     <div id="footer-placeholder"></div>
@@ -83,4 +133,5 @@
     <script src="script.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>
