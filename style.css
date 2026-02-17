@@ -793,6 +793,15 @@ h1 {
     width: 30px;
     text-align: center;
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.element-icon img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .ad {
