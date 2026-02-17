@@ -1,7 +1,81 @@
 window.isScriptDataLoaded = false;
 document.addEventListener('scriptDataLoaded', () => {
     window.isScriptDataLoaded = true;
+    checkShareParams();
 });
+
+function getShareUrl() {
+    // Generate URL with current result data
+    const p = new URLSearchParams();
+    if (window.shareData) {
+        p.set('n', window.shareData.n);
+        p.set('b', window.shareData.b);
+        p.set('g', window.shareData.g);
+        p.set('t', window.shareData.t);
+    }
+    return window.location.origin + window.location.pathname + '?' + p.toString();
+}
+
+function checkShareParams() {
+    const p = new URLSearchParams(window.location.search);
+    const n = p.get('n');
+    const b = p.get('b');
+    const g = p.get('g');
+    const t = p.get('t');
+
+    if (n && b && g) {
+        // Set inputs from params
+        document.getElementById('userName').value = n;
+
+        // Select Quick Tab
+        const quickTab = document.querySelector('button[data-tab="quick"]');
+        if (quickTab) quickTab.click();
+
+        // Set Date
+        document.getElementById('quickDate').value = b;
+
+        // Set Gender
+        const gBtn = document.querySelector(`.gender-sel button[data-g="${g}"]`);
+        if (gBtn) gBtn.click();
+
+        // Set Time
+        if (t === 'u') {
+            document.getElementById('unknownTime').click();
+        } else {
+            // If checkbox is checked, uncheck it
+            const ut = document.getElementById('unknownTime');
+            if (ut.checked) ut.click();
+
+            const tVal = parseInt(t);
+            const hh = Math.floor(tVal / 100);
+            const mi = tVal % 100;
+            const isPm = hh >= 12; // Simple logic, assumes user inputs 0-23
+            // But UI uses AM/PM + 1-12
+            // Convert 24h to 12h
+            let uiH = hh;
+            let uiAmpm = 'AM';
+            if (hh >= 12) { uiAmpm = 'PM'; uiH = hh > 12 ? hh - 12 : 12; }
+            if (hh === 0) { uiH = 12; }
+
+            document.getElementById('selAmpm').value = uiAmpm;
+            document.getElementById('selHour').value = uiH;
+            document.getElementById('selMinute').value = mi;
+        }
+
+        // Add shared-view class
+        document.body.classList.add('shared-view');
+
+        // Change Retry Button Text to "Test Mine Too"
+        const retryBtn = document.querySelector('.reset');
+        if (retryBtn) {
+            retryBtn.removeAttribute('data-i18n'); // Prevent overwrite
+            retryBtn.innerText = window.translations.test_mine_button || "🙋‍♂️ 나도 테스트 하기";
+        }
+
+        // Auto Analyze
+        setTimeout(analyze, 500);
+    }
+}
 
 // Kakao Init
 if (window.Kakao && !Kakao.isInitialized()) {
@@ -138,6 +212,14 @@ function analyze() {
         h = hh;
     }
 
+    // Store data for sharing
+    window.shareData = {
+        n: uName,
+        b: `${y}${String(mo).padStart(2, '0')}${String(d).padStart(2, '0')}`,
+        g: gender,
+        t: document.getElementById('unknownTime').checked ? 'u' : String(h * 100 + mi).padStart(4, '0')
+    };
+
     document.getElementById('inputSection').style.display = 'none';
     document.getElementById('loading').style.display = 'flex';
 
@@ -240,24 +322,24 @@ function shareKakao() {
         alert(window.translations.alert_kakao_sdk_error);
         return;
     }
-    const currentUrl = window.location.origin + window.location.pathname;
+    const shareUrl = getShareUrl();
     Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
             title: `${window.translations.kakao_share_title_prefix} ${uName}${window.translations.kakao_share_title_suffix}`,
             description: `${window.translations.kakao_share_desc_prefix} [${curDm}]${window.translations.kakao_share_desc_suffix}`,
-            imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png', // 이미지는 외부 호스팅 유지 (또는 상대경로 확인 필요)
+            imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png',
             link: {
-                mobileWebUrl: currentUrl,
-                webUrl: currentUrl
+                mobileWebUrl: shareUrl,
+                webUrl: shareUrl
             }
         },
         buttons: [
             {
                 title: window.translations.kakao_share_button_title,
                 link: {
-                    mobileWebUrl: currentUrl,
-                    webUrl: currentUrl
+                    mobileWebUrl: shareUrl,
+                    webUrl: shareUrl
                 }
             }
         ]
@@ -272,7 +354,7 @@ window.addEventListener('scroll', () => {
 }, { once: true });
 
 function copyLink() {
-    const url = window.location.href;
+    const url = getShareUrl();
     navigator.clipboard.writeText(url).then(() => {
         alert(window.translations ? window.translations.alert_link_copied : "링크가 복사되었습니다.");
     }).catch(err => {
