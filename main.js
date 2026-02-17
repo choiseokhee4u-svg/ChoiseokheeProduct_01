@@ -33,15 +33,26 @@ function applyTranslations(translations) {
 async function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
-    translations = await loadTranslations(lang);
+
+    try {
+        translations = await loadTranslations(lang);
+    } catch (e) {
+        console.error('Failed to load translations:', e);
+        translations = {};
+    }
+
     applyTranslations(translations);
     updateLangUI();
 
     // Load dynamic script data as well
     if (typeof loadScriptData === 'function') {
-        await loadScriptData(lang);
-        isScriptDataLoaded = true; // Set flag to true after data is loaded
-        document.dispatchEvent(new CustomEvent('scriptDataLoaded')); // Dispatch event
+        try {
+            await loadScriptData(lang);
+            isScriptDataLoaded = true; // Set flag to true after data is loaded
+            document.dispatchEvent(new CustomEvent('scriptDataLoaded')); // Dispatch event
+        } catch (e) {
+            console.error('Failed to load script data:', e);
+        }
     }
 }
 
