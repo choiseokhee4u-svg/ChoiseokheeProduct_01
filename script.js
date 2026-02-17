@@ -5,7 +5,7 @@ document.addEventListener('scriptDataLoaded', () => {
 
 // Kakao Init
 if (window.Kakao && !Kakao.isInitialized()) {
-    Kakao.init('YOUR_KAKAO_JAVASCRIPT_KEY'); // 여기에 카카오 앱 키를 입력하세요
+    Kakao.init('14302bcc718209aaa470793e426fbb2a');
 }
 
 // Initialize Time/Date Options immediately
