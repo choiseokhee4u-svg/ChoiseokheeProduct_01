@@ -102,7 +102,7 @@ const REL_MAP = {
     i_control: ['Pyeon-jae', 'Jeong-jae'],
     input: ['Pyeon-in', 'Jeong-in']
 };
-const E = { WOOD: { img: '🌳', c: '#4ade80' }, FIRE: { img: '🔥', c: '#f87171' }, EARTH: { img: '⛰️', c: '#fbbf24' }, METAL: { img: '🔔', c: '#e2e8f0' }, WATER: { img: '🌊', c: '#60a5fa' } };
+const E = { WOOD: { img: 'images/Wood.png', c: '#4ade80' }, FIRE: { img: 'images/Fire.png', c: '#f87171' }, EARTH: { img: 'images/Earth.png', c: '#fbbf24' }, METAL: { img: 'images/Metal.png', c: '#e2e8f0' }, WATER: { img: 'images/Water.jpg', c: '#60a5fa' } };
 const EM = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER', '寅': 'WOOD', '卯': 'WOOD', '巳': 'FIRE', '午': 'FIRE', '辰': 'EARTH', '戌': 'EARTH', '丑': 'EARTH', '未': 'EARTH', '申': 'METAL', '酉': 'METAL', '亥': 'WATER', '子': 'WATER' };
 const STEM_EL = { '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE', '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL', '壬': 'WATER', '癸': 'WATER' };
 const GENERATING = { WOOD: 'WATER', FIRE: 'WOOD', EARTH: 'FIRE', METAL: 'EARTH', WATER: 'METAL' };
@@ -300,7 +300,12 @@ function calc(y, mo, d, h, mi) {
     ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'].forEach(k => {
         const e = E[k], c = cnt[k], pc = (c / 8) * 100;
         const eName = window.ELEMENT_NAMES_DATA[k];
-        ch.innerHTML += `<div class="stat-row"><span class="element-icon">${e.img} <span style="font-size:0.6em; opacity:0.75; margin-left:2px; vertical-align: middle;">(${eName})</span></span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
+        ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'].forEach(k => {
+            const e = E[k], c = cnt[k], pc = (c / 8) * 100;
+            const eName = window.ELEMENT_NAMES_DATA[k];
+            const iconHtml = e.img.includes('.') ? `<img src="${e.img}" alt="${eName}">` : e.img;
+            ch.innerHTML += `<div class="stat-row"><span class="element-icon">${iconHtml} <span style="font-size:0.6em; opacity:0.75; margin-left:2px; vertical-align: middle;">(${eName})</span></span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
+        });
     });
     setTimeout(() => document.querySelectorAll('.stat-fill').forEach(b => b.style.width = b.dataset.w), 100);
     const lk = window.LK_DATA[wk], le = E[wk];
