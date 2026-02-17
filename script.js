@@ -3,6 +3,11 @@ document.addEventListener('scriptDataLoaded', () => {
     window.isScriptDataLoaded = true;
 });
 
+// Kakao Init
+if (window.Kakao && !Kakao.isInitialized()) {
+    Kakao.init('YOUR_KAKAO_JAVASCRIPT_KEY'); // 여기에 카카오 앱 키를 입력하세요
+}
+
 // Initialize Time/Date Options immediately
 const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay'), hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
 for (let y = new Date().getFullYear(); y >= 1920; y--)yS.innerHTML += `<option value="${y}">${y}</option>`;
