@@ -1,5 +1,5 @@
 let currentLang = localStorage.getItem('lang') || 'ko';
-let translations = {}; // Store translations globally
+window.translations = {}; // Store translations globally on window
 // isScriptDataLoaded는 script.js에서 이미 선언됨. 재선언 삭제.
 
 async function loadTranslations(lang) {
@@ -48,7 +48,7 @@ async function setLanguage(lang) {
     if (typeof loadScriptData === 'function') {
         try {
             await loadScriptData(lang);
-            isScriptDataLoaded = true; // Set flag to true after data is loaded
+            window.isScriptDataLoaded = true; // Use global window property
             document.dispatchEvent(new CustomEvent('scriptDataLoaded')); // Dispatch event
         } catch (e) {
             console.error('Failed to load script data:', e);
