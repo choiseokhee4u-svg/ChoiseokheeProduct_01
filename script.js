@@ -225,23 +225,24 @@ function shareKakao() {
         alert(window.translations.alert_kakao_sdk_error);
         return;
     }
+    const currentUrl = window.location.origin + window.location.pathname;
     Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
             title: `${window.translations.kakao_share_title_prefix} ${uName}${window.translations.kakao_share_title_suffix}`,
             description: `${window.translations.kakao_share_desc_prefix} [${curDm}]${window.translations.kakao_share_desc_suffix}`,
-            imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png',
+            imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png', // 이미지는 외부 호스팅 유지 (또는 상대경로 확인 필요)
             link: {
-                mobileWebUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/',
-                webUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/'
+                mobileWebUrl: currentUrl,
+                webUrl: currentUrl
             }
         },
         buttons: [
             {
                 title: window.translations.kakao_share_button_title,
                 link: {
-                    mobileWebUrl: 'https://choiseokheesite01.github.io/ChoiseokheeProduct_01/',
-                    webUrl: 'https://choiseokheesite01.github.io/ChoiseokheeProduct_01/'
+                    mobileWebUrl: currentUrl,
+                    webUrl: currentUrl
                 }
             }
         ]
