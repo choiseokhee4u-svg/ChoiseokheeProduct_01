@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="gw" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="trunk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6b4226"/>
+      <stop offset="100%" stop-color="#3e2723"/>
+    </linearGradient>
+    <filter id="glowW">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#gw)"/>
+  <!-- Trunk -->
+  <path d="M56 95 Q54 75 52 65 Q50 55 55 48 Q58 42 60 38 Q62 42 65 48 Q70 55 68 65 Q66 75 64 95 Z" fill="url(#trunk)" filter="url(#glowW)"/>
+  <!-- Branches -->
+  <path d="M55 48 Q42 40 35 32" stroke="#5d4037" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M65 48 Q78 40 85 32" stroke="#5d4037" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M53 58 Q40 55 32 50" stroke="#5d4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M67 58 Q80 55 88 50" stroke="#5d4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Leaves / Canopy -->
+  <ellipse cx="35" cy="28" rx="12" ry="10" fill="#4ade80" opacity="0.85" filter="url(#glowW)"/>
+  <ellipse cx="60" cy="22" rx="14" ry="11" fill="#22c55e" opacity="0.9" filter="url(#glowW)"/>
+  <ellipse cx="85" cy="28" rx="12" ry="10" fill="#4ade80" opacity="0.85" filter="url(#glowW)"/>
+  <ellipse cx="48" cy="18" rx="10" ry="8" fill="#86efac" opacity="0.7"/>
+  <ellipse cx="72" cy="18" rx="10" ry="8" fill="#86efac" opacity="0.7"/>
+  <ellipse cx="30" cy="46" rx="10" ry="8" fill="#4ade80" opacity="0.7"/>
+  <ellipse cx="90" cy="46" rx="10" ry="8" fill="#4ade80" opacity="0.7"/>
+  <ellipse cx="60" cy="30" rx="16" ry="10" fill="#16a34a" opacity="0.6"/>
+</svg>

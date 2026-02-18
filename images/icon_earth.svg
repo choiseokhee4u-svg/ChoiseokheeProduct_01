@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="ge" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mount" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="50%" stop-color="#92400e"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="mount2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#713f12"/>
+    </linearGradient>
+    <filter id="glowE">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#ge)"/>
+  <!-- Back mountain -->
+  <path d="M20 90 L50 35 L80 90Z" fill="url(#mount2)" opacity="0.6"/>
+  <!-- Main mountain -->
+  <path d="M10 95 L60 25 L110 95Z" fill="url(#mount)" filter="url(#glowE)"/>
+  <!-- Snow/glow peak -->
+  <path d="M50 45 L60 25 L70 45 Q65 42 60 44 Q55 42 50 45Z" fill="#fbbf24" opacity="0.7"/>
+  <!-- Ground line -->
+  <ellipse cx="60" cy="95" rx="50" ry="5" fill="#78350f" opacity="0.4"/>
+  <!-- Detail lines -->
+  <path d="M35 75 L45 60 L55 75" stroke="#a16207" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M65 75 L75 60 L85 75" stroke="#a16207" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <!-- Amber glow at peak -->
+  <circle cx="60" cy="30" r="8" fill="#fbbf24" opacity="0.3" filter="url(#glowE)"/>
+</svg>

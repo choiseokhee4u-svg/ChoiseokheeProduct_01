@@ -621,10 +621,11 @@ h1 {
 }
 
 .stat-row .element-icon {
-    font-size: 1.8rem;
-    width: 30px;
+    font-size: 1.4rem;
+    width: 40px;
+    min-width: 40px;
     text-align: center;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
 }
 
 .stat-track {
@@ -789,22 +790,24 @@ h1 {
 }
 
 .element-icon {
-    font-size: 1.8rem;
-    width: 30px;
+    font-size: 1.4rem;
+    width: 40px;
+    min-width: 40px;
     text-align: center;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2px;
 }
 
 .element-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
     display: block;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
 }
 
 .ad {

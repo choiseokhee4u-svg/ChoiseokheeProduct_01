@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="gwt" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="drop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="40%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+    <filter id="glowWt">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#gwt)"/>
+  <!-- Main water drop -->
+  <path d="M60 15 Q45 45 40 60 Q35 75 42 85 Q48 95 60 98 Q72 95 78 85 Q85 75 80 60 Q75 45 60 15Z" fill="url(#drop)" filter="url(#glowWt)" opacity="0.9"/>
+  <!-- Inner highlight -->
+  <path d="M55 40 Q48 55 47 65 Q46 72 50 78 Q53 82 56 80 Q52 72 53 63 Q54 52 55 40Z" fill="#bfdbfe" opacity="0.5"/>
+  <!-- Light reflection -->
+  <ellipse cx="52" cy="55" rx="4" ry="6" fill="#dbeafe" opacity="0.4" transform="rotate(-15 52 55)"/>
+  <!-- Ripples at bottom -->
+  <ellipse cx="60" cy="100" rx="22" ry="4" fill="#3b82f6" opacity="0.3"/>
+  <ellipse cx="60" cy="104" rx="28" ry="3" fill="#2563eb" opacity="0.2"/>
+  <!-- Small drops -->
+  <path d="M30 50 Q28 42 30 38 Q32 42 34 50 Q32 52 30 50Z" fill="#60a5fa" opacity="0.5"/>
+  <path d="M88 55 Q86 47 88 43 Q90 47 92 55 Q90 57 88 55Z" fill="#60a5fa" opacity="0.5"/>
+</svg>
