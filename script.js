@@ -115,10 +115,13 @@ const LUCKY_ITEMS = {
 
 
 // Event Listeners (Global)
-document.querySelectorAll('.fortune-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.fortune-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); fType = b.dataset.t; updateQuest() });
-document.querySelectorAll('.gender-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.gender-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); gender = b.dataset.g });
-document.querySelectorAll('.tab-row button').forEach(b => b.onclick = () => { document.querySelectorAll('.tab-row button').forEach(x => x.classList.remove('on')); document.querySelectorAll('.tab-c').forEach(x => x.classList.remove('on')); b.classList.add('on'); document.getElementById('tab-' + b.dataset.tab).classList.add('on') });
-document.querySelectorAll('.theme-tabs button').forEach(b => b.onclick = () => { document.querySelectorAll('.theme-tabs button').forEach(x => x.classList.remove('on')); b.classList.add('on'); curTheme = b.dataset.th; updateTheme() });
+function initEventListeners() {
+    document.querySelectorAll('.fortune-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.fortune-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); fType = b.dataset.t; updateQuest() });
+    document.querySelectorAll('.gender-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.gender-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); gender = b.dataset.g });
+    document.querySelectorAll('.tab-row button').forEach(b => b.onclick = () => { document.querySelectorAll('.tab-row button').forEach(x => x.classList.remove('on')); document.querySelectorAll('.tab-c').forEach(x => x.classList.remove('on')); b.classList.add('on'); document.getElementById('tab-' + b.dataset.tab).classList.add('on') });
+    document.querySelectorAll('.theme-tabs button').forEach(b => b.onclick = () => { document.querySelectorAll('.theme-tabs button').forEach(x => x.classList.remove('on')); b.classList.add('on'); curTheme = b.dataset.th; updateTheme() });
+}
+document.addEventListener('DOMContentLoaded', initEventListeners);
 
 // Functions
 function updateTheme() {
@@ -663,4 +666,58 @@ function calcCompatibility(pn, y, m, d, h, mi) {
             <p style="font-size:0.95rem; line-height:1.6; color:var(--txt1);">${notes.join('<br>')}</p>
         </div>
     `;
+}
+
+function getShareUrl() {
+    const params = new URLSearchParams();
+    if (window.shareData) {
+        params.set('n', window.shareData.n);
+        params.set('b', window.shareData.b);
+        params.set('g', window.shareData.g);
+        params.set('t', window.shareData.t);
+    }
+    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+}
+
+function checkShareParams() {
+    const params = new URLSearchParams(window.location.search);
+    const n = params.get('n');
+    const b = params.get('b');
+    const g = params.get('g');
+    const t = params.get('t');
+
+    if (n && b && g && t) {
+        // Pre-fill inputs
+        const nameInput = document.getElementById('userName');
+        if (nameInput) nameInput.value = n;
+
+        // Gender
+        gender = g;
+        document.querySelectorAll('.gender-sel button').forEach(btn => {
+            btn.classList.toggle('on', btn.dataset.g === g);
+        });
+
+        // Set Date
+        const y = b.slice(0, 4), m = b.slice(4, 6), d = b.slice(6, 8);
+
+        // Use Quick Input for simplicity in restoration
+        const quickTab = document.querySelector('.tab-row button[data-tab="quick"]');
+        if (quickTab) quickTab.click();
+        const quickDate = document.getElementById('quickDate');
+        if (quickDate) quickDate.value = b;
+
+        // Set Time
+        const unknownTime = document.getElementById('unknownTime');
+        if (t === 'u') {
+            if (unknownTime) unknownTime.checked = true;
+        } else {
+            if (unknownTime) unknownTime.checked = false;
+            // Simplified handling for share restore - focusing on preventing crash first
+        }
+
+        // Auto Analyze if data is ready
+        setTimeout(() => {
+            if (window.isScriptDataLoaded) analyze();
+        }, 500);
+    }
 }
