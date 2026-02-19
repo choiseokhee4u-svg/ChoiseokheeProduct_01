@@ -83,20 +83,50 @@ if (window.Kakao && !Kakao.isInitialized()) {
 }
 
 // Initialize Time/Date Options immediately
-const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay'), hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
-for (let y = new Date().getFullYear(); y >= 1920; y--)yS.innerHTML += `<option value="${y}">${y}</option>`;
-for (let m = 1; m <= 12; m++)mS.innerHTML += `<option value="${m}">${m}월</option>`;
-for (let d = 1; d <= 31; d++)dS.innerHTML += `<option value="${d}">${d}</option>`;
-for (let h = 1; h <= 12; h++) {
-    hS.innerHTML += `<option value="${h}">${h}시</option>`;
-    document.getElementById('partnerHour').innerHTML += `<option value="${h}">${h}시</option>`;
-}
-for (let m = 0; m < 60; m++) {
-    const o = `<option value="${m}">${String(m).padStart(2, '0')}분</option>`;
-    minS.innerHTML += o;
-    document.getElementById('partnerMinute').innerHTML += o;
-}
-document.getElementById('unknownTime').onchange = e => { const t = document.getElementById('timeInputs'); t.style.opacity = e.target.checked ? '.4' : '1'; t.style.pointerEvents = e.target.checked ? 'none' : 'auto' };
+// Initialize Time/Date Options safely
+document.addEventListener('DOMContentLoaded', () => {
+    const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay'), hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
+    // Clear previous if any
+    if (yS) yS.innerHTML = ''; if (mS) mS.innerHTML = ''; if (dS) dS.innerHTML = ''; if (hS) hS.innerHTML = ''; if (minS) minS.innerHTML = '';
+
+    for (let y = new Date().getFullYear(); y >= 1920; y--) if (yS) yS.innerHTML += `<option value="${y}">${y}</option>`;
+    for (let m = 1; m <= 12; m++) if (mS) mS.innerHTML += `<option value="${m}">${m}월</option>`;
+    for (let d = 1; d <= 31; d++) if (dS) dS.innerHTML += `<option value="${d}">${d}</option>`;
+
+    const phS = document.getElementById('partnerHour');
+    if (phS) phS.innerHTML = '';
+    for (let h = 1; h <= 12; h++) {
+        const opt = `<option value="${h}">${h}시</option>`;
+        if (hS) hS.innerHTML += opt;
+        if (phS) phS.innerHTML += opt;
+    }
+
+    const pmS = document.getElementById('partnerMinute');
+    if (pmS) pmS.innerHTML = '';
+    for (let m = 0; m < 60; m++) {
+        const o = `<option value="${m}">${String(m).padStart(2, '0')}분</option>`;
+        if (minS) minS.innerHTML += o;
+        if (pmS) pmS.innerHTML += o;
+    }
+
+    const ut = document.getElementById('unknownTime');
+    if (ut) ut.onchange = e => {
+        const t = document.getElementById('timeInputs');
+        if (t) {
+            t.style.opacity = e.target.checked ? '.4' : '1';
+            t.style.pointerEvents = e.target.checked ? 'none' : 'auto';
+        }
+    };
+
+    const put = document.getElementById('partnerUnknownTime');
+    if (put) put.onchange = e => {
+        const sel = document.querySelector('#partnerInput .grid-2-1');
+        if (sel) {
+            sel.style.opacity = e.target.checked ? '.4' : '1';
+            sel.style.pointerEvents = e.target.checked ? 'none' : 'auto';
+        }
+    };
+});
 
 // Global Variables
 let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
