@@ -84,8 +84,15 @@ if (window.Kakao && !Kakao.isInitialized()) {
 
 // Initialize Time/Date Options immediately
 // Initialize Time/Date Options safely
+let yS, mS, dS, hS, minS; // Global declaration for access in analyze()
+
 document.addEventListener('DOMContentLoaded', () => {
-    const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay'), hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
+    yS = document.getElementById('selYear');
+    mS = document.getElementById('selMonth');
+    dS = document.getElementById('selDay');
+    hS = document.getElementById('selHour');
+    minS = document.getElementById('selMinute');
+
     // Clear previous if any
     if (yS) yS.innerHTML = ''; if (mS) mS.innerHTML = ''; if (dS) dS.innerHTML = ''; if (hS) hS.innerHTML = ''; if (minS) minS.innerHTML = '';
 
