@@ -377,20 +377,20 @@ function drawRadar(cnt) {
 
     const w = 300, h = 300, cx = w / 2, cy = h / 2, r = 100;
     const elems = ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'];
-    const angles = [-90, -18, 54, 126, 198].map(a => a * Math.PI / 180); // Top start, clockwise
-    const maxVal = 5; // Normalize scale (usually max count is around 3-4, but let's set 5 as safe max visually)
+    const angles = [-90, -18, 54, 126, 198].map(a => a * Math.PI / 180);
+    const maxVal = 5;
 
-    // Generate Polygon Points
+    // Data Preparation
     let points = "";
     elems.forEach((k, i) => {
         const val = cnt[k] || 0;
-        const dist = (Math.min(val, maxVal) / maxVal) * r; // Cap at maxVal
+        const dist = (Math.min(val, maxVal) / maxVal) * r;
         const x = cx + dist * Math.cos(angles[i]);
         const y = cy + dist * Math.sin(angles[i]);
         points += `${x},${y} `;
     });
 
-    // Background Grid (Pentagons)
+    // Background Grid
     let grid = "";
     [0.2, 0.4, 0.6, 0.8, 1].forEach(scale => {
         let p = "";
@@ -406,30 +406,29 @@ function drawRadar(cnt) {
         axes += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(a)}" y2="${cy + r * Math.sin(a)}" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`;
     });
 
-    // Icons & Labels
+    // Labels & Icons
     let labels = "";
+    const fallbackNames = { WOOD: '목', FIRE: '화', EARTH: '토', METAL: '금', WATER: '수' };
+
     elems.forEach((k, i) => {
         const x = cx + (r + 25) * Math.cos(angles[i]);
         const y = cy + (r + 25) * Math.sin(angles[i]);
         const e = window.E_DATA ? window.E_DATA[k] : E[k];
-        // Use emoji or text for simplicity in SVG, or foreignObject for img
-        // Let's use text for now to keep it lightweight: WOOD -> 🌲
-        const icon = k === 'WOOD' ? '🌲' : k === 'FIRE' ? '🔥' : k === 'EARTH' ? '⛰️' : k === 'METAL' ? '⚔️' : '💧';
-        // Or better, stick to text labels since icons are nearby
-        const name = window.ELEMENT_NAMES_DATA[k];
+        const name = (window.ELEMENT_NAMES_DATA && window.ELEMENT_NAMES_DATA[k]) || fallbackNames[k];
+
         labels += `<text x="${x}" y="${y}" fill="${e.c}" font-size="14" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${name}</text>`;
 
-        // Value Text
         const vx = cx + (r + 45) * Math.cos(angles[i]);
         const vy = cy + (r + 45) * Math.sin(angles[i]);
-        labels += `<text x="${vx}" y="${vy}" fill="rgba(255,255,255,0.7)" font-size="11" text-anchor="middle" dominant-baseline="middle">${cnt[k]}</text>`;
+        labels += `<text x="${vx}" y="${vy}" fill="rgba(255,255,255,0.7)" font-size="11" text-anchor="middle" dominant-baseline="middle">${cnt[k] || 0}</text>`;
     });
 
+    // Render SVG (Removed .radar-poly class to avoid transform issues)
     box.innerHTML = `
-        <svg width="100%" height="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">
+        <svg width="100%" height="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" style="overflow:visible">
             ${grid}
             ${axes}
-            <polygon points="${points}" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2" class="radar-poly"/>
+            <polygon points="${points}" fill="rgba(168, 85, 247, 0.4)" stroke="#a855f7" stroke-width="2" style="transition: all 1s ease; opacity: 0.9;"/>
             ${labels}
         </svg>
     `;
