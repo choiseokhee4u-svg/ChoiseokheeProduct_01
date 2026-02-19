@@ -1873,3 +1873,5 @@ h1 {
     background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
     filter: blur(20px);
 }
+
+/* Version 2.0 - Cache Busting */
