@@ -1,7 +1,11 @@
 window.isScriptDataLoaded = false;
 document.addEventListener('scriptDataLoaded', () => {
     window.isScriptDataLoaded = true;
-    checkShareParams();
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkShareParams);
+    } else {
+        checkShareParams();
+    }
 });
 
 function getShareUrl() {
@@ -25,26 +29,28 @@ function checkShareParams() {
 
     if (n && b && g) {
         // Set inputs from params
-        document.getElementById('userName').value = n;
+        const unInput = document.getElementById('userName');
+        if (unInput) unInput.value = n;
 
         // Select Quick Tab
         const quickTab = document.querySelector('button[data-tab="quick"]');
         if (quickTab) quickTab.click();
 
         // Set Date
-        document.getElementById('quickDate').value = b;
+        const qDate = document.getElementById('quickDate');
+        if (qDate) qDate.value = b;
 
         // Set Gender
         const gBtn = document.querySelector(`.gender-sel button[data-g="${g}"]`);
         if (gBtn) gBtn.click();
 
         // Set Time
+        const unkTime = document.getElementById('unknownTime');
         if (t === 'u') {
-            document.getElementById('unknownTime').click();
+            if (unkTime) unkTime.click();
         } else {
             // If checkbox is checked, uncheck it
-            const ut = document.getElementById('unknownTime');
-            if (ut.checked) ut.click();
+            if (unkTime && unkTime.checked) unkTime.click();
 
             const tVal = parseInt(t);
             const hh = Math.floor(tVal / 100);
@@ -57,9 +63,12 @@ function checkShareParams() {
             if (hh >= 12) { uiAmpm = 'PM'; uiH = hh > 12 ? hh - 12 : 12; }
             if (hh === 0) { uiH = 12; }
 
-            document.getElementById('selAmpm').value = uiAmpm;
-            document.getElementById('selHour').value = uiH;
-            document.getElementById('selMinute').value = mi;
+            const sa = document.getElementById('selAmpm');
+            const sh = document.getElementById('selHour');
+            const sm = document.getElementById('selMinute');
+            if (sa) sa.value = uiAmpm;
+            if (sh) sh.value = uiH;
+            if (sm) sm.value = mi;
         }
 
         // Add shared-view class
@@ -84,14 +93,8 @@ if (window.Kakao && !Kakao.isInitialized()) {
 
 // Initialize Time/Date Options immediately
 // Initialize Time/Date Options safely
-let yS, mS, dS, hS, minS; // Global declaration for access in analyze()
-
 document.addEventListener('DOMContentLoaded', () => {
-    yS = document.getElementById('selYear');
-    mS = document.getElementById('selMonth');
-    dS = document.getElementById('selDay');
-    hS = document.getElementById('selHour');
-    minS = document.getElementById('selMinute');
+    const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay'), hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
 
     // Clear previous if any
     if (yS) yS.innerHTML = ''; if (mS) mS.innerHTML = ''; if (dS) dS.innerHTML = ''; if (hS) hS.innerHTML = ''; if (minS) minS.innerHTML = '';
@@ -260,7 +263,8 @@ function analyze() {
     }
 
     // Compatibility Mode Check
-    const isCompat = document.getElementById('partnerInput').style.display !== 'none';
+    const partnerInput = document.getElementById('partnerInput');
+    const isCompat = partnerInput && partnerInput.style.display !== 'none';
     let pName = '', pY, pM, pD, pH, pMi;
 
     if (isCompat) {
@@ -290,12 +294,14 @@ function analyze() {
         if (!/^\d{8}$/.test(v)) { alert(window.translations.alert_birthdate_format); return }
         y = +v.slice(0, 4); mo = +v.slice(4, 6); d = +v.slice(6, 8);
     } else {
+        const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay');
         y = +yS.value; mo = +mS.value; d = +dS.value;
     }
     if (mo < 1 || mo > 12 || d < 1 || d > 31) { alert(window.translations.alert_invalid_date); return }
     if (document.getElementById('unknownTime').checked) {
         h = 12; mi = 0;
     } else {
+        const hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
         const ap = document.getElementById('selAmpm').value;
         let hh = +hS.value;
         mi = +minS.value;
