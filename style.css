@@ -1780,3 +1780,96 @@ h1 {
         opacity: 0.8;
     }
 }
+
+/* Compatibility Feature */
+.compat-section {
+    width: 100%;
+    text-align: center;
+}
+
+.compat-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(236, 72, 153, 0.15);
+    color: #ec4899;
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.compat-btn:hover {
+    background: rgba(236, 72, 153, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+}
+
+.compat-btn.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--txt2);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+.partner-form {
+    margin-top: 15px;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(236, 72, 153, 0.2);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.partner-title {
+    color: #ec4899;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.partner-title::before,
+.partner-title::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: rgba(236, 72, 153, 0.3);
+}
+
+#compatResultCard {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(168, 85, 247, 0.05) 100%);
+    border: 1px solid rgba(236, 72, 153, 0.25);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#compatResultCard::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
+    filter: blur(20px);
+}

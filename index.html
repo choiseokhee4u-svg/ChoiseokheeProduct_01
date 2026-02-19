@@ -85,6 +85,48 @@
                                 data-i18n="unknown_time">시간 모름</label>
                         </div>
                     </div>
+
+                    <!-- Compatibility Toggle -->
+                    <div class="compat-section"
+                        style="margin-top:25px; padding-top:20px; border-top:1px dashed rgba(255,255,255,0.1);">
+                        <button id="toggleCompat" class="compat-btn" onclick="toggleCompatibility()">
+                            👫 그분과의 궁합도 같이 보기
+                        </button>
+                    </div>
+
+                    <!-- Partner Input Form -->
+                    <div id="partnerInput" class="partner-form" style="display:none;">
+                        <h3 class="partner-title">💖 상대방 정보</h3>
+                        <div class="form-g">
+                            <label>📛 이름/애칭</label>
+                            <input type="text" id="partnerName" placeholder="상대방 이름" maxlength="20">
+                        </div>
+                        <div class="form-g">
+                            <label>🎂 생년월일 (8자리)</label>
+                            <input type="text" id="partnerBirth" placeholder="19990101" maxlength="8"
+                                inputmode="numeric">
+                        </div>
+                        <div class="form-g">
+                            <label>⏰ 태어난 시간</label>
+                            <div class="grid-2-1" style="display:flex; gap:10px;">
+                                <select id="partnerAmpm" style="flex:1;">
+                                    <option value="AM">오전</option>
+                                    <option value="PM">오후</option>
+                                </select>
+                                <select id="partnerHour" style="flex:1;">
+                                    <!-- Populated by JS -->
+                                </select>
+                                <select id="partnerMinute" style="flex:1;">
+                                    <!-- Populated by JS -->
+                                </select>
+                            </div>
+                            <div class="chk-row">
+                                <input type="checkbox" id="partnerUnknownTime">
+                                <label for="partnerUnknownTime">시간 모름</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="action-buttons">
                         <button class="submit" onclick="analyze()" data-i18n="analyze_button">🍭 애기동자에게 물어보기</button>
                     </div>
@@ -101,6 +143,14 @@
                         <div class="pillars" id="pillarsBox"></div>
                         <div class="saju-msg" id="sajuMsg"></div>
                     </div>
+
+                    <!-- Compatibility Result Card -->
+                    <div class="card" id="compatResultCard" style="display:none;">
+                        <div class="sec-title" style="justify-content:center">💖 두 사람의 궁합</div>
+                        <div id="compatScoreBox"></div>
+                        <div id="compatMsg"></div>
+                    </div>
+
                     <div class="card hero">
                         <div class="sec-title" style="justify-content:center" data-i18n="soul_title">✨ <span class="nm"
                                 id="n1"></span>애기동자님이 알려주는 너의 영혼

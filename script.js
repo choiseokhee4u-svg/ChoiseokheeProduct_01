@@ -87,8 +87,15 @@ const yS = document.getElementById('selYear'), mS = document.getElementById('sel
 for (let y = new Date().getFullYear(); y >= 1920; y--)yS.innerHTML += `<option value="${y}">${y}</option>`;
 for (let m = 1; m <= 12; m++)mS.innerHTML += `<option value="${m}">${m}월</option>`;
 for (let d = 1; d <= 31; d++)dS.innerHTML += `<option value="${d}">${d}</option>`;
-for (let h = 1; h <= 12; h++)hS.innerHTML += `<option value="${h}">${h}시</option>`;
-for (let m = 0; m < 60; m++)minS.innerHTML += `<option value="${m}">${String(m).padStart(2, '0')}분</option>`;
+for (let h = 1; h <= 12; h++) {
+    hS.innerHTML += `<option value="${h}">${h}시</option>`;
+    document.getElementById('partnerHour').innerHTML += `<option value="${h}">${h}시</option>`;
+}
+for (let m = 0; m < 60; m++) {
+    const o = `<option value="${m}">${String(m).padStart(2, '0')}분</option>`;
+    minS.innerHTML += o;
+    document.getElementById('partnerMinute').innerHTML += o;
+}
 document.getElementById('unknownTime').onchange = e => { const t = document.getElementById('timeInputs'); t.style.opacity = e.target.checked ? '.4' : '1'; t.style.pointerEvents = e.target.checked ? 'none' : 'auto' };
 
 // Global Variables
@@ -215,6 +222,29 @@ function analyze() {
         return;
     }
 
+    // Compatibility Mode Check
+    const isCompat = document.getElementById('partnerInput').style.display !== 'none';
+    let pName = '', pY, pM, pD, pH, pMi;
+
+    if (isCompat) {
+        pName = document.getElementById('partnerName').value.trim() || '그분';
+        const pv = document.getElementById('partnerBirth').value.trim();
+        if (!/^\d{8}$/.test(pv)) { alert("상대방 생년월일 8자리를 입력해주세요."); return; }
+        pY = +pv.slice(0, 4); pM = +pv.slice(4, 6); pD = +pv.slice(6, 8);
+        if (pM < 1 || pM > 12 || pD < 1 || pD > 31) { alert("상대방 생년월일이 올바르지 않습니다."); return; }
+
+        if (document.getElementById('partnerUnknownTime').checked) {
+            pH = 12; pMi = 0;
+        } else {
+            const pa = document.getElementById('partnerAmpm').value;
+            let phh = +document.getElementById('partnerHour').value;
+            pMi = +document.getElementById('partnerMinute').value;
+            if (pa === 'PM' && phh !== 12) phh += 12;
+            if (pa === 'AM' && phh === 12) phh = 0;
+            pH = phh;
+        }
+    }
+
     uName = document.getElementById('userName').value.trim() || window.translations.default_name;
     let y, mo, d, h, mi;
     const tab = document.querySelector('.tab-row button.on').dataset.tab;
@@ -252,6 +282,15 @@ function analyze() {
         try {
             if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
             calc(y, mo, d, h, mi);
+
+            // Compatibility Calculation
+            if (isCompat) {
+                calcCompatibility(pName, pY, pM, pD, pH, pMi);
+                document.getElementById('compatResultCard').style.display = 'block';
+            } else {
+                document.getElementById('compatResultCard').style.display = 'none';
+            }
+
             document.getElementById('loading').style.display = 'none';
             document.getElementById('result').style.display = 'block';
             window.scrollTo(0, 0);
@@ -274,6 +313,7 @@ function calc(y, mo, d, h, mi) {
     const p = [yG, yZ, mG, mZ, dG, dZ, tG, tZ];
     const cnt = { WOOD: 0, FIRE: 0, EARTH: 0, METAL: 0, WATER: 0 };
     p.forEach(c => { const e = EM[c]; if (e) cnt[e]++ });
+    window.userInput = { cnt }; // Store for compatibility
     curDm = dG;
     const basePd = window.P_DATA[curDm] || window.P_DATA['甲'];
     const brMod = window.BRANCH_MODIFIERS_DATA[dZ] || { k: '', d: '', love: '', money: '', work: '' };
@@ -556,4 +596,96 @@ function revealResults() {
             }, 250 * i);
         });
     }, 300);
+}
+
+// ────── Compatibility Logic ──────
+function toggleCompatibility() {
+    const box = document.getElementById('partnerInput');
+    const btn = document.getElementById('toggleCompat');
+    const isHidden = box.style.display === 'none';
+    box.style.display = isHidden ? 'block' : 'none';
+    btn.innerHTML = isHidden ? '❌ 궁합 안 볼래요' : '👫 그분과의 궁합도 같이 보기';
+    btn.classList.toggle('active', isHidden);
+}
+
+function calcCompatibility(pn, y, m, d, h, mi) {
+    // 1. Calculate Partner Saju
+    const s = Solar.fromYmdHms(y, m, d, h, mi, 0), l = s.getLunar(), bz = l.getEightChar();
+    const pDm = bz.getDayGan().toString(); // Partner Day Stem
+
+    // Partner Element Count
+    const pStems = [bz.getYearGan(), bz.getMonthGan(), bz.getDayGan(), bz.getTimeGan()].map(x => x.toString());
+    const pBranches = [bz.getYearZhi(), bz.getMonthZhi(), bz.getDayZhi(), bz.getTimeZhi()].map(x => x.toString());
+    const pCnt = { WOOD: 0, FIRE: 0, EARTH: 0, METAL: 0, WATER: 0 };
+    [...pStems, ...pBranches].forEach(c => { const e = EM[c]; if (e) pCnt[e]++ });
+
+    // 2. Score Calculation
+    let score = 50; // Base score
+    let notes = [];
+
+    // A. Day Stem Relationship (Harmony)
+    const myEl = STEM_EL[curDm], pEl = STEM_EL[pDm];
+    if (myEl === pEl) {
+        score += 10; notes.push("친구처럼 편안한 사이");
+    } else if (GENERATING[myEl] === pEl || GENERATING[pEl] === myEl) {
+        score += 20; notes.push("서로 돕고 발전하는 상생 관계");
+    } else if (OVERCOMING[myEl] === pEl || OVERCOMING[pEl] === myEl) {
+        score -= 10; notes.push("서로 주도권을 잡으려는 긴장감");
+    }
+
+    // B. Element Balance
+    // Check if partner has what I lack
+    const myWeakest = Object.keys(window.userInput?.cnt || {}).reduce((a, b) => (window.userInput?.cnt[a] < window.userInput?.cnt[b] ? a : b), 'WOOD');
+    if (pCnt[myWeakest] >= 2) {
+        score += 15; notes.push(`나에게 부족한 ${window.ELEMENT_NAMES_DATA[myWeakest]} 기운을 상대방이 채워줌`);
+    }
+
+    // Check Heavenly Stem Clash (Choong) - Simplified
+    // Gap: 甲-庚, 乙-辛 etc. (Index diff 6)
+    const stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const idx1 = stems.indexOf(curDm), idx2 = stems.indexOf(pDm);
+    if (Math.abs(idx1 - idx2) === 6) {
+        score -= 15; notes.push("강렬하게 끌리지만 자주 부딪힐 수 있음 (충)");
+    } else if ((idx1 + idx2) % 5 === 0) { // Approx Hap (Gan-Hap) logic simplified
+        score += 15; notes.push("정신적으로 깊이 통하는 천생연분 (합)");
+    }
+
+    score = Math.min(100, Math.max(0, score)); // Clamp 0-100
+
+    // 3. Render
+    const box = document.getElementById('compatScoreBox');
+    const msgBox = document.getElementById('compatMsg');
+
+    // Heart Gauge
+    box.innerHTML = `
+        <div class="heart-container" style="position:relative; width:120px; height:120px; margin:0 auto;">
+            <svg viewBox="0 0 100 100" style="width:100%; height:100%; filter:drop-shadow(0 0 10px rgba(236, 72, 153, 0.5));">
+                <path d="M50 88.9L16.7 55.6C7.2 46.1 7.2 30.9 16.7 21.4s24.7-9.5 33.3 0L50 21.4l0 0" fill="#331832" stroke="none"/>
+                <path d="M50 88.9L83.3 55.6C92.8 46.1 92.8 30.9 83.3 21.4s-24.7-9.5-33.3 0L50 21.4l0 0" fill="#331832" stroke="none"/>
+                
+                <defs>
+                    <linearGradient id="heartGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#ec4899" />
+                        <stop offset="100%" stop-color="#ff75c3" />
+                    </linearGradient>
+                    <mask id="fillMask">
+                        <rect x="0" y="${100 - score}" width="100" height="100" fill="white" style="transition:y 1s ease-out;"/>
+                    </mask>
+                </defs>
+                
+                <g mask="url(#fillMask)">
+                    <path d="M50 88.9L16.7 55.6C7.2 46.1 7.2 30.9 16.7 21.4s24.7-9.5 33.3 0L50 21.4l0 0" fill="url(#heartGrad)" stroke="none"/>
+                    <path d="M50 88.9L83.3 55.6C92.8 46.1 92.8 30.9 83.3 21.4s-24.7-9.5-33.3 0L50 21.4l0 0" fill="url(#heartGrad)" stroke="none"/>
+                </g>
+            </svg>
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:white; font-weight:800; font-size:1.8rem; text-shadow:0 2px 4px rgba(0,0,0,0.5);">${score}%</div>
+        </div>
+    `;
+
+    msgBox.innerHTML = `
+        <div style="text-align:center; margin-top:15px; background:rgba(255,255,255,0.05); padding:15px; border-radius:12px;">
+            <div style="color:var(--pink); font-weight:700; margin-bottom:8px;">${uName} ⚡ ${pn}</div>
+            <p style="font-size:0.95rem; line-height:1.6; color:var(--txt1);">${notes.join('<br>')}</p>
+        </div>
+    `;
 }
