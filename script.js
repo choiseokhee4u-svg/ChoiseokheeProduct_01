@@ -53,6 +53,9 @@ function initOptions() {
             sel.style.pointerEvents = e.target.checked ? 'none' : 'auto';
         }
     };
+
+    // Reveal body
+    document.body.classList.add('loaded');
 }
 
 // Register initOptions FIRST so it runs before checkShareParams
@@ -109,6 +112,7 @@ const LUCKY_ITEMS = {
     METAL: { color: '⚪ 흰색', number: 9, direction: '서쪽', food: '배/무/요거트', action: '심호흡하기 🧘', colorHex: '#e2e8f0' },
     WATER: { color: '🔵 파랑', number: 1, direction: '북쪽', food: '해산물/검은콩', action: '물 많이 마시기 💧', colorHex: '#60a5fa' }
 };
+
 
 // Event Listeners (Global)
 document.querySelectorAll('.fortune-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.fortune-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); fType = b.dataset.t; updateQuest() });

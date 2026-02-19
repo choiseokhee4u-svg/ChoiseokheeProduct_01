@@ -40,7 +40,7 @@ function setPageMetadata(page, translations) {
 
 async function includeHeader() {
     const head = document.head;
-    
+
     // Add placeholders for title and description
     const titleElement = document.createElement('title');
     const descriptionElement = document.createElement('meta');
@@ -49,23 +49,24 @@ async function includeHeader() {
     head.appendChild(descriptionElement);
 
     const lang = localStorage.getItem('lang') || 'ko';
-    const translations = await fetch(`locales/${lang}.json`).then(response => response.json());
+    // Use global translations or empty object if not ready
+    const translations = window.translations || {};
 
     fetch('_header.html')
         .then(response => response.text())
         .then(data => {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = data;
-            
+
             const fragment = document.createDocumentFragment();
             Array.from(tempDiv.children).forEach(child => {
                 fragment.appendChild(child);
             });
             head.prepend(fragment);
-            
+
             // Set metadata based on the current page
             let pageName = window.location.pathname.split('/').pop().replace('.html', '');
-            if(pageName ==='ChoiseokheeProduct_01' || pageName === '') pageName = 'index'; // Handle root and index.html
+            if (pageName === 'ChoiseokheeProduct_01' || pageName === '') pageName = 'index'; // Handle root and index.html
             setPageMetadata(pageName, translations);
         });
 }
