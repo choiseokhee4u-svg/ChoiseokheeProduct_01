@@ -489,255 +489,43 @@ function copyLink() {
     });
 }
 
-// ────── Result Card Image Generator ──────
+// ────── Result Card Image Generator (html2canvas) ──────
 function generateCard() {
-    const canvas = document.createElement('canvas');
-    const W = 720, H = 1280;
-    canvas.width = W;
-    canvas.height = H;
-    const ctx = canvas.getContext('2d');
+    const btn = document.querySelector('.save-card-btn');
+    const originalText = btn.innerText;
+    btn.innerText = "저장 중... 📷";
 
-    // Background gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, '#0f0c29');
-    bgGrad.addColorStop(0.5, '#1a1145');
-    bgGrad.addColorStop(1, '#0f172a');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, W, H);
+    // Hide buttons for capture
+    const btnRow = document.querySelector('.btn-row');
+    if (btnRow) btnRow.style.display = 'none';
 
-    // Stars
-    for (let i = 0; i < 120; i++) {
-        const x = Math.random() * W, y = Math.random() * H;
-        const r = Math.random() * 1.8 + 0.3;
-        const alpha = Math.random() * 0.7 + 0.3;
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-        ctx.fill();
-    }
+    // Target the result container
+    const element = document.getElementById('result');
 
-    // Nebula glow
-    const nb1 = ctx.createRadialGradient(W * 0.2, H * 0.15, 0, W * 0.2, H * 0.15, 200);
-    nb1.addColorStop(0, 'rgba(168, 85, 247, 0.12)');
-    nb1.addColorStop(1, 'rgba(168, 85, 247, 0)');
-    ctx.fillStyle = nb1;
-    ctx.fillRect(0, 0, W, H);
+    html2canvas(element, {
+        scale: 2, // High resolution
+        backgroundColor: '#0f172a', // Force dark background
+        useCORS: true, // Allow cross-origin images (e.g. Kakao CDN if any)
+        allowTaint: true,
+        logging: false
+    }).then(canvas => {
+        // Restore buttons
+        if (btnRow) btnRow.style.display = 'flex';
+        btn.innerText = originalText;
 
-    const nb2 = ctx.createRadialGradient(W * 0.8, H * 0.7, 0, W * 0.8, H * 0.7, 250);
-    nb2.addColorStop(0, 'rgba(0, 245, 212, 0.08)');
-    nb2.addColorStop(1, 'rgba(0, 245, 212, 0)');
-    ctx.fillStyle = nb2;
-    ctx.fillRect(0, 0, W, H);
-
-    // Moon
-    ctx.beginPath();
-    ctx.arc(W - 80, 100, 35, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 245, 200, 0.15)';
-    ctx.fill();
-
-    // Top/Bottom ornament lines
-    ctx.strokeStyle = 'rgba(168, 85, 247, 0.4)';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(60, 60); ctx.lineTo(W - 60, 60); ctx.stroke();
-    ctx.strokeStyle = 'rgba(0, 245, 212, 0.3)';
-    ctx.beginPath(); ctx.moveTo(60, 64); ctx.lineTo(W - 60, 64); ctx.stroke();
-
-    // Title
-    ctx.font = '600 18px sans-serif';
-    ctx.fillStyle = 'rgba(203, 213, 225, 0.7)';
-    ctx.textAlign = 'center';
-    ctx.fillText('🌙 용한점집 달의 신당', W / 2, 100);
-
-    // User Name
-    ctx.font = '800 38px sans-serif';
-    ctx.fillStyle = '#f0f0ff';
-    ctx.fillText(uName + '님의 운명 카드', W / 2, 160);
-
-    // Divider
-    const dg = ctx.createLinearGradient(100, 0, W - 100, 0);
-    dg.addColorStop(0, 'rgba(168, 85, 247, 0)');
-    dg.addColorStop(0.5, 'rgba(168, 85, 247, 0.5)');
-    dg.addColorStop(1, 'rgba(168, 85, 247, 0)');
-    ctx.strokeStyle = dg;
-    ctx.beginPath(); ctx.moveTo(100, 185); ctx.lineTo(W - 100, 185); ctx.stroke();
-
-    // Character emoji (text-based, no external font needed)
-    const charData = CHARACTER_TITLES[curDm] || CHARACTER_TITLES['甲'];
-    ctx.font = '64px sans-serif';
-    ctx.fillText(charData.emoji, W / 2, 270);
-
-    // Character title
-    ctx.font = '800 32px sans-serif';
-    const tGrad = ctx.createLinearGradient(W / 2 - 100, 0, W / 2 + 100, 0);
-    tGrad.addColorStop(0, '#00f5d4');
-    tGrad.addColorStop(1, '#a855f7');
-    ctx.fillStyle = tGrad;
-    ctx.fillText('"' + charData.title + '"', W / 2, 320);
-
-    ctx.font = '400 18px sans-serif';
-    ctx.fillStyle = 'rgba(203, 213, 225, 0.8)';
-    ctx.fillText(charData.desc, W / 2, 355);
-
-    // Day Stem badge
-    const myEl = STEM_EL[curDm] || 'WOOD';
-    const elColor = E[myEl].c;
-    ctx.beginPath();
-    _rr(ctx, W / 2 - 55, 385, 110, 50, 12);
-    ctx.fillStyle = 'rgba(0,0,0,0.4)';
-    ctx.fill();
-    ctx.strokeStyle = elColor;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.font = '800 28px sans-serif';
-    ctx.fillStyle = elColor;
-    ctx.fillText(curDm, W / 2, 420);
-
-    // Five Elements Label
-    ctx.font = '600 20px sans-serif';
-    ctx.fillStyle = 'rgba(203, 213, 225, 0.6)';
-    ctx.fillText('✦ 오행 분포 ✦', W / 2, 490);
-
-    // Five Elements Bars
-    const elems = ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'];
-    const elN = { WOOD: '목', FIRE: '화', EARTH: '토', METAL: '금', WATER: '수' };
-    const bsY = 510, bH = 28, bGap = 12, bMaxW = 400, bsX = 160;
-    const statNums = document.querySelectorAll('.stat-n');
-
-    elems.forEach((k, i) => {
-        const e = E[k];
-        const c = parseInt(statNums[i]?.innerText || '0');
-        const pc = c / 8;
-        const y = bsY + i * (bH + bGap);
-
-        ctx.font = '600 16px sans-serif';
-        ctx.fillStyle = e.c;
-        ctx.textAlign = 'right';
-        ctx.fillText(elN[k], bsX - 12, y + 20);
-
-        ctx.beginPath();
-        _rr(ctx, bsX, y, bMaxW, bH, 6);
-        ctx.fillStyle = 'rgba(255,255,255,0.08)';
-        ctx.fill();
-
-        const fW = Math.max(pc * bMaxW, 4);
-        ctx.beginPath();
-        _rr(ctx, bsX, y, fW, bH, 6);
-        ctx.fillStyle = e.c;
-        ctx.fill();
-
-        ctx.font = '700 14px sans-serif';
-        ctx.fillStyle = 'rgba(255,255,255,0.9)';
-        ctx.textAlign = 'left';
-        ctx.fillText(String(c), bsX + fW + 8, y + 20);
+        // Download
+        const link = document.createElement('a');
+        link.download = `달의신당_결과_${uName}.png`;
+        link.href = canvas.toDataURL("image/png");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }).catch(err => {
+        console.error("Capture failed:", err);
+        alert("이미지 저장 중 오류가 발생했습니다.");
+        if (btnRow) btnRow.style.display = 'flex';
+        btn.innerText = originalText;
     });
-
-    ctx.textAlign = 'center';
-
-    // Lucky Items
-    const tSolar = Solar.fromYmd(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());
-    const tLunar = tSolar.getLunar();
-    const tBz = tLunar.getEightChar();
-    const tStem = tBz.getDayGan().toString();
-    const tEl = STEM_EL[tStem] || 'WOOD';
-    const lData = LUCKY_ITEMS[tEl];
-
-    const lY = 750;
-    ctx.font = '600 20px sans-serif';
-    ctx.fillStyle = 'rgba(203, 213, 225, 0.6)';
-    ctx.fillText('🌟 오늘의 럭키 아이템 🌟', W / 2, lY);
-
-    const gItems = [
-        { label: '🎨 컬러', value: lData.color, color: lData.colorHex },
-        { label: '🔢 넘버', value: String(lData.number), color: '#f0f0ff' },
-        { label: '🧭 방향', value: lData.direction, color: '#f0f0ff' },
-        { label: '🍽️ 음식', value: lData.food, color: '#f0f0ff' }
-    ];
-    const cW = 260, cH = 74, cG = 16;
-    const gSX = W / 2 - cW - cG / 2;
-
-    gItems.forEach((item, i) => {
-        const col = i % 2, row = Math.floor(i / 2);
-        const x = gSX + col * (cW + cG);
-        const y = lY + 20 + row * (cH + cG);
-
-        ctx.beginPath();
-        _rr(ctx, x, y, cW, cH, 12);
-        ctx.fillStyle = 'rgba(0,0,0,0.35)';
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        ctx.font = '400 13px sans-serif';
-        ctx.fillStyle = 'rgba(203, 213, 225, 0.6)';
-        ctx.fillText(item.label, x + cW / 2, y + 28);
-
-        ctx.font = '700 18px sans-serif';
-        ctx.fillStyle = item.color;
-        ctx.fillText(item.value, x + cW / 2, y + 56);
-    });
-
-    // Lucky action
-    const aY = lY + 20 + 2 * (cH + cG) + 16;
-    ctx.beginPath();
-    _rr(ctx, 80, aY, W - 160, 44, 12);
-    ctx.fillStyle = 'rgba(0, 245, 212, 0.1)';
-    ctx.fill();
-    ctx.setLineDash([6, 4]);
-    ctx.strokeStyle = 'rgba(0, 245, 212, 0.5)';
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    ctx.font = '600 18px sans-serif';
-    ctx.fillStyle = '#00f5d4';
-    ctx.fillText(lData.action, W / 2, aY + 28);
-
-    // Bottom
-    const btmDG = ctx.createLinearGradient(100, 0, W - 100, 0);
-    btmDG.addColorStop(0, 'rgba(0, 245, 212, 0)');
-    btmDG.addColorStop(0.5, 'rgba(0, 245, 212, 0.3)');
-    btmDG.addColorStop(1, 'rgba(0, 245, 212, 0)');
-    ctx.strokeStyle = btmDG;
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(100, H - 140); ctx.lineTo(W - 100, H - 140); ctx.stroke();
-
-    const now = new Date();
-    ctx.font = '400 15px sans-serif';
-    ctx.fillStyle = 'rgba(203, 213, 225, 0.5)';
-    ctx.fillText(`${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`, W / 2, H - 105);
-
-    ctx.font = '400 14px sans-serif';
-    ctx.fillStyle = 'rgba(203, 213, 225, 0.35)';
-    ctx.fillText('yonghanjeomjip.com', W / 2, H - 70);
-
-    ctx.strokeStyle = 'rgba(168, 85, 247, 0.3)';
-    ctx.beginPath(); ctx.moveTo(60, H - 40); ctx.lineTo(W - 60, H - 40); ctx.stroke();
-
-    // Download
-    canvas.toBlob(blob => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `달의신당_${uName}_운명카드.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }, 'image/png');
-}
-
-// Rounded rect helper
-function _rr(ctx, x, y, w, h, r) {
-    ctx.moveTo(x + r, y);
-    ctx.lineTo(x + w - r, y);
-    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-    ctx.lineTo(x + w, y + h - r);
-    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    ctx.lineTo(x + r, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-    ctx.lineTo(x, y + r);
-    ctx.quadraticCurveTo(x, y, x + r, y);
-    ctx.closePath();
 }
 
 // ────── Result Reveal Animation ──────
