@@ -72,6 +72,9 @@ if (window.P_DATA) {
 // Global Variables
 let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
 
+// Global Variables for Partner
+let pGender = 'M';
+
 // Constants
 const REL_MAP = {
     same: ['Bi-gyeon', 'Geop-jae'],
@@ -118,6 +121,17 @@ const LUCKY_ITEMS = {
 function initEventListeners() {
     document.querySelectorAll('.fortune-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.fortune-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); fType = b.dataset.t; updateQuest() });
     document.querySelectorAll('.gender-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.gender-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); gender = b.dataset.g });
+
+    // Partner Gender Selection
+    const pGenderBtns = document.querySelectorAll('#partnerGenderSel button');
+    if (pGenderBtns.length > 0) {
+        pGenderBtns.forEach(b => b.onclick = () => {
+            pGenderBtns.forEach(x => x.classList.remove('on'));
+            b.classList.add('on');
+            pGender = b.dataset.g;
+        });
+    }
+
     document.querySelectorAll('.tab-row button').forEach(b => b.onclick = () => { document.querySelectorAll('.tab-row button').forEach(x => x.classList.remove('on')); document.querySelectorAll('.tab-c').forEach(x => x.classList.remove('on')); b.classList.add('on'); document.getElementById('tab-' + b.dataset.tab).classList.add('on') });
     document.querySelectorAll('.theme-tabs button').forEach(b => b.onclick = () => { document.querySelectorAll('.theme-tabs button').forEach(x => x.classList.remove('on')); b.classList.add('on'); curTheme = b.dataset.th; updateTheme() });
 }
@@ -263,7 +277,7 @@ function analyze() {
 
             // Compatibility Calculation
             if (isCompat) {
-                calcCompatibility(pName, pY, pM, pD, pH, pMi);
+                calcCompatibility(pName, pY, pM, pD, pH, pMi, pGender);
                 document.getElementById('compatResultCard').style.display = 'block';
             } else {
                 document.getElementById('compatResultCard').style.display = 'none';
@@ -586,7 +600,7 @@ function toggleCompatibility() {
     btn.classList.toggle('active', isHidden);
 }
 
-function calcCompatibility(pn, y, m, d, h, mi) {
+function calcCompatibility(pn, y, m, d, h, mi, pg) {
     // 1. Calculate Partner Saju
     const s = Solar.fromYmdHms(y, m, d, h, mi, 0), l = s.getLunar(), bz = l.getEightChar();
     const pDm = bz.getDayGan().toString(); // Partner Day Stem
@@ -609,6 +623,11 @@ function calcCompatibility(pn, y, m, d, h, mi) {
         score += 20; notes.push("서로 돕고 발전하는 상생 관계");
     } else if (OVERCOMING[myEl] === pEl || OVERCOMING[pEl] === myEl) {
         score -= 10; notes.push("서로 주도권을 잡으려는 긴장감");
+    }
+
+    // Yin-Yang Harmony (Gender)
+    if (gender !== pg) {
+        score += 5; notes.push("음양의 조화가 좋은 커플 (성별 조화)");
     }
 
     // B. Element Balance
