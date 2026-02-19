@@ -360,13 +360,81 @@ function calc(y, mo, d, h, mi) {
         ch.innerHTML += `<div class="stat-row"><span class="element-icon">${iconHtml} <span style="font-size:0.5em; opacity:0.7; margin-left:1px; vertical-align: middle;">(${eName})</span></span><div class="stat-track"><div class="stat-fill" style="background:${e.c}" data-w="${pc}%"></div></div><span class="stat-n">${c}</span></div>`;
     });
     setTimeout(() => document.querySelectorAll('.stat-fill').forEach(b => b.style.width = b.dataset.w), 100);
-    const lk = window.LK_DATA[wk], le = E[wk];
     const genderTip = gender === 'M' ? window.translations.male_luck_tip : window.translations.female_luck_tip;
     document.getElementById('luckBox').innerHTML = `<div class="luck-dot" style="background:${le.c};color:${le.c}"></div><div class="luck-info"><strong>${lk.c}</strong><span>${lk.i} | ${genderTip}</span></div>`;
+
+    // Draw Radar Chart
+    drawRadar(cnt);
+
     updateQuest();
     document.getElementById('sajuMbti').innerHTML = `${curDm}`;
     document.getElementById('soulT').innerHTML = ``;
 }
+
+function drawRadar(cnt) {
+    const box = document.getElementById('radarChart');
+    if (!box) return;
+
+    const w = 300, h = 300, cx = w / 2, cy = h / 2, r = 100;
+    const elems = ['WOOD', 'FIRE', 'EARTH', 'METAL', 'WATER'];
+    const angles = [-90, -18, 54, 126, 198].map(a => a * Math.PI / 180); // Top start, clockwise
+    const maxVal = 5; // Normalize scale (usually max count is around 3-4, but let's set 5 as safe max visually)
+
+    // Generate Polygon Points
+    let points = "";
+    elems.forEach((k, i) => {
+        const val = cnt[k] || 0;
+        const dist = (Math.min(val, maxVal) / maxVal) * r; // Cap at maxVal
+        const x = cx + dist * Math.cos(angles[i]);
+        const y = cy + dist * Math.sin(angles[i]);
+        points += `${x},${y} `;
+    });
+
+    // Background Grid (Pentagons)
+    let grid = "";
+    [0.2, 0.4, 0.6, 0.8, 1].forEach(scale => {
+        let p = "";
+        angles.forEach(a => {
+            p += `${cx + r * scale * Math.cos(a)},${cy + r * scale * Math.sin(a)} `;
+        });
+        grid += `<polygon points="${p}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`;
+    });
+
+    // Axis Lines
+    let axes = "";
+    angles.forEach(a => {
+        axes += `<line x1="${cx}" y1="${cy}" x2="${cx + r * Math.cos(a)}" y2="${cy + r * Math.sin(a)}" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`;
+    });
+
+    // Icons & Labels
+    let labels = "";
+    elems.forEach((k, i) => {
+        const x = cx + (r + 25) * Math.cos(angles[i]);
+        const y = cy + (r + 25) * Math.sin(angles[i]);
+        const e = window.E_DATA ? window.E_DATA[k] : E[k];
+        // Use emoji or text for simplicity in SVG, or foreignObject for img
+        // Let's use text for now to keep it lightweight: WOOD -> 🌲
+        const icon = k === 'WOOD' ? '🌲' : k === 'FIRE' ? '🔥' : k === 'EARTH' ? '⛰️' : k === 'METAL' ? '⚔️' : '💧';
+        // Or better, stick to text labels since icons are nearby
+        const name = window.ELEMENT_NAMES_DATA[k];
+        labels += `<text x="${x}" y="${y}" fill="${e.c}" font-size="14" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${name}</text>`;
+
+        // Value Text
+        const vx = cx + (r + 45) * Math.cos(angles[i]);
+        const vy = cy + (r + 45) * Math.sin(angles[i]);
+        labels += `<text x="${vx}" y="${vy}" fill="rgba(255,255,255,0.7)" font-size="11" text-anchor="middle" dominant-baseline="middle">${cnt[k]}</text>`;
+    });
+
+    box.innerHTML = `
+        <svg width="100%" height="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">
+            ${grid}
+            ${axes}
+            <polygon points="${points}" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2" class="radar-poly"/>
+            ${labels}
+        </svg>
+    `;
+}
+
 
 function shareKakao() {
     if (typeof Kakao === 'undefined') {

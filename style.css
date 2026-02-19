@@ -1754,3 +1754,29 @@ h1 {
     transform-style: preserve-3d;
     backface-visibility: hidden;
 }
+
+/* Radar Chart */
+.radar-chart {
+    width: 100%;
+    max-width: 320px;
+    height: 320px;
+    margin: 0 auto 20px auto;
+}
+
+.radar-poly {
+    transform-origin: center;
+    animation: radarGrow 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0.8;
+}
+
+@keyframes radarGrow {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
