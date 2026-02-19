@@ -9,100 +9,8 @@ function onScriptDataLoaded() {
     }
 }
 
-// Check if data is already loaded (sync)
-if (window.P_DATA) {
-    onScriptDataLoaded();
-} else {
-    // Wait for event (async)
-    document.addEventListener('scriptDataLoaded', onScriptDataLoaded);
-}
-
-function getShareUrl() {
-    // Generate URL with current result data
-    const p = new URLSearchParams();
-    if (window.shareData) {
-        p.set('n', window.shareData.n);
-        p.set('b', window.shareData.b);
-        p.set('g', window.shareData.g);
-        p.set('t', window.shareData.t);
-    }
-    return window.location.origin + window.location.pathname + '?' + p.toString();
-}
-
-function checkShareParams() {
-    const p = new URLSearchParams(window.location.search);
-    const n = p.get('n');
-    const b = p.get('b');
-    const g = p.get('g');
-    const t = p.get('t');
-
-    if (n && b && g) {
-        // Set inputs from params
-        const unInput = document.getElementById('userName');
-        if (unInput) unInput.value = n;
-
-        // Select Quick Tab
-        const quickTab = document.querySelector('button[data-tab="quick"]');
-        if (quickTab) quickTab.click();
-
-        // Set Date
-        const qDate = document.getElementById('quickDate');
-        if (qDate) qDate.value = b;
-
-        // Set Gender
-        const gBtn = document.querySelector(`.gender-sel button[data-g="${g}"]`);
-        if (gBtn) gBtn.click();
-
-        // Set Time
-        const unkTime = document.getElementById('unknownTime');
-        if (t === 'u') {
-            if (unkTime) unkTime.click();
-        } else {
-            // If checkbox is checked, uncheck it
-            if (unkTime && unkTime.checked) unkTime.click();
-
-            const tVal = parseInt(t);
-            const hh = Math.floor(tVal / 100);
-            const mi = tVal % 100;
-            const isPm = hh >= 12; // Simple logic, assumes user inputs 0-23
-            // But UI uses AM/PM + 1-12
-            // Convert 24h to 12h
-            let uiH = hh;
-            let uiAmpm = 'AM';
-            if (hh >= 12) { uiAmpm = 'PM'; uiH = hh > 12 ? hh - 12 : 12; }
-            if (hh === 0) { uiH = 12; }
-
-            const sa = document.getElementById('selAmpm');
-            const sh = document.getElementById('selHour');
-            const sm = document.getElementById('selMinute');
-            if (sa) sa.value = uiAmpm;
-            if (sh) sh.value = uiH;
-            if (sm) sm.value = mi;
-        }
-
-        // Add shared-view class
-        document.body.classList.add('shared-view');
-
-        // Change Retry Button Text to "Test Mine Too"
-        const retryBtn = document.querySelector('.reset');
-        if (retryBtn) {
-            retryBtn.removeAttribute('data-i18n'); // Prevent overwrite
-            retryBtn.innerText = window.translations.test_mine_button || "🙋‍♂️ 나도 테스트 하기";
-        }
-
-        // Auto Analyze
-        setTimeout(analyze, 500);
-    }
-}
-
-// Kakao Init
-if (window.Kakao && !Kakao.isInitialized()) {
-    Kakao.init('14302bcc718209aaa470793e426fbb2a');
-}
-
 // Initialize Time/Date Options immediately
-// Initialize Time/Date Options safely
-document.addEventListener('DOMContentLoaded', () => {
+function initOptions() {
     const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay'), hS = document.getElementById('selHour'), minS = document.getElementById('selMinute');
 
     // Clear previous if any
@@ -145,7 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
             sel.style.pointerEvents = e.target.checked ? 'none' : 'auto';
         }
     };
-});
+}
+
+// Register initOptions FIRST so it runs before checkShareParams
+document.addEventListener('DOMContentLoaded', initOptions);
+
+// Check if data is already loaded (sync)
+if (window.P_DATA) {
+    onScriptDataLoaded();
+} else {
+    // Wait for event (async)
+    document.addEventListener('scriptDataLoaded', onScriptDataLoaded);
+}
 
 // Global Variables
 let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
