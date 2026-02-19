@@ -1,12 +1,21 @@
 window.isScriptDataLoaded = false;
-document.addEventListener('scriptDataLoaded', () => {
+
+function onScriptDataLoaded() {
     window.isScriptDataLoaded = true;
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', checkShareParams);
     } else {
         checkShareParams();
     }
-});
+}
+
+// Check if data is already loaded (sync)
+if (window.P_DATA) {
+    onScriptDataLoaded();
+} else {
+    // Wait for event (async)
+    document.addEventListener('scriptDataLoaded', onScriptDataLoaded);
+}
 
 function getShareUrl() {
     // Generate URL with current result data

@@ -6,13 +6,17 @@ window.SEASON_MODIFIERS_DATA = null;
 window.LK_DATA = null;
 window.ELEMENT_NAMES_DATA = null;
 
-window.loadScriptData = async function (lang) {
-    const response = await fetch(`locales/${lang}.json?v=${new Date().getTime()}`);
-    const translations = await response.json();
-    window.P_DATA = translations.P;
-    window.TEN_GODS_DATA = translations.TEN_GODS;
-    window.BRANCH_MODIFIERS_DATA = translations.BRANCH_MODIFIERS;
-    window.SEASON_MODIFIERS_DATA = translations.SEASON_MODIFIERS;
-    window.LK_DATA = translations.LK;
-    window.ELEMENT_NAMES_DATA = translations.ELEMENT_NAMES;
+// Synchronous data loading from window.translations (loaded via ko.js)
+if (window.translations) {
+    window.P_DATA = window.translations.P;
+    window.TEN_GODS_DATA = window.translations.TEN_GODS;
+    window.BRANCH_MODIFIERS_DATA = window.translations.BRANCH_MODIFIERS;
+    window.SEASON_MODIFIERS_DATA = window.translations.SEASON_MODIFIERS;
+    window.LK_DATA = window.translations.LK;
+    window.ELEMENT_NAMES_DATA = window.translations.ELEMENT_NAMES;
+
+    // Dispatch event for script.js
+    document.dispatchEvent(new Event('scriptDataLoaded'));
+} else {
+    console.error("Translations not found!");
 }

@@ -1,4 +1,4 @@
-{
+window.translations = {
     "site_title": "용한점집 달의 신당 - 애기동자 신점으로 보는 운명",
     "site_description": "애기동자 몸주신을 모시는 용한점집, 달의 신당. 신의 공수로 당신의 운명, 조상 문제, 살(煞)을 꿰뚫어 봅니다. 굿, 비방을 통해 운명을 개척하세요.",
     "og_title": "용한점집 달의 신당",
@@ -430,4 +430,4 @@
     "kakao_share_desc_suffix": "... 과연 그 뜻은?",
     "kakao_share_button_title": "내 점괘 확인하기",
     "test_mine_button": "🙋‍♂️ 나도 테스트 하기"
-}
+};
