@@ -1,0 +1,31 @@
+{
+    "name": "용한점집 달의 신당 - 무료 사주 운세",
+    "short_name": "달의 신당",
+    "description": "애기동자 몸주신의 영험한 공수! 2026년 사주팔자, 오늘의 운세, 궁합을 무료로 확인하세요.",
+    "start_url": "/ChoiseokheeProduct_01/",
+    "scope": "/ChoiseokheeProduct_01/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "icons": [
+        {
+            "src": "images/Fire.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "images/Fire.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "entertainment",
+        "lifestyle"
+    ],
+    "lang": "ko",
+    "dir": "ltr"
+}

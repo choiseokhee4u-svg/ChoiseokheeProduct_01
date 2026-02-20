@@ -274,6 +274,7 @@ function analyze() {
         try {
             if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
             calc(y, mo, d, h, mi);
+            if (typeof trackAnalysis === 'function') trackAnalysis();
 
             // Compatibility Calculation
             if (isCompat) {
@@ -1011,12 +1012,13 @@ function updateReviewSlider() {
     dots.forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
 }
 
-// ═══════ Visit Counter (localStorage) ═══════
+// ═══════ Visit Counter & Gamification (Enhanced) ═══════
 function trackVisit() {
     const today = new Date().toISOString().slice(0, 10);
     const lastVisit = localStorage.getItem('saju_last_visit');
     let streak = parseInt(localStorage.getItem('saju_visit_streak') || '0');
     let totalVisits = parseInt(localStorage.getItem('saju_total_visits') || '0');
+    let totalAnalysis = parseInt(localStorage.getItem('saju_total_analysis') || '0');
 
     if (lastVisit !== today) {
         totalVisits++;
@@ -1035,12 +1037,180 @@ function trackVisit() {
         localStorage.setItem('saju_visit_streak', streak);
     }
 
-    // Show streak badge if 2+ days
-    if (streak >= 2) {
-        const dateEl = document.getElementById('dailyDate');
-        if (dateEl) {
-            dateEl.innerHTML += ` <span style="color:var(--pink); font-weight:700;">🔥 ${streak}일 연속 방문!</span>`;
+    // Show visit stats badge
+    const dateEl = document.getElementById('dailyDate');
+    if (dateEl) {
+        let badges = '';
+        if (streak >= 2) {
+            badges += ` <span style="color:var(--pink); font-weight:700;">🔥 ${streak}일 연속!</span>`;
         }
+        if (totalVisits >= 5) {
+            const rank = totalVisits >= 30 ? '🏆 VIP' : totalVisits >= 15 ? '⭐ 단골' : '💫 단골';
+            badges += ` <span style="color:var(--yellow); font-weight:600; font-size:0.75rem;">${rank}</span>`;
+        }
+        if (badges) dateEl.innerHTML += badges;
+    }
+}
+
+// 분석 횟수 추적
+function trackAnalysis() {
+    let count = parseInt(localStorage.getItem('saju_total_analysis') || '0');
+    count++;
+    localStorage.setItem('saju_total_analysis', count);
+}
+
+// ═══════ 24절기 이벤트 시스템 ═══════
+function initSeasonalEvent() {
+    const now = new Date();
+    const year = now.getFullYear();
+
+    // 2026년 24절기 근사 데이터 (월/일)
+    const SOLAR_TERMS = [
+        { name: '소한', emoji: '❄️', date: [1, 5], desc: '차가운 기운이 가장 강한 때', advice: '따뜻한 차와 함께 마음을 녹이세요', element: 'WATER' },
+        { name: '대한', emoji: '🧊', date: [1, 20], desc: '겨울의 절정, 인내의 시기', advice: '묵묵히 준비하면 봄에 꽃이 핍니다', element: 'WATER' },
+        { name: '입춘', emoji: '🌱', date: [2, 4], desc: '새로운 시작의 기운이 피어남', advice: '올해의 소원을 마음에 심으세요', element: 'WOOD' },
+        { name: '우수', emoji: '💧', date: [2, 19], desc: '얼음이 녹고 봄비가 내리는 때', advice: '감사한 마음이 복을 부릅니다', element: 'WATER' },
+        { name: '경칩', emoji: '🐸', date: [3, 6], desc: '개구리가 겨울잠에서 깨어남', advice: '새로운 도전을 시작하기 좋은 때', element: 'WOOD' },
+        { name: '춘분', emoji: '🌸', date: [3, 21], desc: '낮과 밤의 길이가 같은 균형의 날', advice: '삶의 균형을 점검해보세요', element: 'WOOD' },
+        { name: '청명', emoji: '🌤️', date: [4, 5], desc: '하늘이 맑고 봄기운이 가득', advice: '산책하며 좋은 기운을 받으세요', element: 'WOOD' },
+        { name: '곡우', emoji: '🌾', date: [4, 20], desc: '봄비가 내려 곡식을 윤택하게 함', advice: '씨앗처럼 작은 시작이 큰 결과를 낳습니다', element: 'EARTH' },
+        { name: '입하', emoji: '☀️', date: [5, 6], desc: '여름의 시작, 만물이 자라는 때', advice: '열정을 불태우되 건강을 챙기세요', element: 'FIRE' },
+        { name: '소만', emoji: '🌿', date: [5, 21], desc: '풀과 나무가 무성해지는 때', advice: '성장의 기쁨을 느끼며 감사하세요', element: 'FIRE' },
+        { name: '망종', emoji: '🌾', date: [6, 6], desc: '씨를 뿌리는 절기', advice: '중요한 계획을 실행에 옮기세요', element: 'FIRE' },
+        { name: '하지', emoji: '🌞', date: [6, 21], desc: '낮이 가장 긴 날, 양기의 절정', advice: '에너지가 넘치는 날! 활발하게 움직이세요', element: 'FIRE' },
+        { name: '소서', emoji: '🌡️', date: [7, 7], desc: '본격적인 더위의 시작', advice: '더위를 이기는 건 마음의 시원함입니다', element: 'FIRE' },
+        { name: '대서', emoji: '🔥', date: [7, 23], desc: '한 해 중 가장 더운 때', advice: '인내하면 가을의 풍성한 수확이 기다립니다', element: 'FIRE' },
+        { name: '입추', emoji: '🍂', date: [8, 7], desc: '가을의 시작, 수확의 계절 도래', advice: '그동안의 노력을 정리할 시간입니다', element: 'METAL' },
+        { name: '처서', emoji: '🌬️', date: [8, 23], desc: '더위가 물러가는 때', advice: '서늘한 바람처럼 마음도 가볍게', element: 'METAL' },
+        { name: '백로', emoji: '🌫️', date: [9, 8], desc: '이슬이 내리기 시작하는 때', advice: '감성이 풍요로운 시기, 예술을 즐기세요', element: 'METAL' },
+        { name: '추분', emoji: '🍁', date: [9, 23], desc: '낮과 밤이 같아지는 가을의 균형', advice: '감사의 마음을 전하면 복이 돌아옵니다', element: 'METAL' },
+        { name: '한로', emoji: '🍃', date: [10, 8], desc: '찬 이슬이 내리는 깊어가는 가을', advice: '따뜻한 사람과 시간을 보내세요', element: 'METAL' },
+        { name: '상강', emoji: '🥶', date: [10, 23], desc: '서리가 내리기 시작하는 때', advice: '한 해를 돌아보며 정리하세요', element: 'EARTH' },
+        { name: '입동', emoji: '🌨️', date: [11, 7], desc: '겨울의 시작', advice: '가까운 사람에게 따스한 말 한마디를', element: 'WATER' },
+        { name: '소설', emoji: '❄️', date: [11, 22], desc: '첫눈이 내리는 시기', advice: '첫눈에 빌면 소원이 이루어집니다', element: 'WATER' },
+        { name: '대설', emoji: '⛄', date: [12, 7], desc: '큰 눈이 내리는 절기', advice: '하얀 눈처럼 마음을 정화하세요', element: 'WATER' },
+        { name: '동지', emoji: '🕯️', date: [12, 22], desc: '밤이 가장 긴 날, 새 출발의 시작', advice: '팥죽 한 그릇으로 액운을 쫓으세요', element: 'WATER' }
+    ];
+
+    // 현재 절기와 다음 절기 계산
+    let currentTerm = null, nextTerm = null;
+    const todayNum = (now.getMonth() + 1) * 100 + now.getDate();
+
+    for (let i = 0; i < SOLAR_TERMS.length; i++) {
+        const t = SOLAR_TERMS[i];
+        const termNum = t.date[0] * 100 + t.date[1];
+        const nextIdx = (i + 1) % SOLAR_TERMS.length;
+        const nextTermNum = SOLAR_TERMS[nextIdx].date[0] * 100 + SOLAR_TERMS[nextIdx].date[1];
+
+        if (i === SOLAR_TERMS.length - 1) {
+            // 마지막 절기(동지) 이후 ~ 첫 절기(소한) 이전
+            if (todayNum >= termNum || todayNum < SOLAR_TERMS[0].date[0] * 100 + SOLAR_TERMS[0].date[1]) {
+                currentTerm = t;
+                nextTerm = SOLAR_TERMS[0];
+                break;
+            }
+        } else if (todayNum >= termNum && todayNum < nextTermNum) {
+            currentTerm = t;
+            nextTerm = SOLAR_TERMS[nextIdx];
+            break;
+        }
+    }
+
+    if (!currentTerm) return;
+
+    // 다음 절기까지 남은 일수
+    const nextDate = new Date(year, nextTerm.date[0] - 1, nextTerm.date[1]);
+    if (nextDate < now) nextDate.setFullYear(year + 1);
+    const daysUntilNext = Math.ceil((nextDate - now) / (1000 * 60 * 60 * 24));
+
+    // 오늘이 절기 날짜인지 체크 (특별 이벤트)
+    const isTermDay = (now.getMonth() + 1) === currentTerm.date[0] && now.getDate() === currentTerm.date[1];
+
+    // 절기 배너 생성
+    const fortuneCard = document.getElementById('dailyFortune');
+    if (fortuneCard) {
+        const banner = document.createElement('div');
+        banner.className = 'seasonal-banner';
+        banner.innerHTML = `
+            <div class="seasonal-inner">
+                <div class="seasonal-current">
+                    <span class="seasonal-emoji">${currentTerm.emoji}</span>
+                    <div>
+                        <div class="seasonal-name">${isTermDay ? '🎉 오늘은 ' : ''}${currentTerm.name}${isTermDay ? ' 절기입니다!' : ''}</div>
+                        <div class="seasonal-desc">${currentTerm.desc}</div>
+                    </div>
+                </div>
+                <div class="seasonal-advice">💡 ${currentTerm.advice}</div>
+                <div class="seasonal-next">다음 절기 「${nextTerm.emoji} ${nextTerm.name}」까지 <strong>${daysUntilNext}일</strong></div>
+            </div>
+        `;
+        fortuneCard.after(banner);
+    }
+}
+
+// ═══════ PWA Install Prompt ═══════
+let deferredPrompt = null;
+
+function initPWA() {
+    // Service Worker 등록
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(() => { });
+    }
+
+    // Install Prompt 캡처
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallBanner();
+    });
+}
+
+function showInstallBanner() {
+    // 이미 표시했거나 닫은 경우 스킵
+    const dismissed = localStorage.getItem('saju_pwa_dismissed');
+    if (dismissed) {
+        const dismissDate = new Date(dismissed);
+        const now = new Date();
+        // 7일 후 다시 표시
+        if ((now - dismissDate) < 7 * 24 * 60 * 60 * 1000) return;
+    }
+
+    const banner = document.createElement('div');
+    banner.id = 'pwaInstallBanner';
+    banner.innerHTML = `
+        <div class="pwa-banner-inner">
+            <span class="pwa-emoji">📱</span>
+            <div class="pwa-text">
+                <strong>달의 신당을 홈 화면에 추가하세요!</strong>
+                <span>매일 운세를 앱처럼 빠르게 확인할 수 있어요</span>
+            </div>
+            <button class="pwa-install-btn" onclick="installPWA()">추가</button>
+            <button class="pwa-close-btn" onclick="dismissPWA()">✕</button>
+        </div>
+    `;
+    document.body.appendChild(banner);
+
+    // 3초후 슬라이드 인
+    setTimeout(() => banner.classList.add('show'), 3000);
+}
+
+function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => {
+            deferredPrompt = null;
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner) banner.remove();
+        });
+    }
+}
+
+function dismissPWA() {
+    localStorage.setItem('saju_pwa_dismissed', new Date().toISOString());
+    const banner = document.getElementById('pwaInstallBanner');
+    if (banner) {
+        banner.classList.remove('show');
+        setTimeout(() => banner.remove(), 500);
     }
 }
 
@@ -1049,5 +1219,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initDailyFortune();
     initReviewCarousel();
     trackVisit();
+    initSeasonalEvent();
+    initPWA();
 });
-

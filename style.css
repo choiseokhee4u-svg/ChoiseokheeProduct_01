@@ -2075,3 +2075,171 @@ h1 {
 }
 
 /* Version 3.0 - Phase 1 Features */
+
+/* ═══════ Phase 3: 24절기 배너 ═══════ */
+.seasonal-banner {
+    max-width: 500px;
+    margin: 12px auto;
+    padding: 0 16px;
+    animation: fadeIn 0.5s ease;
+}
+
+.seasonal-inner {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(0, 245, 212, 0.08));
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    border-radius: 16px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+}
+
+.seasonal-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--accent), var(--pink));
+}
+
+.seasonal-current {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.seasonal-emoji {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 102, 0.4));
+}
+
+.seasonal-name {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--cyan);
+}
+
+.seasonal-desc {
+    font-size: 0.8rem;
+    color: var(--txt2);
+    margin-top: 2px;
+}
+
+.seasonal-advice {
+    font-size: 0.85rem;
+    color: var(--yellow);
+    padding: 8px 12px;
+    background: rgba(255, 215, 102, 0.08);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.seasonal-next {
+    font-size: 0.75rem;
+    color: var(--txt2);
+    text-align: right;
+}
+
+.seasonal-next strong {
+    color: var(--pink);
+    font-size: 0.85rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ═══════ Phase 3: PWA Install Banner ═══════ */
+#pwaInstallBanner {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: calc(100% - 32px);
+    max-width: 480px;
+    transition: bottom 0.5s cubic-bezier(.22, 1, .36, 1);
+}
+
+#pwaInstallBanner.show {
+    bottom: 20px;
+}
+
+.pwa-banner-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.pwa-emoji {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.pwa-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pwa-text strong {
+    color: var(--txt);
+    font-size: 0.85rem;
+}
+
+.pwa-text span {
+    color: var(--txt2);
+    font-size: 0.72rem;
+}
+
+.pwa-install-btn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--pink), var(--accent));
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+}
+
+.pwa-install-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+}
+
+.pwa-close-btn {
+    background: none;
+    border: none;
+    color: var(--txt2);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.pwa-close-btn:hover {
+    opacity: 1;
+}
