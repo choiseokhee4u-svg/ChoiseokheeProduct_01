@@ -765,56 +765,13 @@ function getShareUrl() {
 }
 
 
-// ═══════ Daily Fortune System ═══════
-const DAILY_MESSAGES = [
-    "오늘은 새로운 시작의 기운이 감도는 날입니다. 용기를 내어 첫 발을 내디뎌 보세요. 🌱",
-    "지갑을 열기 전에 세 번 생각하세요. 오늘은 절약이 곧 재물복입니다. 💰",
-    "오래된 친구에게 연락해보세요. 뜻밖의 기쁜 소식이 올 수 있습니다. 📱",
-    "하늘이 내린 귀인을 만날 수 있는 날! 약속을 미루지 마세요. ✨",
-    "오늘은 조용히 내면을 돌아보는 시간을 가지세요. 명상이 큰 도움이 됩니다. 🧘",
-    "남을 돕는 작은 행동이 큰 복이 되어 돌아올 날입니다. 선행을 실천하세요. 🤝",
-    "건강에 주의하세요. 따뜻한 차 한잔이 몸과 마음을 치유합니다. 🍵",
-    "오늘의 구설수를 조심하세요. 말을 아끼면 화를 피할 수 있습니다. 🤫",
-    "직감을 믿으세요! 오늘 번뜩이는 아이디어가 미래를 바꿀 수 있습니다. 💡",
-    "사랑하는 사람에게 마음을 표현하세요. 오늘은 연애운이 빛나는 날! 💕",
-    "역마살이 기운이 도니 가까운 곳이라도 산책을 다녀오세요. 기분이 환기됩니다. 🚶",
-    "이직이나 전직을 고민 중이라면, 오늘은 정보 수집에 최적인 날입니다. 📝",
-    "금전적인 제안에는 신중하게 대응하세요. 서두르면 손해를 볼 수 있습니다. ⚠️",
-    "가족과 함께하는 시간이 행운을 부릅니다. 소소한 대화가 큰 힘이 됩니다. 🏠",
-    "오늘은 두뇌 회전이 빠른 날! 공부나 시험에 좋은 결과가 기대됩니다. 📚",
-    "예상치 못한 횡재수가 있을 수 있습니다. 눈을 크게 뜨고 기회를 잡으세요! 🍀",
-    "감정 기복이 심할 수 있는 날입니다. 깊은 호흡으로 마음을 다스려보세요. 🌊",
-    "오늘은 뭘 해도 되는 대길한 날! 그동안 미뤄왔던 일을 시작하세요. 🎯",
-    "주변의 충고에 귀를 기울이세요. 쓴 소리가 약이 될 수 있습니다. 👂",
-    "자기 자신을 칭찬하는 날! 그동안 수고한 나에게 작은 선물을 하세요. 🎁",
-    "오늘의 행운은 동쪽에서 옵니다. 아침 일찍 해를 보며 소원을 빌어보세요. ☀️",
-    "문서운이 좋은 날! 계약이나 합격 소식을 기대해볼 수 있습니다. 📜",
-    "참을수록 복이 오는 날입니다. 화가 나더라도 3초만 참아보세요. 🙏",
-    "옷장을 정리하면 운기가 트입니다. 오래된 것을 버리면 새것이 들어옵니다. 👗",
-    "카리스마가 빛나는 날! 리더십을 발휘하면 주변의 인정을 받습니다. 👑",
-    "오늘은 물을 많이 마시세요. 수(水) 기운이 부족한 날이니 보충이 필요합니다. 💧",
-    "일찍 자고 일찍 일어나면 좋은 기운을 받을 수 있는 날입니다. 🌅",
-    "지인의 부탁을 들어주면 좋은 인연이 이어집니다. 인정을 아끼지 마세요. 💫",
-    "금전운이 상승하는 날! 평소 관심 있던 재테크를 공부해보세요. 📈",
-    "오늘은 혼자만의 시간이 필요한 날입니다. 자연 속에서 힐링해보세요. 🌳",
-    "웃음은 만병통치약! 오늘 하루도 밝게 웃으면 좋은 기운이 모입니다. 😊"
-];
-
-const DAILY_LUCKY_DATA = [
-    { color: '🟢 초록', number: 3, food: '샐러드', direction: '동쪽' },
-    { color: '🔴 빨강', number: 7, food: '매운탕', direction: '남쪽' },
-    { color: '🟡 노랑', number: 5, food: '카레', direction: '중앙' },
-    { color: '⚪ 흰색', number: 9, food: '요거트', direction: '서쪽' },
-    { color: '🔵 파랑', number: 1, food: '해물파전', direction: '북쪽' },
-    { color: '💜 보라', number: 4, food: '포도', direction: '남동쪽' },
-    { color: '🟠 주황', number: 8, food: '감귤', direction: '남서쪽' }
-];
-
+// ═══════ Daily Fortune System (Improved - 천간지지 기반) ═══════
 function initDailyFortune() {
     const now = new Date();
     const dateStr = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
     const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
     const dayName = dayNames[now.getDay()];
+    const hour = now.getHours();
 
     const dateEl = document.getElementById('dailyDate');
     const msgEl = document.getElementById('dailyMessage');
@@ -822,14 +779,134 @@ function initDailyFortune() {
 
     if (!dateEl || !msgEl || !luckyEl) return;
 
+    // 시간대별 인사말
+    let greeting = '';
+    if (hour < 6) greeting = '🌙 고요한 새벽,';
+    else if (hour < 9) greeting = '🌅 상쾌한 아침,';
+    else if (hour < 12) greeting = '☀️ 활기찬 오전,';
+    else if (hour < 14) greeting = '🍽️ 따스한 점심,';
+    else if (hour < 18) greeting = '🌤️ 여유로운 오후,';
+    else if (hour < 21) greeting = '🌆 고운 저녁,';
+    else greeting = '🌃 편안한 밤,';
+
     dateEl.textContent = `${dateStr} (${dayName})`;
 
-    // Date-based hash for consistent daily content
-    const dayHash = (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) % DAILY_MESSAGES.length;
-    msgEl.textContent = DAILY_MESSAGES[dayHash];
+    // 음력 천간지지 기반으로 진정한 일일 변경 메시지 생성
+    let dayStem = '', dayBranch = '';
+    try {
+        const s = Solar.fromYmd(now.getFullYear(), now.getMonth() + 1, now.getDate());
+        const l = s.getLunar();
+        const bz = l.getEightChar();
+        dayStem = bz.getDayGan().toString();
+        dayBranch = bz.getDayZhi().toString();
+    } catch (e) {
+        // Solar 라이브러리 로드 전 fallback
+        const fallbackStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+        const fallbackBranches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+        const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+        dayStem = fallbackStems[dayOfYear % 10];
+        dayBranch = fallbackBranches[dayOfYear % 12];
+    }
 
-    const luckyHash = (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) % DAILY_LUCKY_DATA.length;
-    const lucky = DAILY_LUCKY_DATA[luckyHash];
+    // 천간별 메시지 (각 3개씩 = 30개, 지지에 따라 선택)
+    const stemMessages = {
+        '甲': [
+            `${greeting} 나무가 하늘을 향해 자라듯, 당신의 계획도 위를 향해 뻗어갑니다. 자신감을 가지세요!`,
+            `${greeting} 큰 나무의 기운이 가득한 날! 리더십을 발휘하면 좋은 결과가 따릅니다.`,
+            `${greeting} 봄바람처럼 새로운 시작의 에너지가 넘칩니다. 미뤄둔 일을 시작하세요!`
+        ],
+        '乙': [
+            `${greeting} 부드러운 풀처럼 유연하게 대처하면 어떤 상황도 극복할 수 있습니다. 💚`,
+            `${greeting} 꽃이 피어나듯 당신의 매력이 빛나는 날! 사람들과의 만남이 행운을 부릅니다.`,
+            `${greeting} 작은 풀도 바위틈을 뚫고 자라듯, 포기하지 않으면 길이 열립니다.`
+        ],
+        '丙': [
+            `${greeting} 태양처럼 밝은 에너지가 당신을 감싸는 날! 자신 있게 앞으로 나아가세요. 🔥`,
+            `${greeting} 열정의 불꽃이 타오르는 날입니다. 도전정신이 행운을 부릅니다!`,
+            `${greeting} 밝은 빛이 모든 것을 비추듯, 오늘은 숨겨진 진실이 드러날 수 있습니다.`
+        ],
+        '丁': [
+            `${greeting} 촛불처럼 은은한 빛이 주변을 밝힙니다. 따뜻한 말 한마디가 큰 힘이 됩니다. 🕯️`,
+            `${greeting} 섬세한 관찰력이 빛나는 날! 디테일에 주목하면 큰 기회를 발견합니다.`,
+            `${greeting} 작은 불씨가 큰 불이 되듯, 오늘의 작은 노력이 큰 결실을 맺습니다.`
+        ],
+        '戊': [
+            `${greeting} 큰 산처럼 묵직한 안정감이 당신을 지켜주는 날입니다. 흔들리지 마세요. ⛰️`,
+            `${greeting} 대지의 기운으로 모든 것을 감싸 안는 포용력이 빛나는 날!`,
+            `${greeting} 산이 움직이지 않듯, 오늘은 인내하면 큰 보상이 찾아옵니다.`
+        ],
+        '己': [
+            `${greeting} 비옥한 땅이 만물을 키우듯, 주변 사람들을 돕는 것이 당신의 복이 됩니다. 🌾`,
+            `${greeting} 실용적인 판단이 빛나는 날! 현실적인 계획이 성공을 부릅니다.`,
+            `${greeting} 정원의 흙처럼, 꾸준한 관리가 아름다운 결과를 만들어냅니다.`
+        ],
+        '庚': [
+            `${greeting} 강철처럼 단단한 의지력이 빛나는 날! 결단력 있게 행동하세요. ⚔️`,
+            `${greeting} 칼날처럼 날카로운 판단력의 날! 중요한 결정을 내리기에 좋습니다.`,
+            `${greeting} 금속이 두드릴수록 강해지듯, 오늘의 도전이 당신을 더 강하게 만듭니다.`
+        ],
+        '辛': [
+            `${greeting} 보석처럼 빛나는 날! 평소 숨겨둔 재능을 발휘해보세요. 💎`,
+            `${greeting} 섬세하고 아름다운 것에 마음이 끌리는 날. 예술·문화 활동이 행운을 부릅니다.`,
+            `${greeting} 귀금속처럼 가치 있는 인연을 만날 수 있는 날! 모임에 참석하세요.`
+        ],
+        '壬': [
+            `${greeting} 큰 강처럼 넓은 시야로 세상을 바라보세요. 새로운 가능성이 보입니다. 🌊`,
+            `${greeting} 물이 높은 곳에서 낮은 곳으로 흐르듯, 겸손한 자세가 행운을 부릅니다.`,
+            `${greeting} 바다처럼 깊은 지혜가 빛나는 날! 중요한 학습이나 공부에 좋습니다.`
+        ],
+        '癸': [
+            `${greeting} 이슬처럼 맑고 순수한 에너지의 날! 감성을 따라가면 좋은 결과가 옵니다. 💧`,
+            `${greeting} 안개 속에서도 길을 찾듯, 직감을 믿으면 정답이 보입니다.`,
+            `${greeting} 비가 대지를 적시듯, 당신의 작은 노력이 주변에 큰 영향을 줍니다.`
+        ]
+    };
+
+    // 지지로 메시지 인덱스 선택 (12지지 → 0~2 인덱스)
+    const branchIdx = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'].indexOf(dayBranch);
+    const msgIdx = branchIdx % 3;
+    const messages = stemMessages[dayStem] || stemMessages['甲'];
+    msgEl.textContent = messages[msgIdx];
+
+    // 천간 기반 오행 럭키 아이템 (더 다양하게)
+    const stemElement = {
+        '甲': 'WOOD', '乙': 'WOOD', '丙': 'FIRE', '丁': 'FIRE',
+        '戊': 'EARTH', '己': 'EARTH', '庚': 'METAL', '辛': 'METAL',
+        '壬': 'WATER', '癸': 'WATER'
+    };
+    const el = stemElement[dayStem] || 'WOOD';
+
+    // 오행별 럭키 아이템 (지지에 따라 세부 변화)
+    const luckyByElement = {
+        WOOD: [
+            { color: '🟢 초록', number: 3, food: '샐러드', direction: '동쪽', item: '🌿 관엽식물' },
+            { color: '🟩 라임', number: 8, food: '시금치 비빔밥', direction: '동남쪽', item: '📗 초록 노트' },
+            { color: '💚 에메랄드', number: 13, food: '녹차 라떼', direction: '동쪽', item: '🎋 대나무 소품' }
+        ],
+        FIRE: [
+            { color: '🔴 빨강', number: 7, food: '매운 떡볶이', direction: '남쪽', item: '🕯️ 향초' },
+            { color: '🧡 주황', number: 2, food: '붉은 팥죽', direction: '남쪽', item: '🔥 빨간 양말' },
+            { color: '💗 핑크', number: 9, food: '토마토 파스타', direction: '남서쪽', item: '🌹 장미꽃' }
+        ],
+        EARTH: [
+            { color: '🟡 노랑', number: 5, food: '카레라이스', direction: '중앙', item: '🏺 도자기 컵' },
+            { color: '🟤 갈색', number: 10, food: '고구마', direction: '남서쪽', item: '🧱 테라코타 화분' },
+            { color: '🌕 베이지', number: 15, food: '된장찌개', direction: '북동쪽', item: '🪨 원석 액세서리' }
+        ],
+        METAL: [
+            { color: '⚪ 흰색', number: 4, food: '흰 살 생선', direction: '서쪽', item: '⌚ 메탈 시계' },
+            { color: '🩶 실버', number: 9, food: '배 주스', direction: '서북쪽', item: '💍 은반지' },
+            { color: '🤍 아이보리', number: 14, food: '요거트 스무디', direction: '서쪽', item: '🪙 동전 지갑' }
+        ],
+        WATER: [
+            { color: '🔵 파랑', number: 1, food: '해물 칼국수', direction: '북쪽', item: '💧 물병' },
+            { color: '💙 네이비', number: 6, food: '검은콩 밥', direction: '북쪽', item: '🐟 물고기 장식' },
+            { color: '🩵 하늘색', number: 11, food: '미역국', direction: '북동쪽', item: '🌊 바다 향수' }
+        ]
+    };
+
+    const luckyArr = luckyByElement[el] || luckyByElement.WOOD;
+    const lucky = luckyArr[msgIdx]; // 지지 기반으로 럭키 아이템도 변경
 
     luckyEl.innerHTML = `
         <div class="daily-lucky-item">
@@ -851,6 +928,11 @@ function initDailyFortune() {
             <span class="lucky-emoji">🧭</span>
             <span class="lucky-label">럭키 방향</span>
             <span class="lucky-value">${lucky.direction}</span>
+        </div>
+        <div class="daily-lucky-item">
+            <span class="lucky-emoji">🎁</span>
+            <span class="lucky-label">럭키 아이템</span>
+            <span class="lucky-value">${lucky.item}</span>
         </div>
     `;
 }
