@@ -1874,4 +1874,204 @@ h1 {
     filter: blur(20px);
 }
 
-/* Version 2.0 - Cache Busting */
+/* ═══════ Daily Fortune Section ═══════ */
+.daily-fortune-card {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(0, 245, 212, 0.1));
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: dailyGlow 3s ease-in-out infinite alternate;
+}
+
+.daily-fortune-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+    animation: rotateBg 10s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes dailyGlow {
+    from {
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    }
+
+    to {
+        box-shadow: 0 0 30px rgba(0, 245, 212, 0.25);
+    }
+}
+
+@keyframes rotateBg {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.daily-fortune-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.daily-icon {
+    font-size: 2.2rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.daily-label {
+    font-size: 1.1rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.daily-date {
+    font-size: 0.8rem;
+    color: var(--txt2);
+    margin-top: 2px;
+}
+
+.daily-message {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--txt);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border-left: 3px solid var(--accent);
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.daily-lucky {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.daily-lucky-item {
+    flex: 1;
+    min-width: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.daily-lucky-item .lucky-emoji {
+    display: block;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+}
+
+.daily-lucky-item .lucky-label {
+    font-size: 0.7rem;
+    color: var(--txt2);
+    display: block;
+}
+
+.daily-lucky-item .lucky-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cyan);
+    display: block;
+    margin-top: 2px;
+}
+
+
+/* ═══════ Review Carousel ═══════ */
+.review-section {
+    overflow: hidden;
+}
+
+.review-slider {
+    overflow: hidden;
+    border-radius: 14px;
+    margin-bottom: 12px;
+}
+
+.review-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.review-card {
+    min-width: 100%;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(168, 85, 247, 0.08));
+    border: 1px solid rgba(255, 107, 157, 0.15);
+    border-radius: 14px;
+    text-align: center;
+}
+
+.review-stars {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+.review-text {
+    font-size: 0.95rem;
+    color: var(--txt);
+    line-height: 1.7;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.review-author {
+    font-size: 0.8rem;
+    color: var(--txt2);
+    font-weight: 600;
+}
+
+.review-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.review-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.review-dot.active {
+    background: var(--pink);
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(255, 107, 157, 0.5);
+}
+
+/* Version 3.0 - Phase 1 Features */

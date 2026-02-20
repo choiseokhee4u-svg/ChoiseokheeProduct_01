@@ -9,7 +9,7 @@
         }
     </style>
     <script src="include.js"></script>
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
@@ -39,6 +39,19 @@
         <main id="main-content" itemscope itemtype="https://schema.org/Service">
             <meta itemprop="serviceType" content="사주 운세 제공">
             <div class="wrap">
+                <!-- 오늘의 한마디 Daily Fortune -->
+                <div id="dailyFortune" class="card daily-fortune-card">
+                    <div class="daily-fortune-header">
+                        <span class="daily-icon">🔮</span>
+                        <div>
+                            <div class="daily-label">오늘의 한마디</div>
+                            <div class="daily-date" id="dailyDate"></div>
+                        </div>
+                    </div>
+                    <div class="daily-message" id="dailyMessage"></div>
+                    <div class="daily-lucky" id="dailyLucky"></div>
+                </div>
+
                 <div id="inputSection" class="card">
                     <h1 itemprop="name" data-i18n="main_title">🌙 용한점집 달의 신당</h1>
                     <p class="sub" itemprop="description" data-i18n="sub_title">애기동자 몸주신이 공수로 알려주는 당신의 운명</p>
@@ -133,6 +146,43 @@
                     <div class="action-buttons">
                         <button class="submit" onclick="analyze()" data-i18n="analyze_button">🍭 애기동자에게 물어보기</button>
                     </div>
+                </div>
+
+                <!-- 사용자 후기 슬라이드 -->
+                <div class="card review-section">
+                    <div class="sec-title" style="justify-content:center">✨ 이용자 후기</div>
+                    <div class="review-slider" id="reviewSlider">
+                        <div class="review-track" id="reviewTrack">
+                            <div class="review-card">
+                                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                                <p class="review-text">"사주 결과가 너무 신기해서 소름 돋았어요! 제 성격이랑 100% 일치해서 깜짝 놀랐습니다. 주변 친구들한테도 다
+                                    추천했어요 ㅋㅋ"</p>
+                                <div class="review-author">— 김*서 (28세, 여성)</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                                <p class="review-text">"매일 오늘의 운세 확인하러 와요! 럭키컬러 맞춰서 나갔더니 진짜 좋은 일이 생겼어요. 이제 필수 루틴이에요 👍"
+                                </p>
+                                <div class="review-author">— 이*호 (34세, 남성)</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                                <p class="review-text">"궁합 기능이 대박이에요!! 남자친구랑 같이 해봤는데 결과가 너무 찰떡이어서 결혼해야겠다고 결심했습니다 💕"</p>
+                                <div class="review-author">— 박*영 (31세, 여성)</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                                <p class="review-text">"다른 사주 앱 써봤는데 여기가 제일 정확하고 재밌어요. 애기동자 컨셉이 너무 귀여워서 매일 들어와요 🍬"</p>
+                                <div class="review-author">— 정*수 (26세, 남성)</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                                <p class="review-text">"이번 달 운세가 재물운 좋다고 해서 복권 샀더니 진짜 당첨됐어요 ㅋㅋ 소액이지만 너무 신기해요!"</p>
+                                <div class="review-author">— 최*진 (42세, 여성)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-dots" id="reviewDots"></div>
                 </div>
                 <div id="loading">
                     <div class="ld"></div>

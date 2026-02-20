@@ -687,23 +687,13 @@ function calcCompatibility(pn, y, m, d, h, mi, pg) {
     `;
 }
 
-function getShareUrl() {
-    const params = new URLSearchParams();
-    if (window.shareData) {
-        params.set('n', window.shareData.n);
-        params.set('b', window.shareData.b);
-        params.set('g', window.shareData.g);
-        params.set('t', window.shareData.t);
-    }
-    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
-}
-
 function checkShareParams() {
     const params = new URLSearchParams(window.location.search);
     const n = params.get('n');
     const b = params.get('b');
     const g = params.get('g');
     const t = params.get('t');
+    const ft = params.get('ft'); // fortune type
 
     if (n && b && g && t) {
         // Pre-fill inputs
@@ -715,6 +705,14 @@ function checkShareParams() {
         document.querySelectorAll('.gender-sel button').forEach(btn => {
             btn.classList.toggle('on', btn.dataset.g === g);
         });
+
+        // Fortune type
+        if (ft) {
+            fType = ft;
+            document.querySelectorAll('.fortune-sel button').forEach(btn => {
+                btn.classList.toggle('on', btn.dataset.t === ft);
+            });
+        }
 
         // Set Date
         const y = b.slice(0, 4), m = b.slice(4, 6), d = b.slice(6, 8);
@@ -731,7 +729,19 @@ function checkShareParams() {
             if (unknownTime) unknownTime.checked = true;
         } else {
             if (unknownTime) unknownTime.checked = false;
-            // Simplified handling for share restore - focusing on preventing crash first
+            // Restore time from share params
+            const timeVal = parseInt(t);
+            const hour = Math.floor(timeVal / 100);
+            const minute = timeVal % 100;
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+
+            const selAmpm = document.getElementById('selAmpm');
+            const selHour = document.getElementById('selHour');
+            const selMinute = document.getElementById('selMinute');
+            if (selAmpm) selAmpm.value = ampm;
+            if (selHour) selHour.value = displayHour;
+            if (selMinute) selMinute.value = minute;
         }
 
         // Auto Analyze if data is ready
@@ -740,3 +750,222 @@ function checkShareParams() {
         }, 500);
     }
 }
+
+// ═══════ Share URL improvement ═══════
+function getShareUrl() {
+    const params = new URLSearchParams();
+    if (window.shareData) {
+        params.set('n', window.shareData.n);
+        params.set('b', window.shareData.b);
+        params.set('g', window.shareData.g);
+        params.set('t', window.shareData.t);
+        params.set('ft', fType);
+    }
+    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+}
+
+
+// ═══════ Daily Fortune System ═══════
+const DAILY_MESSAGES = [
+    "오늘은 새로운 시작의 기운이 감도는 날입니다. 용기를 내어 첫 발을 내디뎌 보세요. 🌱",
+    "지갑을 열기 전에 세 번 생각하세요. 오늘은 절약이 곧 재물복입니다. 💰",
+    "오래된 친구에게 연락해보세요. 뜻밖의 기쁜 소식이 올 수 있습니다. 📱",
+    "하늘이 내린 귀인을 만날 수 있는 날! 약속을 미루지 마세요. ✨",
+    "오늘은 조용히 내면을 돌아보는 시간을 가지세요. 명상이 큰 도움이 됩니다. 🧘",
+    "남을 돕는 작은 행동이 큰 복이 되어 돌아올 날입니다. 선행을 실천하세요. 🤝",
+    "건강에 주의하세요. 따뜻한 차 한잔이 몸과 마음을 치유합니다. 🍵",
+    "오늘의 구설수를 조심하세요. 말을 아끼면 화를 피할 수 있습니다. 🤫",
+    "직감을 믿으세요! 오늘 번뜩이는 아이디어가 미래를 바꿀 수 있습니다. 💡",
+    "사랑하는 사람에게 마음을 표현하세요. 오늘은 연애운이 빛나는 날! 💕",
+    "역마살이 기운이 도니 가까운 곳이라도 산책을 다녀오세요. 기분이 환기됩니다. 🚶",
+    "이직이나 전직을 고민 중이라면, 오늘은 정보 수집에 최적인 날입니다. 📝",
+    "금전적인 제안에는 신중하게 대응하세요. 서두르면 손해를 볼 수 있습니다. ⚠️",
+    "가족과 함께하는 시간이 행운을 부릅니다. 소소한 대화가 큰 힘이 됩니다. 🏠",
+    "오늘은 두뇌 회전이 빠른 날! 공부나 시험에 좋은 결과가 기대됩니다. 📚",
+    "예상치 못한 횡재수가 있을 수 있습니다. 눈을 크게 뜨고 기회를 잡으세요! 🍀",
+    "감정 기복이 심할 수 있는 날입니다. 깊은 호흡으로 마음을 다스려보세요. 🌊",
+    "오늘은 뭘 해도 되는 대길한 날! 그동안 미뤄왔던 일을 시작하세요. 🎯",
+    "주변의 충고에 귀를 기울이세요. 쓴 소리가 약이 될 수 있습니다. 👂",
+    "자기 자신을 칭찬하는 날! 그동안 수고한 나에게 작은 선물을 하세요. 🎁",
+    "오늘의 행운은 동쪽에서 옵니다. 아침 일찍 해를 보며 소원을 빌어보세요. ☀️",
+    "문서운이 좋은 날! 계약이나 합격 소식을 기대해볼 수 있습니다. 📜",
+    "참을수록 복이 오는 날입니다. 화가 나더라도 3초만 참아보세요. 🙏",
+    "옷장을 정리하면 운기가 트입니다. 오래된 것을 버리면 새것이 들어옵니다. 👗",
+    "카리스마가 빛나는 날! 리더십을 발휘하면 주변의 인정을 받습니다. 👑",
+    "오늘은 물을 많이 마시세요. 수(水) 기운이 부족한 날이니 보충이 필요합니다. 💧",
+    "일찍 자고 일찍 일어나면 좋은 기운을 받을 수 있는 날입니다. 🌅",
+    "지인의 부탁을 들어주면 좋은 인연이 이어집니다. 인정을 아끼지 마세요. 💫",
+    "금전운이 상승하는 날! 평소 관심 있던 재테크를 공부해보세요. 📈",
+    "오늘은 혼자만의 시간이 필요한 날입니다. 자연 속에서 힐링해보세요. 🌳",
+    "웃음은 만병통치약! 오늘 하루도 밝게 웃으면 좋은 기운이 모입니다. 😊"
+];
+
+const DAILY_LUCKY_DATA = [
+    { color: '🟢 초록', number: 3, food: '샐러드', direction: '동쪽' },
+    { color: '🔴 빨강', number: 7, food: '매운탕', direction: '남쪽' },
+    { color: '🟡 노랑', number: 5, food: '카레', direction: '중앙' },
+    { color: '⚪ 흰색', number: 9, food: '요거트', direction: '서쪽' },
+    { color: '🔵 파랑', number: 1, food: '해물파전', direction: '북쪽' },
+    { color: '💜 보라', number: 4, food: '포도', direction: '남동쪽' },
+    { color: '🟠 주황', number: 8, food: '감귤', direction: '남서쪽' }
+];
+
+function initDailyFortune() {
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일`;
+    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayName = dayNames[now.getDay()];
+
+    const dateEl = document.getElementById('dailyDate');
+    const msgEl = document.getElementById('dailyMessage');
+    const luckyEl = document.getElementById('dailyLucky');
+
+    if (!dateEl || !msgEl || !luckyEl) return;
+
+    dateEl.textContent = `${dateStr} (${dayName})`;
+
+    // Date-based hash for consistent daily content
+    const dayHash = (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) % DAILY_MESSAGES.length;
+    msgEl.textContent = DAILY_MESSAGES[dayHash];
+
+    const luckyHash = (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) % DAILY_LUCKY_DATA.length;
+    const lucky = DAILY_LUCKY_DATA[luckyHash];
+
+    luckyEl.innerHTML = `
+        <div class="daily-lucky-item">
+            <span class="lucky-emoji">🎨</span>
+            <span class="lucky-label">럭키 컬러</span>
+            <span class="lucky-value">${lucky.color}</span>
+        </div>
+        <div class="daily-lucky-item">
+            <span class="lucky-emoji">🔢</span>
+            <span class="lucky-label">럭키 넘버</span>
+            <span class="lucky-value">${lucky.number}</span>
+        </div>
+        <div class="daily-lucky-item">
+            <span class="lucky-emoji">🍽️</span>
+            <span class="lucky-label">럭키 음식</span>
+            <span class="lucky-value">${lucky.food}</span>
+        </div>
+        <div class="daily-lucky-item">
+            <span class="lucky-emoji">🧭</span>
+            <span class="lucky-label">럭키 방향</span>
+            <span class="lucky-value">${lucky.direction}</span>
+        </div>
+    `;
+}
+
+// ═══════ Review Carousel ═══════
+let reviewIndex = 0;
+let reviewInterval = null;
+
+function initReviewCarousel() {
+    const track = document.getElementById('reviewTrack');
+    const dotsContainer = document.getElementById('reviewDots');
+    if (!track || !dotsContainer) return;
+
+    const cards = track.querySelectorAll('.review-card');
+    const total = cards.length;
+
+    // Create dots
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => goToReview(i);
+        dotsContainer.appendChild(dot);
+    }
+
+    // Auto-slide
+    reviewInterval = setInterval(() => {
+        reviewIndex = (reviewIndex + 1) % total;
+        updateReviewSlider();
+    }, 4000);
+
+    // Pause on hover
+    const slider = document.getElementById('reviewSlider');
+    if (slider) {
+        slider.addEventListener('mouseenter', () => clearInterval(reviewInterval));
+        slider.addEventListener('mouseleave', () => {
+            reviewInterval = setInterval(() => {
+                reviewIndex = (reviewIndex + 1) % total;
+                updateReviewSlider();
+            }, 4000);
+        });
+    }
+
+    // Touch swipe support
+    let touchStartX = 0;
+    if (slider) {
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            clearInterval(reviewInterval);
+        }, { passive: true });
+        slider.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                reviewIndex = diff > 0 ? Math.min(reviewIndex + 1, total - 1) : Math.max(reviewIndex - 1, 0);
+                updateReviewSlider();
+            }
+            reviewInterval = setInterval(() => {
+                reviewIndex = (reviewIndex + 1) % total;
+                updateReviewSlider();
+            }, 4000);
+        }, { passive: true });
+    }
+}
+
+function goToReview(idx) {
+    reviewIndex = idx;
+    updateReviewSlider();
+}
+
+function updateReviewSlider() {
+    const track = document.getElementById('reviewTrack');
+    const dots = document.querySelectorAll('.review-dot');
+    if (!track) return;
+
+    track.style.transform = `translateX(-${reviewIndex * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === reviewIndex));
+}
+
+// ═══════ Visit Counter (localStorage) ═══════
+function trackVisit() {
+    const today = new Date().toISOString().slice(0, 10);
+    const lastVisit = localStorage.getItem('saju_last_visit');
+    let streak = parseInt(localStorage.getItem('saju_visit_streak') || '0');
+    let totalVisits = parseInt(localStorage.getItem('saju_total_visits') || '0');
+
+    if (lastVisit !== today) {
+        totalVisits++;
+        localStorage.setItem('saju_total_visits', totalVisits);
+        localStorage.setItem('saju_last_visit', today);
+
+        // Check streak
+        if (lastVisit) {
+            const lastDate = new Date(lastVisit);
+            const todayDate = new Date(today);
+            const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+            streak = diffDays === 1 ? streak + 1 : 1;
+        } else {
+            streak = 1;
+        }
+        localStorage.setItem('saju_visit_streak', streak);
+    }
+
+    // Show streak badge if 2+ days
+    if (streak >= 2) {
+        const dateEl = document.getElementById('dailyDate');
+        if (dateEl) {
+            dateEl.innerHTML += ` <span style="color:var(--pink); font-weight:700;">🔥 ${streak}일 연속 방문!</span>`;
+        }
+    }
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    initDailyFortune();
+    initReviewCarousel();
+    trackVisit();
+});
+
