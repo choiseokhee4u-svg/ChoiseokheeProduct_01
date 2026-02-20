@@ -13,6 +13,23 @@
 </head>
 
 <body>
+    <!-- 상단 네비게이션 바 -->
+    <nav class="site-nav" id="siteNav">
+        <a href="index.html" class="nav-logo">🌙 달의 신당</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">사주</a>
+            <a href="zodiac.html" class="nav-link">띠별운세</a>
+            <a href="blog.html" class="nav-link">블로그</a>
+            <a href="about.html" class="nav-link">소개</a>
+        </div>
+        <button class="nav-menu-btn" id="navMenuBtn"
+            onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    </nav>
+
+    <!-- 맨 위로 버튼 -->
+    <button id="scrollTopBtn" class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        title="맨 위로">↑</button>
+
     <div class="scroll-down-indicator">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -63,6 +80,17 @@
                     </div>
                     <span style="color:var(--accent); font-size:1.5rem;">→</span>
                 </a>
+
+                <!-- 내 운세 저장함 (분석 이력) -->
+                <div id="analysisHistory" class="card" style="display:none;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                        <div style="font-weight:800; color:var(--cyan); font-size:0.95rem;">📋 최근 분석 이력</div>
+                        <button onclick="clearHistory()"
+                            style="background:none; border:none; color:var(--txt2); font-size:0.75rem; cursor:pointer; text-decoration:underline;">전체
+                            삭제</button>
+                    </div>
+                    <div id="historyList"></div>
+                </div>
 
                 <div id="inputSection" class="card">
                     <h1 itemprop="name" data-i18n="main_title">🌙 용한점집 달의 신당</h1>

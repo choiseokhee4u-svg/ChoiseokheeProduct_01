@@ -275,6 +275,7 @@ function analyze() {
             if (typeof Solar === 'undefined') throw new Error('Solar library not loaded');
             calc(y, mo, d, h, mi);
             if (typeof trackAnalysis === 'function') trackAnalysis();
+            if (typeof saveAnalysisToHistory === 'function') saveAnalysisToHistory();
 
             // Compatibility Calculation
             if (isCompat) {
@@ -1214,6 +1215,125 @@ function dismissPWA() {
     }
 }
 
+// ═══════ Phase 4: Analysis History (분석 이력) ═══════
+function saveAnalysisToHistory() {
+    if (!window.shareData || !curDm) return;
+    const history = JSON.parse(localStorage.getItem('saju_history') || '[]');
+    const entry = {
+        name: uName,
+        birth: window.shareData.b,
+        gender: window.shareData.g,
+        time: window.shareData.t,
+        dayStem: curDm,
+        date: new Date().toISOString().slice(0, 10),
+        charTitle: (CHARACTER_TITLES[curDm] || CHARACTER_TITLES['甲']).title
+    };
+    // 중복 제거 (같은 이름+생일)
+    const filtered = history.filter(h => !(h.name === entry.name && h.birth === entry.birth));
+    filtered.unshift(entry);
+    // 최대 5개
+    localStorage.setItem('saju_history', JSON.stringify(filtered.slice(0, 5)));
+}
+
+function loadAnalysisHistory() {
+    const history = JSON.parse(localStorage.getItem('saju_history') || '[]');
+    const container = document.getElementById('analysisHistory');
+    const list = document.getElementById('historyList');
+    if (!container || !list || history.length === 0) return;
+
+    container.style.display = 'block';
+    list.innerHTML = history.map((h, i) => {
+        const charData = CHARACTER_TITLES[h.dayStem] || CHARACTER_TITLES['甲'];
+        const genderIcon = h.gender === 'M' ? '👨' : '👩';
+        const birthFormatted = h.birth ? `${h.birth.slice(0, 4)}.${h.birth.slice(4, 6)}.${h.birth.slice(6, 8)}` : '';
+        return `
+            <div class="history-item" onclick="reAnalyze(${i})">
+                <span class="history-emoji">${charData.emoji}</span>
+                <div class="history-info">
+                    <div class="history-name">${genderIcon} ${h.name} <span style="color:var(--accent);font-size:0.75rem;">[${h.dayStem}] ${h.charTitle}</span></div>
+                    <div class="history-meta">${birthFormatted} · ${h.date}</div>
+                </div>
+                <span class="history-arrow">→</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function reAnalyze(idx) {
+    const history = JSON.parse(localStorage.getItem('saju_history') || '[]');
+    const h = history[idx];
+    if (!h) return;
+    // URL 파라미터로 재분석
+    const params = new URLSearchParams();
+    params.set('n', h.name);
+    params.set('b', h.birth);
+    params.set('g', h.gender);
+    params.set('t', h.time);
+    window.location.href = `index.html?${params.toString()}`;
+}
+
+function clearHistory() {
+    localStorage.removeItem('saju_history');
+    const container = document.getElementById('analysisHistory');
+    if (container) container.style.display = 'none';
+}
+
+// ═══════ Phase 4: Cookie Consent ═══════
+function initCookieConsent() {
+    if (localStorage.getItem('saju_cookie_consent')) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'cookieConsent';
+    banner.innerHTML = `
+        <div class="cookie-inner">
+            <span class="cookie-icon">🍪</span>
+            <div class="cookie-text">
+                본 사이트는 Google Analytics 및 AdSense를 위해 쿠키를 사용합니다.
+                <a href="javascript:void(0)" onclick="document.getElementById('privacyModal').style.display='flex'" style="color:var(--cyan);text-decoration:underline;">개인정보처리방침</a>
+            </div>
+            <button class="cookie-accept" onclick="acceptCookies()">동의</button>
+        </div>
+    `;
+    document.body.appendChild(banner);
+    setTimeout(() => banner.classList.add('show'), 1500);
+}
+
+function acceptCookies() {
+    localStorage.setItem('saju_cookie_consent', new Date().toISOString());
+    const banner = document.getElementById('cookieConsent');
+    if (banner) {
+        banner.classList.remove('show');
+        setTimeout(() => banner.remove(), 500);
+    }
+}
+
+// ═══════ Phase 4: Scroll-to-Top & Nav ═══════
+function initScrollEffects() {
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    const nav = document.getElementById('siteNav');
+    let lastScrollY = 0;
+
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+
+        // 맨 위로 버튼
+        if (scrollBtn) {
+            scrollBtn.classList.toggle('visible', y > 400);
+        }
+
+        // 네비게이션 숨김/표시
+        if (nav) {
+            if (y > 60) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        }
+
+        lastScrollY = y;
+    }, { passive: true });
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initDailyFortune();
@@ -1221,4 +1341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     trackVisit();
     initSeasonalEvent();
     initPWA();
+    loadAnalysisHistory();
+    initCookieConsent();
+    initScrollEffects();
 });
