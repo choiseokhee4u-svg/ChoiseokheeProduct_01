@@ -1334,6 +1334,31 @@ function initScrollEffects() {
     }, { passive: true });
 }
 
+// ═══════ Phase 7: 신뢰도 카운트 애니메이션 ═══════
+function initTrustCounter() {
+    const counterEl = document.getElementById('analyzeCountDisplay');
+    if (!counterEl) return;
+
+    // 타겟 숫자 517,669
+    const targetValue = 517669;
+    // 시작 숫자 (타겟 - 랜덤 편차)
+    let currentValue = 517669 - Math.floor(Math.random() * 50) - 50;
+
+    const duration = 2000;
+    const interval = 30;
+    const steps = duration / interval;
+    const increment = (targetValue - currentValue) / steps;
+
+    const counterInterval = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= targetValue) {
+            currentValue = targetValue;
+            clearInterval(counterInterval);
+        }
+        counterEl.innerText = Math.floor(currentValue).toLocaleString();
+    }, interval);
+}
+
 // ═══════ Phase 6: 결과 탭 시스템 초기화 ═══════
 function initResultTabs() {
     const tabs = document.querySelectorAll('.result-tab');
@@ -1368,4 +1393,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initCookieConsent();
     initScrollEffects();
     initResultTabs();
+    initTrustCounter();
 });
