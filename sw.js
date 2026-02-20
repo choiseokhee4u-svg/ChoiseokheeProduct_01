@@ -1,4 +1,4 @@
-// 달의 신당 Service Worker - Offline 지원 및 캐싱
+// 애기동자 신점 Service Worker - Offline 지원 및 캐싱
 const CACHE_NAME = 'dalsindang-v1';
 const urlsToCache = [
     '/ChoiseokheeProduct_01/',

@@ -1182,7 +1182,7 @@ function showInstallBanner() {
         <div class="pwa-banner-inner">
             <span class="pwa-emoji">📱</span>
             <div class="pwa-text">
-                <strong>달의 신당을 홈 화면에 추가하세요!</strong>
+                <strong>애기동자 신점을 홈 화면에 추가하세요!</strong>
                 <span>매일 운세를 앱처럼 빠르게 확인할 수 있어요</span>
             </div>
             <button class="pwa-install-btn" onclick="installPWA()">추가</button>
