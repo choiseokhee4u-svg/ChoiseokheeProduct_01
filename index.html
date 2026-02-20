@@ -193,97 +193,122 @@
                     <p style="margin-top:14px;color:var(--cyan)" data-i18n="loading_text">애기동자 부르는 중... 🍬</p>
                 </div>
                 <div id="result">
-                    <div class="card" id="manseCard">
-                        <div class="sec-title" style="justify-content:center" data-i18n="result_title">📜 <span
-                                class="nm" id="n0">OOO</span>에게 내리는 신의 공수
-                        </div>
-                        <div class="pillars" id="pillarsBox"></div>
-                        <div class="saju-msg" id="sajuMsg"></div>
+                    <!-- 결과 탭 네비게이션 -->
+                    <div class="result-tabs" id="resultTabs">
+                        <button class="result-tab active" data-result-tab="tab-myeongshik">명식</button>
+                        <button class="result-tab" data-result-tab="tab-haesuk">해석</button>
+                        <button class="result-tab" data-result-tab="tab-personality">성격·궁합</button>
+                        <button class="result-tab" data-result-tab="tab-lucky">운세·비방</button>
                     </div>
 
-                    <!-- Compatibility Result Card -->
-                    <div class="card" id="compatResultCard" style="display:none;">
-                        <div class="sec-title" style="justify-content:center">💖 두 사람의 궁합</div>
-                        <div id="compatScoreBox"></div>
-                        <div id="compatMsg"></div>
+                    <!-- 탭 1: 사주 명식 -->
+                    <div class="result-tab-content active" id="tab-myeongshik">
+                        <div class="card" id="manseCard">
+                            <div class="sec-title" style="justify-content:center" data-i18n="result_title"><span
+                                    class="nm" id="n0">OOO</span>에게 내리는 신의 공수
+                            </div>
+                            <div class="pillars" id="pillarsBox"></div>
+                            <div class="saju-msg" id="sajuMsg"></div>
+                        </div>
+
+                        <!-- Compatibility Result Card -->
+                        <div class="card" id="compatResultCard" style="display:none;">
+                            <div class="sec-title" style="justify-content:center">두 사람의 궁합</div>
+                            <div id="compatScoreBox"></div>
+                            <div id="compatMsg"></div>
+                        </div>
                     </div>
 
-                    <div class="card hero">
-                        <div class="sec-title" style="justify-content:center" data-i18n="soul_title">✨ <span class="nm"
-                                id="n1"></span>애기동자님이 알려주는 너의 영혼
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
-                            <div
-                                style="flex:1; background:rgba(0,0,0,0.3); padding:20px; border-radius:16px; text-align:center;">
-                                <span style="font-size:0.9rem; color:var(--txt2); display:block; margin-bottom:8px;"
-                                    data-i18n="your_deity">너의 주신(主神)</span>
-                                <div id="sajuMbti"
-                                    style="font-size:2.5rem; font-weight:800; color:var(--pink); line-height:1.2;">
+                    <!-- 탭 2: 운세 해석 -->
+                    <div class="result-tab-content" id="tab-haesuk">
+                        <div class="card hero">
+                            <div class="sec-title" style="justify-content:center" data-i18n="soul_title"><span
+                                    class="nm" id="n1"></span>애기동자님이 알려주는 너의 영혼
+                            </div>
+                            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 10px;">
+                                <div
+                                    style="flex:1; background:rgba(0,0,0,0.3); padding:20px; border-radius:16px; text-align:center;">
+                                    <span style="font-size:0.9rem; color:var(--txt2); display:block; margin-bottom:8px;"
+                                        data-i18n="your_deity">너의 주신(主神)</span>
+                                    <div id="sajuMbti"
+                                        style="font-size:2.5rem; font-weight:800; color:var(--pink); line-height:1.2;">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div id="soulC" class="soul-c"></div>
-                        <div id="soulT" class="soul-t"></div>
-                        <div id="genderBadge" style="font-size:.8rem;color:var(--txt2);margin-top:4px"></div>
-                        <div id="characterTitle" class="character-title-box" style="display:none;"></div>
-                    </div>
-                    <div class="card">
-                        <div class="theme-tabs"><button class="on" data-th="base" data-i18n="base_theme">🏠
-                                기본</button><button data-th="love" data-i18n="love_theme">💘
-                                연애</button><button data-th="money" data-i18n="money_theme">💰 재물</button><button
-                                data-th="work" data-i18n="work_theme">⚔️ 사회</button></div>
-                        <div id="storyBox" class="story"></div>
-                        <div class="advice-box">
-                            <div class="advice-t" data-i18n="advice_title">💀 애기동자의 팩폭 공수</div>
-                            <p id="adviceTxt"></p>
+                            <div id="soulC" class="soul-c"></div>
+                            <div id="soulT" class="soul-t"></div>
+                            <div id="genderBadge" style="font-size:.8rem;color:var(--txt2);margin-top:4px"></div>
+                            <div id="characterTitle" class="character-title-box" style="display:none;"></div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="sec-title" data-i18n="ancestor_title">📜 <span class="nm" id="n2"></span>네게 깃든 조상신의
-                            기운과 살(煞) <span class="sub-t">| 조상과 살풀이</span></div>
-                        <div id="radarChart" class="radar-chart"></div>
-                        <div id="statChart"></div>
-                    </div>
-                    <div class="card">
-                        <div class="sec-title" data-i18n="secret_title">🍀 <span class="nm" id="n3"></span>액운을 막고 복을 부르는
-                            비방</div>
-                        <div id="luckBox" class="luck-box"></div>
-                        <div class="quest-box">
-                            <div class="quest-t" data-i18n="quest_title">🎯 애동제자의 오늘의 공수</div>
-                            <p id="questTxt"></p>
-                        </div>
-                    </div>
-                    <div class="card" id="chemistryCard">
-                        <div class="sec-title" style="justify-content:center" data-i18n="best_match_title">💫 영혼의 단짝 &
-                            피해야 할 악연</div>
-                        <div class="chemistry-content">
-                            <div class="chemistry-item best">
-                                <span class="emoji">✨</span>
-                                <div class="chemistry-info">
-                                    <strong data-i18n="best_match_label">너에게 힘이 되어주는 귀인</strong>
-                                    <p id="bestMatch"></p>
-                                </div>
-                            </div>
-                            <div class="chemistry-item worst">
-                                <span class="emoji">⚡</span>
-                                <div class="chemistry-info">
-                                    <strong data-i18n="worst_match_label">만나면 기 빨리는 스타일</strong>
-                                    <p id="worstMatch"></p>
-                                </div>
+                        <div class="card">
+                            <div class="theme-tabs"><button class="on" data-th="base"
+                                    data-i18n="base_theme">기본</button><button data-th="love"
+                                    data-i18n="love_theme">연애</button><button data-th="money"
+                                    data-i18n="money_theme">재물</button><button data-th="work"
+                                    data-i18n="work_theme">사회</button></div>
+                            <div id="storyBox" class="story"></div>
+                            <div class="advice-box">
+                                <div class="advice-t" data-i18n="advice_title">애기동자의 팩폭 공수</div>
+                                <p id="adviceTxt"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="card" id="luckyCard">
-                        <div class="sec-title" style="justify-content:center">🌟 오늘의 럭키 아이템</div>
-                        <div id="luckyItems" style="display:none;"></div>
+
+                    <!-- 탭 3: 성격·궁합 -->
+                    <div class="result-tab-content" id="tab-personality">
+                        <div class="card">
+                            <div class="sec-title" data-i18n="ancestor_title"><span class="nm" id="n2"></span>네게 깃든 조상신의
+                                기운과 살(煞) <span class="sub-t">| 조상과 살풀이</span></div>
+                            <div id="radarChart" class="radar-chart"></div>
+                            <div id="statChart"></div>
+                        </div>
+                        <div class="card" id="chemistryCard">
+                            <div class="sec-title" style="justify-content:center" data-i18n="best_match_title">영혼의 단짝 &
+                                피해야 할 악연</div>
+                            <div class="chemistry-content">
+                                <div class="chemistry-item best">
+                                    <span class="emoji">✦</span>
+                                    <div class="chemistry-info">
+                                        <strong data-i18n="best_match_label">너에게 힘이 되어주는 귀인</strong>
+                                        <p id="bestMatch"></p>
+                                    </div>
+                                </div>
+                                <div class="chemistry-item worst">
+                                    <span class="emoji">✧</span>
+                                    <div class="chemistry-info">
+                                        <strong data-i18n="worst_match_label">만나면 기 빨리는 스타일</strong>
+                                        <p id="worstMatch"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- 탭 4: 운세·비방 -->
+                    <div class="result-tab-content" id="tab-lucky">
+                        <div class="card">
+                            <div class="sec-title" data-i18n="secret_title"><span class="nm" id="n3"></span>액운을 막고 복을
+                                부르는
+                                비방</div>
+                            <div id="luckBox" class="luck-box"></div>
+                            <div class="quest-box">
+                                <div class="quest-t" data-i18n="quest_title">애동제자의 오늘의 공수</div>
+                                <p id="questTxt"></p>
+                            </div>
+                        </div>
+                        <div class="card" id="luckyCard">
+                            <div class="sec-title" style="justify-content:center">오늘의 럭키 아이템</div>
+                            <div id="luckyItems" style="display:none;"></div>
+                        </div>
+                    </div>
+
                     <div class="btn-row">
-                        <button class="save-card-btn" onclick="generateCard()">📷 운명카드 저장</button>
+                        <button class="save-card-btn" onclick="generateCard()">운명카드 저장</button>
                         <button class="reset" onclick="window.location.href=window.location.pathname"
-                            data-i18n="retry_button">🔄 다시하기</button>
-                        <button class="kakao-btn" onclick="shareKakao()" data-i18n="share_kakao_button">💬 자랑하기</button>
-                        <button class="link-btn" onclick="copyLink()" data-i18n="copy_link_button">🔗 링크 복사</button>
+                            data-i18n="retry_button">다시하기</button>
+                        <button class="kakao-btn" onclick="shareKakao()" data-i18n="share_kakao_button">카카오 공유</button>
+                        <button class="link-btn" onclick="copyLink()" data-i18n="copy_link_button">링크 복사</button>
                     </div>
                     <div class="ad">
                         광고 영역

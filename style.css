@@ -2761,3 +2761,157 @@ body::after {
     transform: scale(1.15) !important;
     box-shadow: 0 6px 25px rgba(168, 85, 247, 0.5) !important;
 }
+
+/* ═══════ Phase 6: 결과 탭 시스템 ═══════ */
+
+/* 결과 탭 네비게이션 */
+.result-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 4px;
+    position: sticky;
+    top: 56px;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.result-tab {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--txt2);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+}
+
+.result-tab:hover {
+    color: var(--txt);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.result-tab.active {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(255, 107, 157, 0.2));
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(168, 85, 247, 0.2);
+}
+
+/* 탭 콘텐츠 */
+.result-tab-content {
+    display: none;
+    animation: fadeInTab 0.3s ease;
+}
+
+.result-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeInTab {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ═══════ Phase 6: 사주 명식 테이블 리디자인 (Forceteller 스타일) ═══════ */
+
+.pillars {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px 0;
+}
+
+.pillar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+}
+
+.pillar:last-child {
+    border-right: none;
+}
+
+.pillar-label {
+    display: block !important;
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    color: var(--txt2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stem,
+.branch {
+    width: 100%;
+    padding: 12px 4px !important;
+    text-align: center;
+    font-size: 1.6rem !important;
+    font-weight: 800;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 !important;
+    min-height: 56px;
+    border: none !important;
+}
+
+.stem {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 오행 하위 텍스트 */
+.stem .element-tag,
+.branch .element-tag {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+@media (max-width: 480px) {
+
+    .stem,
+    .branch {
+        font-size: 1.3rem !important;
+        padding: 10px 2px !important;
+        min-height: 48px;
+    }
+
+    .pillar-label {
+        font-size: 0.7rem;
+        padding: 6px;
+    }
+
+    .result-tab {
+        font-size: 0.78rem;
+        padding: 9px 4px;
+    }
+}

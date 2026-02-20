@@ -1334,6 +1334,29 @@ function initScrollEffects() {
     }, { passive: true });
 }
 
+// ═══════ Phase 6: 결과 탭 시스템 초기화 ═══════
+function initResultTabs() {
+    const tabs = document.querySelectorAll('.result-tab');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // 모든 탭과 콘텐츠의 활성화 상태 해제
+            document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.result-tab-content').forEach(c => c.classList.remove('active'));
+
+            // 클릭된 탭 활성화
+            tab.classList.add('active');
+
+            // 해당 콘텐츠 표시
+            const targetId = tab.getAttribute('data-result-tab');
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initDailyFortune();
@@ -1344,4 +1367,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAnalysisHistory();
     initCookieConsent();
     initScrollEffects();
+    initResultTabs();
 });
