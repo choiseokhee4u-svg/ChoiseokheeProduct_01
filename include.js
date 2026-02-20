@@ -19,6 +19,14 @@ function setPageMetadata(page, translations) {
         'contact': {
             title_key: 'contact_title',
             description_key: 'contact_p1'
+        },
+        'zodiac': {
+            title_key: 'zodiac_title',
+            description_key: 'zodiac_description'
+        },
+        'privacy': {
+            title_key: 'privacy_title',
+            description_key: 'privacy_description'
         }
     };
 
