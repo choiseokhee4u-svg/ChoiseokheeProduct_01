@@ -2488,3 +2488,276 @@ body {
 .cookie-accept:hover {
     transform: scale(1.05);
 }
+
+/* ═══════ Phase 5: 신당 컨셉 디자인 강화 ═══════ */
+
+/* 카드 보더 그라데이션 + 깊이감 */
+.card {
+    border: 1px solid rgba(168, 85, 247, 0.15) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(168, 85, 247, 0.5) 20%,
+            rgba(0, 245, 212, 0.5) 50%,
+            rgba(255, 107, 157, 0.5) 80%,
+            transparent 100%);
+    opacity: 0.7;
+}
+
+.card:hover {
+    border-color: rgba(168, 85, 247, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1), 0 0 40px rgba(0, 245, 212, 0.05);
+}
+
+/* 메인 타이틀 글로우 효과 */
+#inputSection h1 {
+    text-shadow:
+        0 0 20px rgba(255, 107, 157, 0.4),
+        0 0 40px rgba(168, 85, 247, 0.2),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+/* 부적 패턴 장식선 */
+#inputSection h1::after {
+    content: '✦ ✧ ✦';
+    display: block;
+    font-size: 0.7rem;
+    color: var(--yellow);
+    letter-spacing: 12px;
+    opacity: 0.5;
+    margin-top: 4px;
+    text-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+}
+
+#inputSection .sub {
+    color: var(--accent);
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+/* 입력 필드 포커스 효과 */
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2), 0 0 20px rgba(168, 85, 247, 0.1);
+    outline: none;
+}
+
+/* 분석 버튼 프리미엄 애니메이션 */
+.submit {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.submit::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+.submit:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4), 0 0 40px rgba(255, 107, 157, 0.2);
+}
+
+/* 오늘의 한마디 카드 특별 스타일 */
+.daily-fortune-card {
+    border: 1px solid rgba(255, 209, 102, 0.2) !important;
+}
+
+.daily-fortune-card::before {
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 209, 102, 0.5),
+            rgba(255, 107, 157, 0.5),
+            transparent) !important;
+}
+
+/* 결과 카드 비주얼 강화 */
+#manseCard {
+    border: 1px solid rgba(0, 245, 212, 0.2) !important;
+}
+
+#manseCard::before {
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(0, 245, 212, 0.6),
+            rgba(168, 85, 247, 0.6),
+            transparent) !important;
+    height: 3px;
+}
+
+.hero {
+    border: 1px solid rgba(255, 107, 157, 0.2) !important;
+}
+
+/* 신비로운 파티클 배경 */
+@keyframes float-particle {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.6;
+    }
+
+    90% {
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+body::after {
+    content: '✦';
+    position: fixed;
+    left: 10%;
+    bottom: 0;
+    color: rgba(255, 209, 102, 0.15);
+    font-size: 1rem;
+    animation: float-particle 15s infinite ease-in;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 섹션 타이틀 장식 */
+.sec-title {
+    position: relative;
+    text-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
+}
+
+/* 띠별운세 배너 호버 */
+.zodiac-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.6) !important;
+}
+
+/* 네비게이션 로고 글로우 */
+.nav-logo {
+    text-shadow: 0 0 15px rgba(255, 107, 157, 0.4);
+}
+
+/* 후기 카드 스타일 개선 */
+.review-text {
+    font-style: italic;
+    line-height: 1.7;
+}
+
+/* 공수 결과 메시지 강화 */
+.saju-msg {
+    position: relative;
+}
+
+.saju-msg::before {
+    content: '〰';
+    display: block;
+    text-align: center;
+    color: rgba(168, 85, 247, 0.3);
+    letter-spacing: 20px;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+}
+
+/* 데일리 럭키 아이템 호버 */
+.daily-lucky-item {
+    transition: transform 0.2s, background 0.2s;
+}
+
+.daily-lucky-item:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* 로딩 신비 효과 강화 */
+.ld::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    margin: -40px 0 0 -40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--yellow);
+    animation: spin 2s linear infinite reverse;
+}
+
+/* 백과 섹션 강화 */
+.enc-card {
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.enc-card:hover {
+    border-left-color: var(--accent);
+    transform: translateX(4px);
+    background: rgba(168, 85, 247, 0.05);
+}
+
+/* 버튼 영역 개선 */
+.btn-row {
+    gap: 10px;
+}
+
+.btn-row button {
+    transition: all 0.3s ease;
+}
+
+.btn-row button:hover {
+    transform: translateY(-2px);
+}
+
+/* 궁합 스코어 비주얼 */
+#compatScoreBox {
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
+}
+
+/* 플로팅 블로그 버튼 강화 */
+.floating-blog-btn {
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.floating-blog-btn:hover {
+    transform: scale(1.15) !important;
+    box-shadow: 0 6px 25px rgba(168, 85, 247, 0.5) !important;
+}
