@@ -754,6 +754,7 @@ function checkShareParams() {
 }
 
 // ═══════ Share URL improvement ═══════
+const PRODUCTION_URL = 'https://choiseokheeproduct-01.pages.dev';
 function getShareUrl() {
     const params = new URLSearchParams();
     if (window.shareData) {
@@ -763,7 +764,10 @@ function getShareUrl() {
         params.set('t', window.shareData.t);
         params.set('ft', fType);
     }
-    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    const baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? PRODUCTION_URL
+        : window.location.origin;
+    return `${baseUrl}/?${params.toString()}`;
 }
 
 
