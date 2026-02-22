@@ -488,7 +488,7 @@ function shareKakao() {
         content: {
             title: `${window.translations.kakao_share_title_prefix} ${uName}${window.translations.kakao_share_title_suffix}`,
             description: `${window.translations.kakao_share_desc_prefix} [${curDm}]${window.translations.kakao_share_desc_suffix}`,
-            imageUrl: 'https://choiseokhee4u-svg.github.io/ChoiseokheeProduct_01/images/Fire.png',
+            imageUrl: 'https://choiseokheeproduct-01.pages.dev/images/Fire.png',
             link: {
                 mobileWebUrl: shareUrl,
                 webUrl: shareUrl
