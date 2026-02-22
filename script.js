@@ -1386,9 +1386,83 @@ function initResultTabs() {
     });
 }
 
+// ═══════ Tarot Card Hook System ═══════
+const TAROT_CARDS = [
+    { emoji: '🔮', name: '수정구', msg: '오늘은 직감이 강하게 빛나는 날! 첫 번째 느낌을 믿으세요. 숨겨진 기회가 보일 거예요.', tags: ['직감력 UP', '🎯 행운시간: 오후 2시'] },
+    { emoji: '💎', name: '보석', msg: '숨겨진 재능이 드러나는 날입니다. 주변의 칭찬을 가볍게 넘기지 마세요, 그것이 당신의 진짜 강점이에요.', tags: ['재능 발견', '💰 재물운 상승'] },
+    { emoji: '🌙', name: '초승달', msg: '새로운 시작의 에너지가 넘칩니다. 미뤄왔던 계획이 있다면 오늘 첫 발을 내딛어보세요!', tags: ['새 출발', '🌱 성장의 날'] },
+    { emoji: '⭐', name: '별', msg: '당신의 매력이 빛나는 날! 사람들이 자연스럽게 당신에게 끌릴 거예요. 소셜 활동이 행운을 부릅니다.', tags: ['매력 UP', '💕 연애운 상승'] },
+    { emoji: '🔥', name: '불꽃', msg: '열정과 에너지가 폭발하는 날! 도전적인 일에 뛰어들면 예상 밖의 좋은 결과가 따릅니다.', tags: ['도전의 날', '⚡ 에너지 최고'] },
+    { emoji: '🌊', name: '파도', msg: '감정의 흐름을 잘 타면 좋은 일이 생깁니다. 억지로 흐름을 거스르지 말고, 자연스럽게 흘러가세요.', tags: ['유연함이 답', '🧘 마음의 평화'] },
+    { emoji: '🦋', name: '나비', msg: '변화가 다가옵니다. 두려워하지 마세요. 이 변화는 더 아름다운 내일을 위한 것이에요.', tags: ['변화의 조짐', '🌸 긍정적 전환'] },
+    { emoji: '🏔️', name: '산', msg: '인내가 보상받는 날입니다. 지금 겪고 있는 어려움은 곧 넘어갈 수 있어요. 포기하지 마세요!', tags: ['인내의 열매', '💪 극복의 날'] },
+    { emoji: '🌈', name: '무지개', msg: '행운이 연달아 찾아오는 날! 사소한 것에서도 기쁨을 발견할 수 있어요. 감사하는 마음이 복을 부릅니다.', tags: ['행운 연속', '🍀 대박 가능성'] },
+    { emoji: '🗝️', name: '열쇠', msg: '막혀있던 문제의 해답이 갑자기 떠오를 수 있습니다. 평소와 다른 관점으로 바라보세요!', tags: ['해답 발견', '💡 아이디어 폭발'] },
+    { emoji: '🪷', name: '연꽃', msg: '마음의 평화가 가장 중요한 날입니다. 복잡한 생각을 내려놓고 지금 이 순간에 집중하세요.', tags: ['내면의 힘', '☕ 힐링의 시간'] },
+    { emoji: '⚡', name: '번개', msg: '예상치 못한 좋은 소식이 올 수 있어요! 갑작스러운 연락이나 제안에 마음을 열어두세요.', tags: ['깜짝 행운', '📱 좋은 소식'] },
+    { emoji: '🎭', name: '가면', msg: '진짜 속마음을 표현해보세요. 오늘은 솔직한 대화가 관계를 한 단계 깊게 만들어줍니다.', tags: ['진심의 힘', '❤️ 관계 발전'] },
+    { emoji: '🦅', name: '독수리', msg: '높은 곳에서 전체를 바라보세요. 세부사항에 매몰되지 말고 큰 그림을 보면 답이 보입니다.', tags: ['큰 그림', '🎯 목표 달성'] },
+    { emoji: '🌺', name: '꽃', msg: '아름다움과 풍요의 기운이 감돕니다. 자신을 꾸미고 좋은 향기를 입으면 좋은 기운이 따릅니다.', tags: ['풍요의 날', '✨ 외모 운 UP'] }
+];
+
+let tarotFlipped = false;
+
+function initTarotCards() {
+    const now = new Date();
+    const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+
+    // Pick 3 cards based on today's date (changes daily)
+    const seed = dayOfYear * 7 + now.getFullYear();
+    const indices = [];
+    let s = seed;
+    while (indices.length < 3) {
+        s = (s * 1103515245 + 12345) & 0x7fffffff;
+        const idx = s % TAROT_CARDS.length;
+        if (!indices.includes(idx)) indices.push(idx);
+    }
+
+    // Store today's cards
+    window.todayTarotCards = indices.map(i => TAROT_CARDS[i]);
+
+    // Populate card backs
+    window.todayTarotCards.forEach((card, i) => {
+        const emojiEl = document.getElementById(`tarotEmoji${i}`);
+        const nameEl = document.getElementById(`tarotName${i}`);
+        if (emojiEl) emojiEl.textContent = card.emoji;
+        if (nameEl) nameEl.textContent = card.name;
+    });
+}
+
+function flipTarotCard(wrapper, index) {
+    if (tarotFlipped) return; // Only one card can be flipped
+    tarotFlipped = true;
+
+    const card = window.todayTarotCards[index];
+
+    // Flip selected card
+    wrapper.classList.add('flipped');
+
+    // Dim other cards
+    const allWrappers = document.querySelectorAll('.tarot-card-wrapper');
+    allWrappers.forEach((w, i) => {
+        if (i !== index) w.classList.add('dimmed');
+    });
+
+    // Show result after flip animation
+    setTimeout(() => {
+        const resultBox = document.getElementById('tarotResultBox');
+        const resultMsg = document.getElementById('tarotResultMsg');
+        const resultLucky = document.getElementById('tarotResultLucky');
+
+        resultMsg.innerHTML = `<span style="color:var(--accent);font-weight:700;">${card.emoji} ${card.name} 카드를 뽑았습니다!</span><br><br>${card.msg}`;
+        resultLucky.innerHTML = card.tags.map(t => `<span class="tarot-lucky-tag">${t}</span>`).join('');
+        resultBox.style.display = 'block';
+    }, 900);
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    initDailyFortune();
+    initTarotCards();
     initReviewCarousel();
     trackVisit();
     initSeasonalEvent();

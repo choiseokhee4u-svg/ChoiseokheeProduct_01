@@ -56,17 +56,65 @@
         <main id="main-content" itemscope itemtype="https://schema.org/Service">
             <meta itemprop="serviceType" content="사주 운세 제공">
             <div class="wrap">
-                <!-- 오늘의 한마디 Daily Fortune -->
-                <div id="dailyFortune" class="card daily-fortune-card">
-                    <div class="daily-fortune-header">
-                        <span class="daily-icon">🔮</span>
+                <!-- 오늘의 타로 카드 뽑기 -->
+                <div id="tarotHook" class="card tarot-hook-card">
+                    <div class="tarot-hook-header">
+                        <span class="tarot-glow-icon">🃏</span>
                         <div>
-                            <div class="daily-label">오늘의 한마디</div>
-                            <div class="daily-date" id="dailyDate"></div>
+                            <div class="tarot-hook-title">카드 한 장을 골라보세요</div>
+                            <div class="tarot-hook-sub">오늘의 운명을 애기동자가 알려줍니다</div>
                         </div>
                     </div>
-                    <div class="daily-message" id="dailyMessage"></div>
-                    <div class="daily-lucky" id="dailyLucky"></div>
+
+                    <!-- 카드 3장 -->
+                    <div class="tarot-cards-row" id="tarotCardsRow">
+                        <div class="tarot-card-wrapper" onclick="flipTarotCard(this, 0)">
+                            <div class="tarot-card">
+                                <div class="tarot-card-front">
+                                    <div class="tarot-card-pattern"></div>
+                                    <span class="tarot-card-symbol">?</span>
+                                </div>
+                                <div class="tarot-card-back">
+                                    <span class="tarot-result-emoji" id="tarotEmoji0"></span>
+                                    <span class="tarot-result-name" id="tarotName0"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tarot-card-wrapper" onclick="flipTarotCard(this, 1)">
+                            <div class="tarot-card">
+                                <div class="tarot-card-front">
+                                    <div class="tarot-card-pattern"></div>
+                                    <span class="tarot-card-symbol">?</span>
+                                </div>
+                                <div class="tarot-card-back">
+                                    <span class="tarot-result-emoji" id="tarotEmoji1"></span>
+                                    <span class="tarot-result-name" id="tarotName1"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tarot-card-wrapper" onclick="flipTarotCard(this, 2)">
+                            <div class="tarot-card">
+                                <div class="tarot-card-front">
+                                    <div class="tarot-card-pattern"></div>
+                                    <span class="tarot-card-symbol">?</span>
+                                </div>
+                                <div class="tarot-card-back">
+                                    <span class="tarot-result-emoji" id="tarotEmoji2"></span>
+                                    <span class="tarot-result-name" id="tarotName2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 결과 메시지 (카드 선택 후 표시) -->
+                    <div class="tarot-result-box" id="tarotResultBox" style="display:none;">
+                        <div class="tarot-result-msg" id="tarotResultMsg"></div>
+                        <div class="tarot-result-lucky" id="tarotResultLucky"></div>
+                        <button class="tarot-cta-btn"
+                            onclick="document.getElementById('inputSection').scrollIntoView({behavior:'smooth'})">
+                            정확한 사주 풀이 받기 →
+                        </button>
+                    </div>
                 </div>
 
                 <!-- 띠별 운세 바로가기 배너 -->
