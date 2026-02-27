@@ -70,7 +70,7 @@ if (window.P_DATA) {
 }
 
 // Global Variables
-let uName = '', fType = 'today', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
+let uName = '', fType = 'year', curDm = '', curPd = null, curTheme = 'base', gender = 'M', userInput = {};
 
 // Global Variables for Partner
 let pGender = 'M';
@@ -119,21 +119,41 @@ const LUCKY_ITEMS = {
 
 // Event Listeners (Global)
 function initEventListeners() {
-    document.querySelectorAll('.fortune-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.fortune-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); fType = b.dataset.t; updateQuest() });
-    document.querySelectorAll('.gender-sel button').forEach(b => b.onclick = () => { document.querySelectorAll('.gender-sel button').forEach(x => x.classList.remove('on')); b.classList.add('on'); gender = b.dataset.g });
+    // Gender Selection (사주풀이 탭)
+    document.querySelectorAll('#inputSection .gender-sel button').forEach(b => b.onclick = () => {
+        document.querySelectorAll('#inputSection .gender-sel button').forEach(x => x.classList.remove('on'));
+        b.classList.add('on'); gender = b.dataset.g;
+    });
 
-    // Partner Gender Selection
-    const pGenderBtns = document.querySelectorAll('#partnerGenderSel button');
-    if (pGenderBtns.length > 0) {
-        pGenderBtns.forEach(b => b.onclick = () => {
-            pGenderBtns.forEach(x => x.classList.remove('on'));
-            b.classList.add('on');
-            pGender = b.dataset.g;
-        });
-    }
-
-    document.querySelectorAll('.tab-row button').forEach(b => b.onclick = () => { document.querySelectorAll('.tab-row button').forEach(x => x.classList.remove('on')); document.querySelectorAll('.tab-c').forEach(x => x.classList.remove('on')); b.classList.add('on'); document.getElementById('tab-' + b.dataset.tab).classList.add('on') });
+    // Theme tabs in results
     document.querySelectorAll('.theme-tabs button').forEach(b => b.onclick = () => { document.querySelectorAll('.theme-tabs button').forEach(x => x.classList.remove('on')); b.classList.add('on'); curTheme = b.dataset.th; updateTheme() });
+
+    // Compatibility tab gender selectors
+    initGenderSelector('compatMyGenderSel', (g) => { window.compatMyGender = g; });
+    initGenderSelector('compatPartnerGenderSel', (g) => { window.compatPartnerGender = g; });
+    window.compatMyGender = 'M';
+    window.compatPartnerGender = 'F';
+
+    // Unknown time checkboxes for compat tab
+    const myUt = document.getElementById('compatMyUnknownTime');
+    if (myUt) myUt.onchange = e => {
+        const t = document.getElementById('compatMyTimeInputs');
+        if (t) { t.style.opacity = e.target.checked ? '.4' : '1'; t.style.pointerEvents = e.target.checked ? 'none' : 'auto'; }
+    };
+    const pUt = document.getElementById('compatPartnerUnknownTime');
+    if (pUt) pUt.onchange = e => {
+        const t = document.getElementById('compatPartnerTimeInputs');
+        if (t) { t.style.opacity = e.target.checked ? '.4' : '1'; t.style.pointerEvents = e.target.checked ? 'none' : 'auto'; }
+    };
+}
+
+function initGenderSelector(containerId, callback) {
+    const btns = document.querySelectorAll('#' + containerId + ' button');
+    btns.forEach(b => b.onclick = () => {
+        btns.forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        callback(b.dataset.g);
+    });
 }
 document.addEventListener('DOMContentLoaded', initEventListeners);
 
@@ -179,16 +199,9 @@ function updateQuest() {
     const l = s.getLunar();
     const bz = l.getEightChar();
 
-    if (fType === 'today') {
-        targetStem = bz.getDayGan().toString();
-        timeLabel = window.translations.today_oracle;
-    } else if (fType === 'week') {
-        targetStem = bz.getMonthGan().toString();
-        timeLabel = window.translations.week_oracle;
-    } else {
-        targetStem = bz.getYearGan().toString();
-        timeLabel = window.translations.year_oracle;
-    }
+    // Always use year fortune (올해 운세)
+    targetStem = bz.getYearGan().toString();
+    timeLabel = window.translations.year_oracle || '2026년 올해 공수';
 
     const uEl = STEM_EL[curDm];
     const tEl = STEM_EL[targetStem];
@@ -237,15 +250,10 @@ function analyze() {
 
     uName = document.getElementById('userName').value.trim() || window.translations.default_name;
     let y, mo, d, h, mi;
-    const tab = document.querySelector('.tab-row button.on').dataset.tab;
-    if (tab === 'quick') {
-        const v = document.getElementById('quickDate').value.trim();
-        if (!/^\d{8}$/.test(v)) { alert(window.translations.alert_birthdate_format); return }
-        y = +v.slice(0, 4); mo = +v.slice(4, 6); d = +v.slice(6, 8);
-    } else {
-        const yS = document.getElementById('selYear'), mS = document.getElementById('selMonth'), dS = document.getElementById('selDay');
-        y = +yS.value; mo = +mS.value; d = +dS.value;
-    }
+    // Always use quick input (8-digit)
+    const v = document.getElementById('quickDate').value.trim();
+    if (!/^\d{8}$/.test(v)) { alert(window.translations.alert_birthdate_format || '생년월일 8자리를 입력해주세요.'); return }
+    y = +v.slice(0, 4); mo = +v.slice(4, 6); d = +v.slice(6, 8);
     if (mo < 1 || mo > 12 || d < 1 || d > 31) { alert(window.translations.alert_invalid_date); return }
     if (document.getElementById('unknownTime').checked) {
         h = 12; mi = 0;
@@ -592,14 +600,9 @@ function revealResults() {
     }, 300);
 }
 
-// ────── Compatibility Logic ──────
+// ────── Compatibility Logic (Standalone Tab) ──────
 function toggleCompatibility() {
-    const box = document.getElementById('partnerInput');
-    const btn = document.getElementById('toggleCompat');
-    const isHidden = box.style.display === 'none';
-    box.style.display = isHidden ? 'block' : 'none';
-    btn.innerHTML = isHidden ? '❌ 궁합 안 볼래요' : '👫 그분과의 궁합도 같이 보기';
-    btn.classList.toggle('active', isHidden);
+    // Legacy - no longer used, compat is now a standalone tab
 }
 
 function calcCompatibility(pn, y, m, d, h, mi, pg) {
@@ -1460,8 +1463,256 @@ function flipTarotCard(wrapper, index) {
     }, 900);
 }
 
+// ═══════ Main Tab System ═══════
+function initMainTabs() {
+    const tabs = document.querySelectorAll('.main-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetId = tab.getAttribute('data-main-tab');
+            switchMainTab(targetId);
+        });
+    });
+}
+
+function switchMainTab(targetId) {
+    document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.main-tab-content').forEach(c => c.classList.remove('active'));
+    const targetTab = document.querySelector(`.main-tab[data-main-tab="${targetId}"]`);
+    if (targetTab) targetTab.classList.add('active');
+    const targetContent = document.getElementById(targetId);
+    if (targetContent) targetContent.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════ Zodiac Inline System ═══════
+const zodiacData = [
+    { emoji: '🐀', name: '쥐띠', hanja: '子 (자)', years: '1960, 1972, 1984, 1996, 2008, 2020', keyword: '🔥 변화의 해', summary: '2026년 화(火)의 기운이 쥐띠의 수(水) 기운과 만나 상극의 긴장이 생기지만, 오히려 이 긴장이 새로운 기회를 만듭니다.', overall: 68, scores: { 재물운: 65, 연애운: 72, 건강운: 60, 직업운: 75 }, detail: { overall: '2026년 쥐띠는 화수(火水) 상극의 해로, 원하는 것을 얻기 위해 노력이 필요한 한 해입니다. 상반기에는 예상치 못한 변화가 찾아올 수 있으나, 이를 기회로 삼으면 하반기에 좋은 결실을 맺을 수 있습니다.', money: '상반기에는 지출이 늘어날 수 있으나 하반기부터 안정됩니다. 투자보다는 저축에 집중하는 것이 좋으며, 7~9월에 좋은 재물 기회가 올 수 있습니다.', love: '싱글은 여름에 좋은 인연을 만날 가능성이 높습니다. 커플은 소통에 더 노력하면 관계가 깊어집니다.', health: '수(水) 기운이 화(火)에 눌리므로 신장, 방광 건강에 주의하세요. 충분한 수분 섭취와 규칙적인 운동이 중요합니다.', career: '직장인은 새로운 프로젝트나 부서 이동의 기회가 올 수 있습니다. 사업가는 내실 다지기에 집중하세요.' } },
+    { emoji: '🐂', name: '소띠', hanja: '丑 (축)', years: '1961, 1973, 1985, 1997, 2009, 2021', keyword: '🌱 성장의 해', summary: '화생토(火生土) 상생으로 안정적이고 성장하는 한 해가 됩니다.', overall: 78, scores: { 재물운: 80, 연애운: 70, 건강운: 75, 직업운: 82 }, detail: { overall: '2026년 소띠는 화생토(火生土)의 상생 관계로 매우 안정적인 운세를 보입니다. 그동안 묵묵히 노력해온 것들이 서서히 결실을 맺기 시작합니다.', money: '재물운이 전반적으로 강합니다. 부동산이나 장기 투자에 좋은 시기이며, 뜻밖의 수익이 생길 수 있습니다.', love: '안정적인 관계를 원하는 분들에게 좋은 해입니다. 결혼을 고려하는 커플에게는 적기가 될 수 있습니다.', health: '전반적으로 양호하나, 소화기관에 주의가 필요합니다. 과식을 피하고 규칙적인 식사 습관을 유지하세요.', career: '상사의 인정을 받는 해입니다. 승진이나 이직의 좋은 기회가 올 수 있습니다.' } },
+    { emoji: '🐅', name: '호랑이띠', hanja: '寅 (인)', years: '1962, 1974, 1986, 1998, 2010, 2022', keyword: '✨ 빛나는 해', summary: '목생화(木生火) 상생으로 에너지가 빛을 발하는 한 해! 리더십을 발휘할 수 있는 최적의 시기입니다.', overall: 85, scores: { 재물운: 78, 연애운: 85, 건강운: 80, 직업운: 90 }, detail: { overall: '2026년 호랑이띠는 목생화(木生火)의 완벽한 상생 관계로, 12지신 중 가장 좋은 운세를 보이는 해입니다.', money: '사업이나 투자에서 좋은 수익을 기대할 수 있습니다. 특히 상반기에 좋은 투자 기회가 올 수 있습니다.', love: '매력이 빛나는 해로, 싱글에게는 여러 이성의 관심을 받을 수 있는 시기입니다.', health: '에너지가 넘치지만 과로에 주의하세요. 적절한 휴식과 충분한 수면이 중요합니다.', career: '승진, 이직, 창업 모두 좋은 결과를 기대할 수 있습니다.' } },
+    { emoji: '🐇', name: '토끼띠', hanja: '卯 (묘)', years: '1963, 1975, 1987, 1999, 2011, 2023', keyword: '🌸 개화의 해', summary: '목생화(木生火) 상생으로 재능이 꽃피는 해입니다.', overall: 82, scores: { 재물운: 75, 연애운: 88, 건강운: 78, 직업운: 80 }, detail: { overall: '2026년 토끼띠는 목생화(木生火)의 상생으로 매력과 재능을 마음껏 발휘할 수 있는 해입니다.', money: '안정적인 수입이 유지되며, 하반기에 보너스나 예상치 못한 수입이 생길 수 있습니다.', love: '올해 가장 좋은 운세 영역! 싱글은 봄에 운명적인 만남이 기다리고 있을 수 있습니다.', health: '전반적으로 건강하나, 눈과 심장 건강에 주의하세요.', career: '창의적인 아이디어가 인정받는 해입니다.' } },
+    { emoji: '🐉', name: '용띠', hanja: '辰 (진)', years: '1964, 1976, 1988, 2000, 2012, 2024', keyword: '⚡ 도약의 해', summary: '화생토(火生土) 상생으로 큰 목표를 향해 도약하기 좋은 해입니다.', overall: 80, scores: { 재물운: 82, 연애운: 73, 건강운: 76, 직업운: 85 }, detail: { overall: '2026년 용띠는 화생토(火生土)의 상생으로 힘차게 날아오를 수 있는 해입니다.', money: '재물운이 강합니다. 새로운 사업 기회나 투자처가 나타날 수 있습니다.', love: '일에 집중하느라 연애에 소홀해질 수 있습니다. 의식적으로 파트너와의 시간을 만들어야 합니다.', health: '소화기 건강에 주의하세요. 스트레스로 인한 위장 질환이 올 수 있습니다.', career: '승진, 사업 확장, 새로운 프로젝트 모두 순조롭습니다.' } },
+    { emoji: '🐍', name: '뱀띠', hanja: '巳 (사)', years: '1965, 1977, 1989, 2001, 2013, 2025', keyword: '🔥 열정의 해', summary: '사오(巳午)의 화(火) 방합으로 불의 기운이 극대화됩니다. 과열 주의!', overall: 72, scores: { 재물운: 70, 연애운: 76, 건강운: 62, 직업운: 75 }, detail: { overall: '2026년 뱀띠는 에너지가 매우 강해지는 해입니다. 열정을 가지고 무언가에 몰두하기 좋지만, 균형 감각이 중요합니다.', money: '투자보다는 안정적인 저축이 유리합니다. 충동적인 소비를 자제하세요.', love: '열정적인 연애가 가능하지만, 감정의 기복이 심할 수 있습니다.', health: '화(火) 기운 과다로 심장, 혈압, 눈 건강에 특별히 주의하세요.', career: '업무에 대한 열정이 넘치는 해입니다. 협력을 통한 성과 창출에 집중하세요.' } },
+    { emoji: '🐴', name: '말띠', hanja: '午 (오)', years: '1966, 1978, 1990, 2002, 2014, 2026', keyword: '👑 주인공의 해', summary: '2026년의 주인공! 자신을 돌아보고 새 출발하기 좋습니다.', overall: 70, scores: { 재물운: 68, 연애운: 72, 건강운: 65, 직업운: 73 }, detail: { overall: '2026년은 말띠의 해(본명년)로, 12년에 한 번 오는 특별한 해입니다. 인생의 큰 전환점이 될 수 있습니다.', money: '큰 투자나 도박은 피하세요. 안정적인 재테크에 집중하세요.', love: '기존 관계에서 변화가 올 수 있는 해입니다. 자신의 마음에 솔직해지세요.', health: '본명년에는 건강에 특별히 주의하세요. 정기 건강 검진을 받는 것을 추천합니다.', career: '직장에서의 변화가 있을 수 있습니다. 변화를 적극적으로 대응하세요.' } },
+    { emoji: '🐑', name: '양띠', hanja: '未 (미)', years: '1967, 1979, 1991, 2003, 2015', keyword: '🕊️ 평화의 해', summary: '화생토(火生土) 상생으로 안정과 평화가 찾아옵니다.', overall: 77, scores: { 재물운: 74, 연애운: 80, 건강운: 78, 직업운: 76 }, detail: { overall: '2026년 양띠는 전반적으로 평화롭고 안정적인 한 해를 보낼 수 있습니다.', money: '안정적인 수입이 유지되며, 저축이 늘어나는 해입니다.', love: '따뜻한 연애운이 기대됩니다. 결혼을 고려하는 분들에게 좋은 시기입니다.', health: '전반적으로 건강하지만, 소화기와 피부 건강에 주의하세요.', career: '현재 위치에서 실력을 쌓는 것이 중요한 해입니다.' } },
+    { emoji: '🐵', name: '원숭이띠', hanja: '申 (신)', years: '1968, 1980, 1992, 2004, 2016', keyword: '💡 기회의 해', summary: '어려움 속에서도 보석 같은 기회를 발견할 수 있습니다.', overall: 65, scores: { 재물운: 63, 연애운: 68, 건강운: 60, 직업운: 70 }, detail: { overall: '2026년 원숭이띠는 도전이 따르는 해이지만, 어려움을 통해 더 단단해지고 성장할 수 있습니다.', money: '큰 투자는 피하고 방어적인 재테크가 유리합니다.', love: '인내심이 필요한 시기입니다. 급한 연애보다 자기 자신에게 집중하세요.', health: '호흡기와 피부 건강에 주의하세요. 충분한 수면과 비타민 C 섭취가 도움이 됩니다.', career: '어려운 과제를 통해 실력이 성장하고 인정받을 수 있습니다.' } },
+    { emoji: '🐔', name: '닭띠', hanja: '酉 (유)', years: '1969, 1981, 1993, 2005, 2017', keyword: '⚔️ 도전의 해', summary: '화극금(火克金) 상극의 해이지만, 날카로운 판단력으로 위기를 기회로!', overall: 63, scores: { 재물운: 60, 연애운: 65, 건강운: 58, 직업운: 68 }, detail: { overall: '2026년 닭띠는 여러 도전에 직면할 수 있지만, 겸손함과 신중함으로 극복할 수 있습니다.', money: '지출이 늘어날 수 있으니 재정 관리에 신경 쓰세요. 절약이 곧 재테크입니다.', love: '말조심이 필요한 해입니다. 상대방의 감정을 배려하는 언어를 사용하세요.', health: '폐와 대장 건강에 주의하세요. 규칙적인 운동으로 면역력을 키우세요.', career: '끈기와 인내로 어려운 시기를 버텨야 합니다. 새로운 자격증 취득이 도움이 됩니다.' } },
+    { emoji: '🐕', name: '개띠', hanja: '戌 (술)', years: '1970, 1982, 1994, 2006, 2018', keyword: '🛡️ 안정의 해', summary: '화생토(火生土) 상생으로 든든한 보호의 기운이 찾아옵니다.', overall: 76, scores: { 재물운: 78, 연애운: 74, 건강운: 77, 직업운: 76 }, detail: { overall: '2026년 개띠는 안정적이고 보호받는 느낌의 한 해를 보낼 수 있습니다.', money: '꾸준한 재물운이 흐릅니다. 장기적인 재테크가 좋은 결과를 가져옵니다.', love: '안정적인 관계가 유지되는 해입니다. 신뢰할 수 있는 사람을 만날 가능성이 높습니다.', health: '전반적으로 건강하지만, 관절과 뼈 건강에 신경 쓰세요.', career: '성실함이 인정받는 해입니다. 팀워크를 중시하는 프로젝트에서 좋은 성과를 거둘 수 있습니다.' } },
+    { emoji: '🐖', name: '돼지띠', hanja: '亥 (해)', years: '1971, 1983, 1995, 2007, 2019', keyword: '🌊 흐름의 해', summary: '유연하게 대처하면 좋은 결과를 얻을 수 있습니다.', overall: 67, scores: { 재물운: 65, 연애운: 70, 건강운: 63, 직업운: 68 }, detail: { overall: '2026년 돼지띠는 변화에 유연하게 대처하는 것이 핵심입니다. 인간관계에서 좋은 기운이 들어옵니다.', money: '무리한 투자는 피하고 안전한 자산 관리에 집중하세요.', love: '기존 인연의 소중함을 느끼는 해입니다. 진정성 있는 관계가 시작될 수 있습니다.', health: '비뇨기 계통과 신장 건강에 주의하세요. 충분한 수분 섭취가 중요합니다.', career: '현재 위치에서 역량을 키우는 것이 중요합니다.' } }
+];
+
+function initZodiacGrid() {
+    const grid = document.getElementById('zodiacGrid');
+    if (!grid) return;
+    grid.innerHTML = zodiacData.map((z, i) => `
+        <div class="zodiac-card" onclick="showZodiacDetail(${i})" id="zodiac-${i}">
+            <span class="zodiac-emoji">${z.emoji}</span>
+            <div class="zodiac-name">${z.name}</div>
+            <div class="zodiac-hanja">${z.hanja}</div>
+            <div class="zodiac-years">${z.years}</div>
+            <div class="zodiac-keyword">${z.keyword}</div>
+            <p class="zodiac-summary">${z.summary}</p>
+            <span class="zodiac-cta">자세히 보기 →</span>
+        </div>
+    `).join('');
+}
+
+function getBarColor(score) {
+    if (score >= 80) return 'linear-gradient(90deg, #00f5d4, #60a5fa)';
+    if (score >= 70) return 'linear-gradient(90deg, #a855f7, #00f5d4)';
+    if (score >= 60) return 'linear-gradient(90deg, #ffd166, #a855f7)';
+    return 'linear-gradient(90deg, #ff6b9d, #ffd166)';
+}
+
+function showZodiacDetail(idx) {
+    const z = zodiacData[idx];
+    const d = z.detail;
+    const panel = document.getElementById('zodiacDetail');
+    if (!panel) return;
+
+    const scoreHTML = Object.entries(z.scores).map(([key, val]) => `
+        <div class="fortune-score">
+            <span class="fortune-score-label">${key}</span>
+            <div class="fortune-score-bar">
+                <div class="fortune-score-fill" style="width:0%;background:${getBarColor(val)}" data-w="${val}%"></div>
+            </div>
+            <span class="fortune-score-value">${val}점</span>
+        </div>
+    `).join('');
+
+    panel.innerHTML = `
+        <div class="zodiac-detail-header">
+            <span class="zodiac-emoji">${z.emoji}</span>
+            <div>
+                <h2 style="font-size:1.5rem; font-weight:800; color:var(--pink); margin:0;">${z.name} 2026년 운세</h2>
+                <div class="zodiac-hanja">${z.hanja} · 종합운 ${z.overall}점</div>
+            </div>
+        </div>
+        ${scoreHTML}
+        <div class="fortune-category"><h3>📋 종합운</h3><p>${d.overall}</p></div>
+        <div class="fortune-category"><h3>💰 재물운</h3><p>${d.money}</p></div>
+        <div class="fortune-category"><h3>💘 연애운</h3><p>${d.love}</p></div>
+        <div class="fortune-category"><h3>💪 건강운</h3><p>${d.health}</p></div>
+        <div class="fortune-category"><h3>💼 직업운</h3><p>${d.career}</p></div>
+        <button class="detail-close" onclick="switchMainTab('tab-saju')">
+            👶 내 사주 신점 받으러 가기 →
+        </button>
+    `;
+
+    panel.classList.add('active');
+    setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        panel.querySelectorAll('.fortune-score-fill').forEach(el => {
+            el.style.width = el.dataset.w;
+        });
+    }, 100);
+}
+
+// ═══════ Standalone Compatibility Analysis ═══════
+function initCompatOptions() {
+    const selectors = [
+        { hourId: 'compatMyHour', minId: 'compatMyMinute' },
+        { hourId: 'compatPartnerHour', minId: 'compatPartnerMinute' }
+    ];
+    selectors.forEach(({ hourId, minId }) => {
+        const hS = document.getElementById(hourId);
+        const mS = document.getElementById(minId);
+        if (hS) { hS.innerHTML = ''; for (let h = 1; h <= 12; h++) hS.innerHTML += `<option value="${h}">${h}시</option>`; }
+        if (mS) { mS.innerHTML = ''; for (let m = 0; m < 60; m++) mS.innerHTML += `<option value="${m}">${String(m).padStart(2, '0')}분</option>`; }
+    });
+}
+
+function analyzeCompatibility() {
+    if (!window.isScriptDataLoaded) {
+        alert('데이터를 불러오는 중입니다...');
+        return;
+    }
+
+    const myName = document.getElementById('compatMyName').value.trim() || '나';
+    const myBirth = document.getElementById('compatMyBirth').value.trim();
+    if (!/^\d{8}$/.test(myBirth)) { alert('내 생년월일 8자리를 입력해주세요.'); return; }
+    const myY = +myBirth.slice(0, 4), myM = +myBirth.slice(4, 6), myD = +myBirth.slice(6, 8);
+    if (myM < 1 || myM > 12 || myD < 1 || myD > 31) { alert('내 생년월일이 올바르지 않습니다.'); return; }
+
+    let myH, myMi;
+    if (document.getElementById('compatMyUnknownTime').checked) { myH = 12; myMi = 0; }
+    else {
+        const ap = document.getElementById('compatMyAmpm').value;
+        let hh = +document.getElementById('compatMyHour').value;
+        myMi = +document.getElementById('compatMyMinute').value;
+        if (ap === 'PM' && hh !== 12) hh += 12;
+        if (ap === 'AM' && hh === 12) hh = 0;
+        myH = hh;
+    }
+
+    const pName = document.getElementById('compatPartnerName').value.trim() || '그분';
+    const pBirth = document.getElementById('compatPartnerBirth').value.trim();
+    if (!/^\d{8}$/.test(pBirth)) { alert('상대방 생년월일 8자리를 입력해주세요.'); return; }
+    const pY = +pBirth.slice(0, 4), pM = +pBirth.slice(4, 6), pD = +pBirth.slice(6, 8);
+    if (pM < 1 || pM > 12 || pD < 1 || pD > 31) { alert('상대방 생년월일이 올바르지 않습니다.'); return; }
+
+    let pH, pMi;
+    if (document.getElementById('compatPartnerUnknownTime').checked) { pH = 12; pMi = 0; }
+    else {
+        const ap = document.getElementById('compatPartnerAmpm').value;
+        let hh = +document.getElementById('compatPartnerHour').value;
+        pMi = +document.getElementById('compatPartnerMinute').value;
+        if (ap === 'PM' && hh !== 12) hh += 12;
+        if (ap === 'AM' && hh === 12) hh = 0;
+        pH = hh;
+    }
+
+    try {
+        // Calculate my saju
+        const myS = Solar.fromYmdHms(myY, myM, myD, myH, myMi, 0);
+        const myL = myS.getLunar(), myBz = myL.getEightChar();
+        const myDm = myBz.getDayGan().toString();
+        const myStems = [myBz.getYearGan(), myBz.getMonthGan(), myBz.getDayGan(), myBz.getTimeGan()].map(x => x.toString());
+        const myBranches = [myBz.getYearZhi(), myBz.getMonthZhi(), myBz.getDayZhi(), myBz.getTimeZhi()].map(x => x.toString());
+        const myCnt = { WOOD: 0, FIRE: 0, EARTH: 0, METAL: 0, WATER: 0 };
+        [...myStems, ...myBranches].forEach(c => { const e = EM[c]; if (e) myCnt[e]++; });
+
+        // Calculate partner saju
+        const pS = Solar.fromYmdHms(pY, pM, pD, pH, pMi, 0);
+        const pL = pS.getLunar(), pBz = pL.getEightChar();
+        const pDm = pBz.getDayGan().toString();
+        const pCnt = { WOOD: 0, FIRE: 0, EARTH: 0, METAL: 0, WATER: 0 };
+        const pStems = [pBz.getYearGan(), pBz.getMonthGan(), pBz.getDayGan(), pBz.getTimeGan()].map(x => x.toString());
+        const pBranches = [pBz.getYearZhi(), pBz.getMonthZhi(), pBz.getDayZhi(), pBz.getTimeZhi()].map(x => x.toString());
+        [...pStems, ...pBranches].forEach(c => { const e = EM[c]; if (e) pCnt[e]++; });
+
+        // Score calculation
+        let score = 50;
+        let notes = [];
+
+        const myEl = STEM_EL[myDm], pEl = STEM_EL[pDm];
+        if (myEl === pEl) { score += 10; notes.push('친구처럼 편안한 사이'); }
+        else if (GENERATING[myEl] === pEl || GENERATING[pEl] === myEl) { score += 20; notes.push('서로 돕고 발전하는 상생 관계 💕'); }
+        else if (OVERCOMING[myEl] === pEl || OVERCOMING[pEl] === myEl) { score -= 10; notes.push('서로 주도권을 잡으려는 긴장감'); }
+
+        if (window.compatMyGender !== window.compatPartnerGender) { score += 5; notes.push('음양의 조화가 좋은 커플'); }
+
+        const myWeakest = Object.keys(myCnt).reduce((a, b) => myCnt[a] < myCnt[b] ? a : b, 'WOOD');
+        if (pCnt[myWeakest] >= 2) {
+            score += 15;
+            const elName = window.ELEMENT_NAMES_DATA ? window.ELEMENT_NAMES_DATA[myWeakest] : myWeakest;
+            notes.push(`나에게 부족한 ${elName} 기운을 상대방이 채워줌`);
+        }
+
+        const stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+        const idx1 = stems.indexOf(myDm), idx2 = stems.indexOf(pDm);
+        if (Math.abs(idx1 - idx2) === 6) { score -= 15; notes.push('강렬하게 끌리지만 자주 부딪힐 수 있음 (충)'); }
+        else if ((idx1 + idx2) % 5 === 0) { score += 15; notes.push('정신적으로 깊이 통하는 천생연분 (합) 💖'); }
+
+        score = Math.min(100, Math.max(0, score));
+
+        // Render
+        const box = document.getElementById('compatScoreBox');
+        const msgBox = document.getElementById('compatMsg');
+        const resultCard = document.getElementById('compatResult');
+
+        box.innerHTML = `
+            <div style="position:relative; width:120px; height:120px; margin:20px auto;">
+                <svg viewBox="0 0 100 100" style="width:100%; height:100%; filter:drop-shadow(0 0 10px rgba(236, 72, 153, 0.5));">
+                    <path d="M50 88.9L16.7 55.6C7.2 46.1 7.2 30.9 16.7 21.4s24.7-9.5 33.3 0L50 21.4l0 0" fill="#331832" stroke="none"/>
+                    <path d="M50 88.9L83.3 55.6C92.8 46.1 92.8 30.9 83.3 21.4s-24.7-9.5-33.3 0L50 21.4l0 0" fill="#331832" stroke="none"/>
+                    <defs>
+                        <linearGradient id="heartGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#ec4899" />
+                            <stop offset="100%" stop-color="#ff75c3" />
+                        </linearGradient>
+                        <mask id="fillMask">
+                            <rect x="0" y="${100 - score}" width="100" height="100" fill="white" style="transition:y 1s ease-out;"/>
+                        </mask>
+                    </defs>
+                    <g mask="url(#fillMask)">
+                        <path d="M50 88.9L16.7 55.6C7.2 46.1 7.2 30.9 16.7 21.4s24.7-9.5 33.3 0L50 21.4l0 0" fill="url(#heartGrad)" stroke="none"/>
+                        <path d="M50 88.9L83.3 55.6C92.8 46.1 92.8 30.9 83.3 21.4s-24.7-9.5-33.3 0L50 21.4l0 0" fill="url(#heartGrad)" stroke="none"/>
+                    </g>
+                </svg>
+                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:white; font-weight:800; font-size:1.8rem; text-shadow:0 2px 4px rgba(0,0,0,0.5);">${score}%</div>
+            </div>
+        `;
+
+        msgBox.innerHTML = `
+            <div style="text-align:center; margin-top:15px; background:rgba(255,255,255,0.05); padding:15px; border-radius:12px;">
+                <div style="color:var(--pink); font-weight:700; margin-bottom:8px;">${myName} ⚡ ${pName}</div>
+                <p style="font-size:0.95rem; line-height:1.6; color:var(--txt1);">${notes.join('<br>')}</p>
+            </div>
+        `;
+
+        resultCard.style.display = 'block';
+        resultCard.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+        console.error(e);
+        alert('궁합 분석 중 오류가 발생했습니다. 입력 정보를 확인해주세요.');
+    }
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+    initMainTabs();
+    initZodiacGrid();
+    initCompatOptions();
     initTarotCards();
     initReviewCarousel();
     trackVisit();
