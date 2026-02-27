@@ -224,30 +224,6 @@ function analyze() {
         return;
     }
 
-    // Compatibility Mode Check
-    const partnerInput = document.getElementById('partnerInput');
-    const isCompat = partnerInput && partnerInput.style.display !== 'none';
-    let pName = '', pY, pM, pD, pH, pMi;
-
-    if (isCompat) {
-        pName = document.getElementById('partnerName').value.trim() || '그분';
-        const pv = document.getElementById('partnerBirth').value.trim();
-        if (!/^\d{8}$/.test(pv)) { alert("상대방 생년월일 8자리를 입력해주세요."); return; }
-        pY = +pv.slice(0, 4); pM = +pv.slice(4, 6); pD = +pv.slice(6, 8);
-        if (pM < 1 || pM > 12 || pD < 1 || pD > 31) { alert("상대방 생년월일이 올바르지 않습니다."); return; }
-
-        if (document.getElementById('partnerUnknownTime').checked) {
-            pH = 12; pMi = 0;
-        } else {
-            const pa = document.getElementById('partnerAmpm').value;
-            let phh = +document.getElementById('partnerHour').value;
-            pMi = +document.getElementById('partnerMinute').value;
-            if (pa === 'PM' && phh !== 12) phh += 12;
-            if (pa === 'AM' && phh === 12) phh = 0;
-            pH = phh;
-        }
-    }
-
     uName = document.getElementById('userName').value.trim() || window.translations.default_name;
     let y, mo, d, h, mi;
     // Always use quick input (8-digit)
@@ -285,14 +261,6 @@ function analyze() {
             if (typeof trackAnalysis === 'function') trackAnalysis();
             if (typeof saveAnalysisToHistory === 'function') saveAnalysisToHistory();
 
-            // Compatibility Calculation
-            if (isCompat) {
-                calcCompatibility(pName, pY, pM, pD, pH, pMi, pGender);
-                document.getElementById('compatResultCard').style.display = 'block';
-            } else {
-                document.getElementById('compatResultCard').style.display = 'none';
-            }
-
             document.getElementById('loading').style.display = 'none';
             document.getElementById('result').style.display = 'block';
             window.scrollTo(0, 0);
@@ -300,8 +268,8 @@ function analyze() {
         } catch (e) {
             console.error(e);
             document.getElementById('loading').style.display = 'none';
+            document.getElementById('inputSection').style.display = 'block';
             alert((window.translations.alert_analysis_error || "오류가 발생했습니다.") + "\n[Error: " + e.message + "]");
-            location.reload();
         }
     }, 1000);
 }
