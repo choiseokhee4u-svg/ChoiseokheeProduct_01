@@ -2006,13 +2006,16 @@ h1 {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
     border-radius: 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.tarot-card-front {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* Card Front (Hidden side - question mark) */
@@ -2062,15 +2065,20 @@ h1 {
     border: 2px solid rgba(0, 245, 212, 0.4);
     box-shadow: 0 4px 25px rgba(0, 245, 212, 0.2),
         0 0 40px rgba(168, 85, 247, 0.15);
-    transform: rotateY(180deg) translateZ(1px);
+    transform: rotateY(180deg);
     gap: 4px;
     padding: 8px;
     overflow: hidden;
+    visibility: hidden;
 }
 
-/* Explicitly hide front face when flipped (fallback for backface-visibility) */
+/* Show back face and hide front face when flipped */
 .tarot-card-wrapper.flipped .tarot-card-front {
     visibility: hidden;
+}
+
+.tarot-card-wrapper.flipped .tarot-card-back {
+    visibility: visible;
 }
 
 .tarot-card-back .tarot-result-emoji {
