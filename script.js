@@ -1401,15 +1401,12 @@ function initTarotCards() {
         const nameEl = document.getElementById(`tarotName${i}`);
         if (emojiEl) emojiEl.textContent = card.emoji;
         if (nameEl) nameEl.textContent = card.name;
-        // Add image to card back
-        const backEl = document.getElementById(`tarotEmoji${i}`);
-        if (backEl && backEl.parentElement) {
-            const imgEl = document.createElement('img');
-            imgEl.src = card.img;
-            imgEl.alt = card.name;
-            imgEl.className = 'tarot-card-img';
-            imgEl.loading = 'lazy';
-            backEl.parentElement.insertBefore(imgEl, backEl);
+        // Set card back background image
+        if (emojiEl && emojiEl.parentElement) {
+            const backEl = emojiEl.parentElement;
+            backEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.5)), url('${card.img}')`;
+            backEl.style.backgroundSize = 'cover';
+            backEl.style.backgroundPosition = 'center';
         }
     });
 }
