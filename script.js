@@ -1404,9 +1404,7 @@ function initTarotCards() {
         // Set card back background image
         if (emojiEl && emojiEl.parentElement) {
             const backEl = emojiEl.parentElement;
-            backEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.5)), url('${card.img}')`;
-            backEl.style.backgroundSize = 'cover';
-            backEl.style.backgroundPosition = 'center';
+            backEl.style.background = `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.45)), url('${card.img}') center/cover no-repeat`;
         }
     });
 }
