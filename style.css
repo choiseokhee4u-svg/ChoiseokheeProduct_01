@@ -2062,10 +2062,15 @@ h1 {
     border: 2px solid rgba(0, 245, 212, 0.4);
     box-shadow: 0 4px 25px rgba(0, 245, 212, 0.2),
         0 0 40px rgba(168, 85, 247, 0.15);
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateZ(1px);
     gap: 4px;
     padding: 8px;
     overflow: hidden;
+}
+
+/* Explicitly hide front face when flipped (fallback for backface-visibility) */
+.tarot-card-wrapper.flipped .tarot-card-front {
+    visibility: hidden;
 }
 
 .tarot-card-back .tarot-result-emoji {
