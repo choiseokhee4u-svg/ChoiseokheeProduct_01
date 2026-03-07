@@ -88,6 +88,18 @@
 </head>
 
 <body>
+    <!-- 네비게이션 바 -->
+    <nav class="site-nav" id="siteNav">
+        <a href="index.html" class="nav-logo">👶 애기동자 신점</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">신점</a>
+            <a href="blog.html" class="nav-link">블로그</a>
+            <a href="about.html" class="nav-link">소개</a>
+        </div>
+        <button class="nav-menu-btn" id="navMenuBtn"
+            onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    </nav>
+
     <div class="contact-container">
         <h1 data-i18n="contact_title">문의하기 - 애기동자 신점</h1>
 
