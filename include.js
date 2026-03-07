@@ -32,15 +32,22 @@ function setPageMetadata(page, translations) {
 
     const pageMeta = metadata[page];
     if (pageMeta && translations) {
-        document.title = translations[pageMeta.title_key] || pageMeta.title_key;
+        const translatedTitle = translations[pageMeta.title_key];
+        // Only update title if we have an actual translation (not just the key name)
+        if (translatedTitle && translatedTitle !== pageMeta.title_key) {
+            document.title = translatedTitle;
+        }
+        const translatedDesc = translations[pageMeta.description_key];
         const descriptionTag = document.querySelector('meta[name="description"]');
-        if (descriptionTag) {
-            descriptionTag.setAttribute('content', translations[pageMeta.description_key] || pageMeta.description_key);
-        } else {
-            const newDescriptionTag = document.createElement('meta');
-            newDescriptionTag.setAttribute('name', 'description');
-            newDescriptionTag.setAttribute('content', translations[pageMeta.description_key] || pageMeta.description_key);
-            document.head.appendChild(newDescriptionTag);
+        if (translatedDesc && translatedDesc !== pageMeta.description_key) {
+            if (descriptionTag) {
+                descriptionTag.setAttribute('content', translatedDesc);
+            } else {
+                const newDescriptionTag = document.createElement('meta');
+                newDescriptionTag.setAttribute('name', 'description');
+                newDescriptionTag.setAttribute('content', translatedDesc);
+                document.head.appendChild(newDescriptionTag);
+            }
         }
     }
 }
@@ -49,12 +56,16 @@ function setPageMetadata(page, translations) {
 async function includeHeader() {
     const head = document.head;
 
-    // Add placeholders for title and description
-    const titleElement = document.createElement('title');
-    const descriptionElement = document.createElement('meta');
-    descriptionElement.setAttribute('name', 'description');
-    head.appendChild(titleElement);
-    head.appendChild(descriptionElement);
+    // Only add title/description placeholders if they don't already exist
+    if (!document.querySelector('title')) {
+        const titleElement = document.createElement('title');
+        head.appendChild(titleElement);
+    }
+    if (!document.querySelector('meta[name="description"]')) {
+        const descriptionElement = document.createElement('meta');
+        descriptionElement.setAttribute('name', 'description');
+        head.appendChild(descriptionElement);
+    }
 
     const lang = localStorage.getItem('lang') || 'ko';
     // Use global translations or empty object if not ready
